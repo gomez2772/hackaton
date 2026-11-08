@@ -1,0 +1,74 @@
+{
+  "_comment": "Fuente de verdad de qué archivos puede tocar cada rol. Patrones fnmatch (* cruza carpetas). Dueño: D. Cambios por PR con etiqueta 'contrato'.",
+  "roles": {
+    "A": [
+      "app/ui/*",
+      "app/api/*",
+      "app/export/*",
+      "tests/unit/test_ui_*.py",
+      "tests/unit/test_api*.py",
+      "tests/unit/test_export*.py"
+    ],
+    "B": [
+      "app/engine/llm.py",
+      "app/engine/extraction.py",
+      "app/engine/citations.py",
+      "app/engine/report.py",
+      "app/engine/prompts/*",
+      "app/pipeline.py",
+      "tests/unit/test_llm*.py",
+      "tests/unit/test_extraction*.py",
+      "tests/unit/test_citations*.py",
+      "tests/unit/test_report*.py",
+      "tests/unit/test_pipeline*.py"
+    ],
+    "C": [
+      "app/audio/*",
+      "app/data/*",
+      "app/engine/checker.py",
+      "app/engine/risk.py",
+      "scripts/*",
+      "tests/unit/test_stt*.py",
+      "tests/unit/test_tts*.py",
+      "tests/unit/test_checker*.py",
+      "tests/unit/test_risk*.py",
+      "tests/unit/test_data*.py"
+    ],
+    "D": [
+      "tests/integration/*",
+      "tests/eval/*",
+      "tests/conftest.py",
+      "tests/unit/__init__.py",
+      "tests/__init__.py",
+      "fixtures/*",
+      "app/fakes.py",
+      "tools/*",
+      ".github/*",
+      ".claude/*",
+      "README.md",
+      "docs/INTEGRATION.md",
+      "docs/EVAL.md",
+      "docs/DEMO.md"
+    ]
+  },
+  "shared": [
+    "docs/TASKS.md",
+    "docs/DECISIONS.md",
+    "requirements.txt",
+    "app/__init__.py",
+    "app/engine/__init__.py",
+    ".env",
+    ".cache/*",
+    ".claude/settings.local.json"
+  ],
+  "frozen": [
+    "app/schemas.py",
+    "app/config.py",
+    "docs/CONTRACT.md",
+    "CLAUDE.md",
+    ".env.example",
+    "pyproject.toml",
+    "tools/ownership.json",
+    ".gitignore"
+  ]
+}

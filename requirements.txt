@@ -1,0 +1,28 @@
+# Núcleo (congelado: cambios de versión solo vía D)
+pydantic>=2.7
+python-dotenv>=1.0
+anthropic>=0.40
+elevenlabs>=2.0
+numpy>=1.26
+pandas>=2.2
+
+# UI y API (rol A)
+streamlit>=1.40
+fastapi>=0.115
+uvicorn[standard]>=0.30
+python-multipart>=0.0.9
+
+# Exportación (rol A)
+python-docx>=1.1
+reportlab>=4.2
+markdown>=3.6
+
+# Datos (rol C)
+yfinance>=0.2.40
+
+# Calidad (rol D)
+pytest>=8.0
+httpx>=0.27
+ruff>=0.6
+
+# --- Añadir nuevas dependencias debajo, una por línea, con "# rol X: motivo"
