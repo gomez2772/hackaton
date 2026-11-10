@@ -1,0 +1,24 @@
+# Sustituye @usuario-X por los usuarios de GitHub del equipo (tarea D-01).
+# Sirve para que GitHub pida revisión al dueño; el bloqueo real lo hacen el hook y la CI.
+
+*                         @usuario-D
+
+/app/ui/                  @usuario-A
+/app/api/                 @usuario-A
+/app/export/              @usuario-A
+
+/app/engine/llm.py        @usuario-B
+/app/engine/extraction.py @usuario-B
+/app/engine/citations.py  @usuario-B
+/app/engine/report.py     @usuario-B
+/app/engine/prompts/      @usuario-B
+/app/pipeline.py          @usuario-B
+
+/app/audio/               @usuario-C
+/app/data/                @usuario-C
+/app/engine/checker.py    @usuario-C
+/app/engine/risk.py       @usuario-C
+/scripts/                 @usuario-C
+
+/app/schemas.py           @usuario-D @usuario-A @usuario-B @usuario-C
+/docs/CONTRACT.md         @usuario-D @usuario-A @usuario-B @usuario-C

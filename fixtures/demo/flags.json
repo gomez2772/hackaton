@@ -1,0 +1,78 @@
+[
+  {
+    "id": "f1",
+    "type": "horizon",
+    "severity": "red",
+    "recommendation_id": "r1",
+    "title": "Horizonte insuficiente",
+    "explanation": "Horizonte recomendado KID 5 años > 3 años declarados por la clienta",
+    "value": 3.0,
+    "limit": 5.0,
+    "unit": "años",
+    "evidence": [
+      {
+        "quote": "me jubilo en tres años",
+        "segment_id": "s0003",
+        "start": 24.0,
+        "end": 38.5,
+        "verified": true
+      }
+    ]
+  },
+  {
+    "id": "f2",
+    "type": "volatility",
+    "severity": "red",
+    "recommendation_id": "r1",
+    "title": "Volatilidad por encima del perfil",
+    "explanation": "Volatilidad anual de la cartera resultante 16,0 % > 12,0 % límite del perfil 3 (Moderado)",
+    "value": 16.0,
+    "limit": 12.0,
+    "unit": "%",
+    "evidence": []
+  },
+  {
+    "id": "f3",
+    "type": "concentration",
+    "severity": "amber",
+    "recommendation_id": "r1",
+    "title": "Concentración elevada",
+    "explanation": "RV emergente pasaría a 30,0 % de la cartera > 25,0 % máximo por producto",
+    "value": 30.0,
+    "limit": 25.0,
+    "unit": "%",
+    "evidence": []
+  },
+  {
+    "id": "f4",
+    "type": "sri",
+    "severity": "green",
+    "recommendation_id": "r1",
+    "title": "SRI dentro del perfil",
+    "explanation": "SRI del producto 4 ≤ 4 máximo del perfil 3",
+    "value": 4.0,
+    "limit": 4.0,
+    "unit": "SRI",
+    "evidence": []
+  },
+  {
+    "id": "f5",
+    "type": "liquidity",
+    "severity": "green",
+    "recommendation_id": "r1",
+    "title": "Liquidez suficiente",
+    "explanation": "Activos con liquidez ≤ T+3 tras la operación 70 000 € ≥ 20 000 € necesarios en 1 año",
+    "value": 70000.0,
+    "limit": 20000.0,
+    "unit": "€",
+    "evidence": [
+      {
+        "quote": "Necesitaré unos veinte mil euros el año que viene",
+        "segment_id": "s0005",
+        "start": 46.0,
+        "end": 61.0,
+        "verified": true
+      }
+    ]
+  }
+]

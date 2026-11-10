@@ -1,0 +1,20 @@
+[project]
+name = "acta"
+version = "0.1.0"
+description = "Acta: de la reunión al informe de idoneidad MiFID II trazable al segundo"
+requires-python = ">=3.11"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-m 'not live'"
+markers = [
+    "live: llama a APIs de pago (Claude/ElevenLabs); ejecutar con: pytest -m live",
+]
+
+[tool.ruff]
+line-length = 120
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+ignore = ["E501", "UP042"]

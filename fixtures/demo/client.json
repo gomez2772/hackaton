@@ -1,0 +1,20 @@
+{
+  "client_id": "CLI-DEMO-001",
+  "name": "Lucía Martín (sintético)",
+  "risk_profile": 3,
+  "horizon_years": null,
+  "liquidity_need_eur": null,
+  "portfolio": [
+    {
+      "isin": "DEMO00000001",
+      "name": "Fondo índice RV global (demo)",
+      "amount_eur": 50000.0
+    },
+    {
+      "isin": "DEMO00000002",
+      "name": "Fondo RF corto plazo euro (demo)",
+      "amount_eur": 50000.0
+    }
+  ],
+  "synthetic": true
+}

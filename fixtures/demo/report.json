@@ -1,0 +1,174 @@
+{
+  "client_id": "CLI-DEMO-001",
+  "client_name": "Lucía Martín (sintético)",
+  "advisor_name": "Asesor de demostración",
+  "meeting_date": "2026-11-10",
+  "sections": [
+    {
+      "key": "client_situation",
+      "title": "Situación de la clienta",
+      "sentences": [
+        {
+          "id": "p1",
+          "text": "La clienta comunica que se jubilará en un plazo de tres años.",
+          "kind": "claim",
+          "evidence": [
+            {
+              "quote": "me jubilo en tres años",
+              "segment_id": "s0003",
+              "start": 24.0,
+              "end": 38.5,
+              "verified": true
+            }
+          ],
+          "flag_ids": [],
+          "status": "supported"
+        }
+      ]
+    },
+    {
+      "key": "objectives_and_needs",
+      "title": "Objetivos y necesidades",
+      "sentences": [
+        {
+          "id": "p2",
+          "text": "Necesitará aproximadamente 20 000 € el próximo año para la entrada de la vivienda de su hija.",
+          "kind": "claim",
+          "evidence": [
+            {
+              "quote": "Necesitaré unos veinte mil euros el año que viene",
+              "segment_id": "s0005",
+              "start": 46.0,
+              "end": 61.0,
+              "verified": true
+            }
+          ],
+          "flag_ids": [],
+          "status": "supported"
+        },
+        {
+          "id": "p3",
+          "text": "Manifiesta aversión a pérdidas relevantes dada la proximidad de su jubilación.",
+          "kind": "claim",
+          "evidence": [
+            {
+              "quote": "Lo que no quiero es llevarme sustos",
+              "segment_id": "s0009",
+              "start": 108.0,
+              "end": 121.0,
+              "verified": true
+            }
+          ],
+          "flag_ids": [],
+          "status": "supported"
+        }
+      ]
+    },
+    {
+      "key": "recommendations",
+      "title": "Recomendación",
+      "sentences": [
+        {
+          "id": "p4",
+          "text": "El asesor recomienda invertir 30 000 € en un fondo indexado de renta variable emergente, financiado con la venta de parte de la renta fija.",
+          "kind": "claim",
+          "evidence": [
+            {
+              "quote": "invertir treinta mil euros en un fondo indexado de renta variable emergente",
+              "segment_id": "s0006",
+              "start": 61.0,
+              "end": 84.0,
+              "verified": true
+            },
+            {
+              "quote": "vendiendo parte de la renta fija",
+              "segment_id": "s0008",
+              "start": 92.0,
+              "end": 108.0,
+              "verified": true
+            }
+          ],
+          "flag_ids": [],
+          "status": "supported"
+        }
+      ]
+    },
+    {
+      "key": "suitability_assessment",
+      "title": "Evaluación de idoneidad",
+      "sentences": [
+        {
+          "id": "p5",
+          "text": "El horizonte mínimo recomendado del producto (5 años) supera el horizonte declarado (3 años).",
+          "kind": "claim",
+          "evidence": [
+            {
+              "quote": "me jubilo en tres años",
+              "segment_id": "s0003",
+              "start": 24.0,
+              "end": 38.5,
+              "verified": true
+            }
+          ],
+          "flag_ids": [
+            "f1"
+          ],
+          "status": "supported"
+        },
+        {
+          "id": "p6",
+          "text": "La volatilidad estimada de la cartera resultante (16,0 %) excede el límite del perfil Moderado (12,0 %).",
+          "kind": "computed",
+          "evidence": [],
+          "flag_ids": [
+            "f2"
+          ],
+          "status": "supported"
+        }
+      ]
+    },
+    {
+      "key": "risks_and_warnings",
+      "title": "Riesgos y advertencias",
+      "sentences": [
+        {
+          "id": "p7",
+          "text": "Con la información disponible, la recomendación presenta incoherencias con el perfil que deben resolverse antes de ejecutarse.",
+          "kind": "computed",
+          "evidence": [],
+          "flag_ids": [
+            "f1",
+            "f2",
+            "f3"
+          ],
+          "status": "supported"
+        }
+      ]
+    },
+    {
+      "key": "commitments",
+      "title": "Compromisos",
+      "sentences": [
+        {
+          "id": "p8",
+          "text": "El asesor se compromete a remitir la documentación del fondo y este informe antes del viernes.",
+          "kind": "claim",
+          "evidence": [
+            {
+              "quote": "Le enviaré por correo la documentación del fondo y el informe antes del viernes",
+              "segment_id": "s0010",
+              "start": 121.0,
+              "end": 140.0,
+              "verified": true
+            }
+          ],
+          "flag_ids": [],
+          "status": "supported"
+        }
+      ]
+    }
+  ],
+  "coverage_pct": 100.0,
+  "model": "fixture",
+  "template_mode": false
+}

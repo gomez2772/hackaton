@@ -1,0 +1,116 @@
+{
+  "circumstance_changes": [
+    {
+      "id": "cc1",
+      "field": "horizon",
+      "description": "Se jubila en tres años",
+      "new_value": "3 años",
+      "evidence": [
+        {
+          "quote": "me jubilo en tres años",
+          "segment_id": "s0003",
+          "start": 24.0,
+          "end": 38.5,
+          "verified": true
+        }
+      ]
+    }
+  ],
+  "stated_needs": [
+    {
+      "id": "n1",
+      "kind": "horizon",
+      "description": "Disponer del dinero al jubilarse",
+      "amount_eur": null,
+      "horizon_years": 3.0,
+      "evidence": [
+        {
+          "quote": "me jubilo en tres años",
+          "segment_id": "s0003",
+          "start": 24.0,
+          "end": 38.5,
+          "verified": true
+        }
+      ]
+    },
+    {
+      "id": "n2",
+      "kind": "liquidity",
+      "description": "Entrada del piso de su hija el año que viene",
+      "amount_eur": 20000.0,
+      "horizon_years": 1.0,
+      "evidence": [
+        {
+          "quote": "Necesitaré unos veinte mil euros el año que viene",
+          "segment_id": "s0005",
+          "start": 46.0,
+          "end": 61.0,
+          "verified": true
+        }
+      ]
+    },
+    {
+      "id": "n3",
+      "kind": "capital_preservation",
+      "description": "No quiere sustos cerca de la jubilación",
+      "amount_eur": null,
+      "horizon_years": null,
+      "evidence": [
+        {
+          "quote": "Lo que no quiero es llevarme sustos",
+          "segment_id": "s0009",
+          "start": 108.0,
+          "end": 121.0,
+          "verified": true
+        }
+      ]
+    }
+  ],
+  "recommendations": [
+    {
+      "id": "r1",
+      "product_name": "Fondo índice RV emergente (demo)",
+      "isin": "DEMO00000003",
+      "action": "buy",
+      "amount_eur": 30000.0,
+      "rationale": "Mercados emergentes baratos, potencial a largo plazo; se financia vendiendo renta fija",
+      "evidence": [
+        {
+          "quote": "invertir treinta mil euros en un fondo indexado de renta variable emergente",
+          "segment_id": "s0006",
+          "start": 61.0,
+          "end": 84.0,
+          "verified": true
+        },
+        {
+          "quote": "vendiendo parte de la renta fija",
+          "segment_id": "s0008",
+          "start": 92.0,
+          "end": 108.0,
+          "verified": true
+        }
+      ]
+    }
+  ],
+  "commitments": [
+    {
+      "id": "c1",
+      "who": "advisor",
+      "description": "Enviar documentación del fondo e informe",
+      "due": "antes del viernes",
+      "evidence": [
+        {
+          "quote": "Le enviaré por correo la documentación del fondo y el informe antes del viernes",
+          "segment_id": "s0010",
+          "start": 121.0,
+          "end": 140.0,
+          "verified": true
+        }
+      ]
+    }
+  ],
+  "speaker_roles": {
+    "speaker_0": "advisor",
+    "speaker_1": "client"
+  }
+}

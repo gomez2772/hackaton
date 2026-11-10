@@ -1,0 +1,37 @@
+[
+  {
+    "risk_profile": 1,
+    "label": "Conservador",
+    "max_sri": 2,
+    "max_volatility_pct": 4.0,
+    "max_single_position_pct": 25.0
+  },
+  {
+    "risk_profile": 2,
+    "label": "Moderado-conservador",
+    "max_sri": 3,
+    "max_volatility_pct": 8.0,
+    "max_single_position_pct": 25.0
+  },
+  {
+    "risk_profile": 3,
+    "label": "Moderado",
+    "max_sri": 4,
+    "max_volatility_pct": 12.0,
+    "max_single_position_pct": 25.0
+  },
+  {
+    "risk_profile": 4,
+    "label": "Dinámico",
+    "max_sri": 5,
+    "max_volatility_pct": 18.0,
+    "max_single_position_pct": 25.0
+  },
+  {
+    "risk_profile": 5,
+    "label": "Agresivo",
+    "max_sri": 7,
+    "max_volatility_pct": 30.0,
+    "max_single_position_pct": 25.0
+  }
+]

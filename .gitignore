@@ -1,0 +1,29 @@
+# Secretos
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+
+# Caché de Acta (transcripciones, respuestas LLM, análisis)
+.cache/
+
+# Claude Code local
+.claude/settings.local.json
+
+# Sistema / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Audio de trabajo (los versionados van en app/data/audio y app/data/meetings)
+*.tmp.wav
+recordings/

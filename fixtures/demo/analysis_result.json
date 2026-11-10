@@ -1,0 +1,537 @@
+{
+  "schema_version": "1.0",
+  "analysis_id": "AN-DEMO-0001",
+  "created_at": "2026-11-08T16:07:48.951849Z",
+  "client": {
+    "client_id": "CLI-DEMO-001",
+    "name": "Lucía Martín (sintético)",
+    "risk_profile": 3,
+    "horizon_years": null,
+    "liquidity_need_eur": null,
+    "portfolio": [
+      {
+        "isin": "DEMO00000001",
+        "name": "Fondo índice RV global (demo)",
+        "amount_eur": 50000.0
+      },
+      {
+        "isin": "DEMO00000002",
+        "name": "Fondo RF corto plazo euro (demo)",
+        "amount_eur": 50000.0
+      }
+    ],
+    "synthetic": true
+  },
+  "transcript": {
+    "audio_id": "demo0000clip0001",
+    "language": "es",
+    "duration_s": 146.0,
+    "segments": [
+      {
+        "id": "s0000",
+        "speaker_id": "speaker_0",
+        "role": "advisor",
+        "start": 0.0,
+        "end": 9.5,
+        "text": "Buenos días, Lucía. Antes de empezar, le recuerdo que esta reunión se graba con su consentimiento.",
+        "words": []
+      },
+      {
+        "id": "s0001",
+        "speaker_id": "speaker_1",
+        "role": "client",
+        "start": 9.5,
+        "end": 13.0,
+        "text": "Sí, sin problema.",
+        "words": []
+      },
+      {
+        "id": "s0002",
+        "speaker_id": "speaker_0",
+        "role": "advisor",
+        "start": 13.0,
+        "end": 24.0,
+        "text": "Perfecto. Revisando su cartera, tiene unos cien mil euros, la mayor parte en renta variable global y una parte en renta fija.",
+        "words": []
+      },
+      {
+        "id": "s0003",
+        "speaker_id": "speaker_1",
+        "role": "client",
+        "start": 24.0,
+        "end": 38.5,
+        "text": "Eso es. Le cuento una novedad: me jubilo en tres años, así que quiero ir pensando en tener el dinero disponible para entonces.",
+        "words": []
+      },
+      {
+        "id": "s0004",
+        "speaker_id": "speaker_0",
+        "role": "advisor",
+        "start": 38.5,
+        "end": 46.0,
+        "text": "Entendido, tres años. ¿Hay algún gasto importante antes de esa fecha?",
+        "words": []
+      },
+      {
+        "id": "s0005",
+        "speaker_id": "speaker_1",
+        "role": "client",
+        "start": 46.0,
+        "end": 61.0,
+        "text": "Sí, lo de la entrada del piso de mi hija. Necesitaré unos veinte mil euros el año que viene.",
+        "words": []
+      },
+      {
+        "id": "s0006",
+        "speaker_id": "speaker_0",
+        "role": "advisor",
+        "start": 61.0,
+        "end": 84.0,
+        "text": "Tomo nota. Ahora mismo los mercados emergentes están baratos. Le propongo invertir treinta mil euros en un fondo indexado de renta variable emergente.",
+        "words": []
+      },
+      {
+        "id": "s0007",
+        "speaker_id": "speaker_1",
+        "role": "client",
+        "start": 84.0,
+        "end": 92.0,
+        "text": "Bueno, si usted lo ve bien... no entiendo mucho de esto.",
+        "words": []
+      },
+      {
+        "id": "s0008",
+        "speaker_id": "speaker_0",
+        "role": "advisor",
+        "start": 92.0,
+        "end": 108.0,
+        "text": "Es un fondo con buen potencial a largo plazo. Lo financiaríamos vendiendo parte de la renta fija.",
+        "words": []
+      },
+      {
+        "id": "s0009",
+        "speaker_id": "speaker_1",
+        "role": "client",
+        "start": 108.0,
+        "end": 121.0,
+        "text": "Lo que no quiero es llevarme sustos, que con la jubilación tan cerca me pone nerviosa.",
+        "words": []
+      },
+      {
+        "id": "s0010",
+        "speaker_id": "speaker_0",
+        "role": "advisor",
+        "start": 121.0,
+        "end": 140.0,
+        "text": "Lo entiendo. Le enviaré por correo la documentación del fondo y el informe antes del viernes.",
+        "words": []
+      },
+      {
+        "id": "s0011",
+        "speaker_id": "speaker_1",
+        "role": "client",
+        "start": 140.0,
+        "end": 146.0,
+        "text": "De acuerdo, muchas gracias.",
+        "words": []
+      }
+    ],
+    "stt_provider": "fixture"
+  },
+  "extraction": {
+    "circumstance_changes": [
+      {
+        "id": "cc1",
+        "field": "horizon",
+        "description": "Se jubila en tres años",
+        "new_value": "3 años",
+        "evidence": [
+          {
+            "quote": "me jubilo en tres años",
+            "segment_id": "s0003",
+            "start": 24.0,
+            "end": 38.5,
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "stated_needs": [
+      {
+        "id": "n1",
+        "kind": "horizon",
+        "description": "Disponer del dinero al jubilarse",
+        "amount_eur": null,
+        "horizon_years": 3.0,
+        "evidence": [
+          {
+            "quote": "me jubilo en tres años",
+            "segment_id": "s0003",
+            "start": 24.0,
+            "end": 38.5,
+            "verified": true
+          }
+        ]
+      },
+      {
+        "id": "n2",
+        "kind": "liquidity",
+        "description": "Entrada del piso de su hija el año que viene",
+        "amount_eur": 20000.0,
+        "horizon_years": 1.0,
+        "evidence": [
+          {
+            "quote": "Necesitaré unos veinte mil euros el año que viene",
+            "segment_id": "s0005",
+            "start": 46.0,
+            "end": 61.0,
+            "verified": true
+          }
+        ]
+      },
+      {
+        "id": "n3",
+        "kind": "capital_preservation",
+        "description": "No quiere sustos cerca de la jubilación",
+        "amount_eur": null,
+        "horizon_years": null,
+        "evidence": [
+          {
+            "quote": "Lo que no quiero es llevarme sustos",
+            "segment_id": "s0009",
+            "start": 108.0,
+            "end": 121.0,
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "recommendations": [
+      {
+        "id": "r1",
+        "product_name": "Fondo índice RV emergente (demo)",
+        "isin": "DEMO00000003",
+        "action": "buy",
+        "amount_eur": 30000.0,
+        "rationale": "Mercados emergentes baratos, potencial a largo plazo; se financia vendiendo renta fija",
+        "evidence": [
+          {
+            "quote": "invertir treinta mil euros en un fondo indexado de renta variable emergente",
+            "segment_id": "s0006",
+            "start": 61.0,
+            "end": 84.0,
+            "verified": true
+          },
+          {
+            "quote": "vendiendo parte de la renta fija",
+            "segment_id": "s0008",
+            "start": 92.0,
+            "end": 108.0,
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "commitments": [
+      {
+        "id": "c1",
+        "who": "advisor",
+        "description": "Enviar documentación del fondo e informe",
+        "due": "antes del viernes",
+        "evidence": [
+          {
+            "quote": "Le enviaré por correo la documentación del fondo y el informe antes del viernes",
+            "segment_id": "s0010",
+            "start": 121.0,
+            "end": 140.0,
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "speaker_roles": {
+      "speaker_0": "advisor",
+      "speaker_1": "client"
+    }
+  },
+  "flags": [
+    {
+      "id": "f1",
+      "type": "horizon",
+      "severity": "red",
+      "recommendation_id": "r1",
+      "title": "Horizonte insuficiente",
+      "explanation": "Horizonte recomendado KID 5 años > 3 años declarados por la clienta",
+      "value": 3.0,
+      "limit": 5.0,
+      "unit": "años",
+      "evidence": [
+        {
+          "quote": "me jubilo en tres años",
+          "segment_id": "s0003",
+          "start": 24.0,
+          "end": 38.5,
+          "verified": true
+        }
+      ]
+    },
+    {
+      "id": "f2",
+      "type": "volatility",
+      "severity": "red",
+      "recommendation_id": "r1",
+      "title": "Volatilidad por encima del perfil",
+      "explanation": "Volatilidad anual de la cartera resultante 16,0 % > 12,0 % límite del perfil 3 (Moderado)",
+      "value": 16.0,
+      "limit": 12.0,
+      "unit": "%",
+      "evidence": []
+    },
+    {
+      "id": "f3",
+      "type": "concentration",
+      "severity": "amber",
+      "recommendation_id": "r1",
+      "title": "Concentración elevada",
+      "explanation": "RV emergente pasaría a 30,0 % de la cartera > 25,0 % máximo por producto",
+      "value": 30.0,
+      "limit": 25.0,
+      "unit": "%",
+      "evidence": []
+    },
+    {
+      "id": "f4",
+      "type": "sri",
+      "severity": "green",
+      "recommendation_id": "r1",
+      "title": "SRI dentro del perfil",
+      "explanation": "SRI del producto 4 ≤ 4 máximo del perfil 3",
+      "value": 4.0,
+      "limit": 4.0,
+      "unit": "SRI",
+      "evidence": []
+    },
+    {
+      "id": "f5",
+      "type": "liquidity",
+      "severity": "green",
+      "recommendation_id": "r1",
+      "title": "Liquidez suficiente",
+      "explanation": "Activos con liquidez ≤ T+3 tras la operación 70 000 € ≥ 20 000 € necesarios en 1 año",
+      "value": 70000.0,
+      "limit": 20000.0,
+      "unit": "€",
+      "evidence": [
+        {
+          "quote": "Necesitaré unos veinte mil euros el año que viene",
+          "segment_id": "s0005",
+          "start": 46.0,
+          "end": 61.0,
+          "verified": true
+        }
+      ]
+    }
+  ],
+  "report": {
+    "client_id": "CLI-DEMO-001",
+    "client_name": "Lucía Martín (sintético)",
+    "advisor_name": "Asesor de demostración",
+    "meeting_date": "2026-11-10",
+    "sections": [
+      {
+        "key": "client_situation",
+        "title": "Situación de la clienta",
+        "sentences": [
+          {
+            "id": "p1",
+            "text": "La clienta comunica que se jubilará en un plazo de tres años.",
+            "kind": "claim",
+            "evidence": [
+              {
+                "quote": "me jubilo en tres años",
+                "segment_id": "s0003",
+                "start": 24.0,
+                "end": 38.5,
+                "verified": true
+              }
+            ],
+            "flag_ids": [],
+            "status": "supported"
+          }
+        ]
+      },
+      {
+        "key": "objectives_and_needs",
+        "title": "Objetivos y necesidades",
+        "sentences": [
+          {
+            "id": "p2",
+            "text": "Necesitará aproximadamente 20 000 € el próximo año para la entrada de la vivienda de su hija.",
+            "kind": "claim",
+            "evidence": [
+              {
+                "quote": "Necesitaré unos veinte mil euros el año que viene",
+                "segment_id": "s0005",
+                "start": 46.0,
+                "end": 61.0,
+                "verified": true
+              }
+            ],
+            "flag_ids": [],
+            "status": "supported"
+          },
+          {
+            "id": "p3",
+            "text": "Manifiesta aversión a pérdidas relevantes dada la proximidad de su jubilación.",
+            "kind": "claim",
+            "evidence": [
+              {
+                "quote": "Lo que no quiero es llevarme sustos",
+                "segment_id": "s0009",
+                "start": 108.0,
+                "end": 121.0,
+                "verified": true
+              }
+            ],
+            "flag_ids": [],
+            "status": "supported"
+          }
+        ]
+      },
+      {
+        "key": "recommendations",
+        "title": "Recomendación",
+        "sentences": [
+          {
+            "id": "p4",
+            "text": "El asesor recomienda invertir 30 000 € en un fondo indexado de renta variable emergente, financiado con la venta de parte de la renta fija.",
+            "kind": "claim",
+            "evidence": [
+              {
+                "quote": "invertir treinta mil euros en un fondo indexado de renta variable emergente",
+                "segment_id": "s0006",
+                "start": 61.0,
+                "end": 84.0,
+                "verified": true
+              },
+              {
+                "quote": "vendiendo parte de la renta fija",
+                "segment_id": "s0008",
+                "start": 92.0,
+                "end": 108.0,
+                "verified": true
+              }
+            ],
+            "flag_ids": [],
+            "status": "supported"
+          }
+        ]
+      },
+      {
+        "key": "suitability_assessment",
+        "title": "Evaluación de idoneidad",
+        "sentences": [
+          {
+            "id": "p5",
+            "text": "El horizonte mínimo recomendado del producto (5 años) supera el horizonte declarado (3 años).",
+            "kind": "claim",
+            "evidence": [
+              {
+                "quote": "me jubilo en tres años",
+                "segment_id": "s0003",
+                "start": 24.0,
+                "end": 38.5,
+                "verified": true
+              }
+            ],
+            "flag_ids": [
+              "f1"
+            ],
+            "status": "supported"
+          },
+          {
+            "id": "p6",
+            "text": "La volatilidad estimada de la cartera resultante (16,0 %) excede el límite del perfil Moderado (12,0 %).",
+            "kind": "computed",
+            "evidence": [],
+            "flag_ids": [
+              "f2"
+            ],
+            "status": "supported"
+          }
+        ]
+      },
+      {
+        "key": "risks_and_warnings",
+        "title": "Riesgos y advertencias",
+        "sentences": [
+          {
+            "id": "p7",
+            "text": "Con la información disponible, la recomendación presenta incoherencias con el perfil que deben resolverse antes de ejecutarse.",
+            "kind": "computed",
+            "evidence": [],
+            "flag_ids": [
+              "f1",
+              "f2",
+              "f3"
+            ],
+            "status": "supported"
+          }
+        ]
+      },
+      {
+        "key": "commitments",
+        "title": "Compromisos",
+        "sentences": [
+          {
+            "id": "p8",
+            "text": "El asesor se compromete a remitir la documentación del fondo y este informe antes del viernes.",
+            "kind": "claim",
+            "evidence": [
+              {
+                "quote": "Le enviaré por correo la documentación del fondo y el informe antes del viernes",
+                "segment_id": "s0010",
+                "start": 121.0,
+                "end": 140.0,
+                "verified": true
+              }
+            ],
+            "flag_ids": [],
+            "status": "supported"
+          }
+        ]
+      }
+    ],
+    "coverage_pct": 100.0,
+    "model": "fixture",
+    "template_mode": false
+  },
+  "timings": [
+    {
+      "stage": "stt",
+      "seconds": 0.0,
+      "fake": true
+    },
+    {
+      "stage": "extract",
+      "seconds": 0.0,
+      "fake": true
+    },
+    {
+      "stage": "validate",
+      "seconds": 0.0,
+      "fake": true
+    },
+    {
+      "stage": "check",
+      "seconds": 0.0,
+      "fake": true
+    },
+    {
+      "stage": "report",
+      "seconds": 0.0,
+      "fake": true
+    }
+  ],
+  "warnings": []
+}
