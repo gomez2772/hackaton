@@ -55,8 +55,15 @@ def load_client(client_id: str) -> ClientProfile:
 
 
 def load_returns(tickers: list[str]) -> pd.DataFrame:
-    """Daily returns (3 years) for proxy tickers from app/data/prices/<ticker>.csv.
+    """Daily returns (3 years) for proxy tickers from app/data/prices/<ticker>.csv (columns: date, close).
 
-    TODO(C-05): read CSVs (date, close), pct_change, inner-join on date.
+    Raises FileNotFoundError if a ticker has no CSV (the checker then uses the SRI approximation).
     """
-    raise NotImplementedError("C-05: load_returns() pendiente.")
+    series = {}
+    for t in tickers:
+        p = DATA / "prices" / f"{t}.csv"
+        if not p.exists():
+            raise FileNotFoundError(p)
+        df = pd.read_csv(p, parse_dates=["date"]).set_index("date").sort_index()
+        series[t] = df["close"].pct_change()
+    return pd.concat(series, axis=1, join="inner").dropna()
