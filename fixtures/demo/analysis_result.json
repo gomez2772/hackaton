@@ -1,7 +1,7 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "1.1",
   "analysis_id": "AN-DEMO-0001",
-  "created_at": "2026-11-08T16:07:48.951849Z",
+  "created_at": "2026-11-10T18:36:39.087835Z",
   "client": {
     "client_id": "CLI-DEMO-001",
     "name": "Lucía Martín (sintético)",
@@ -105,7 +105,7 @@
         "role": "advisor",
         "start": 92.0,
         "end": 108.0,
-        "text": "Es un fondo con buen potencial a largo plazo. Lo financiaríamos vendiendo parte de la renta fija.",
+        "text": "Es un fondo con buen potencial a largo plazo y con este no va a perder dinero. Lo financiaríamos vendiendo parte de la renta fija.",
         "words": []
       },
       {
@@ -506,6 +506,169 @@
     "model": "fixture",
     "template_mode": false
   },
+  "conduct": {
+    "items": [
+      {
+        "code": "recording_notice",
+        "title": "Aviso de grabación",
+        "rule": "MiFID II art. 16.7; Reg. Del. 2017/565 art. 76",
+        "status": "ok",
+        "explanation": "El asesor informa de la grabación y la clienta lo acepta.",
+        "evidence": [
+          {
+            "quote": "esta reunión se graba con su consentimiento",
+            "segment_id": "s0000",
+            "start": 0.0,
+            "end": 9.5,
+            "verified": true
+          },
+          {
+            "quote": "Sí, sin problema.",
+            "segment_id": "s0001",
+            "start": 9.5,
+            "end": 13.0,
+            "verified": true
+          }
+        ]
+      },
+      {
+        "code": "circumstances_updated",
+        "title": "Se actualiza la situación del cliente",
+        "rule": "Reg. Del. 2017/565 art. 54",
+        "status": "ok",
+        "explanation": "El asesor pregunta por gastos importantes antes de recomendar.",
+        "evidence": [
+          {
+            "quote": "¿Hay algún gasto importante antes de esa fecha?",
+            "segment_id": "s0004",
+            "start": 38.5,
+            "end": 46.0,
+            "verified": true
+          }
+        ]
+      },
+      {
+        "code": "return_promise",
+        "title": "Sin promesas de rentabilidad",
+        "rule": "MiFID II art. 24.3",
+        "status": "breach",
+        "explanation": "Se asegura que la clienta no perderá dinero en un fondo de renta variable.",
+        "evidence": [
+          {
+            "quote": "con este no va a perder dinero",
+            "segment_id": "s0008",
+            "start": 92.0,
+            "end": 108.0,
+            "verified": true
+          }
+        ]
+      },
+      {
+        "code": "risks_explained",
+        "title": "Riesgos explicados",
+        "rule": "MiFID II art. 24.4",
+        "status": "breach",
+        "explanation": "La clienta dice no entender el producto y no se le explican sus riesgos.",
+        "evidence": [
+          {
+            "quote": "no entiendo mucho de esto",
+            "segment_id": "s0007",
+            "start": 84.0,
+            "end": 92.0,
+            "verified": true
+          },
+          {
+            "quote": "Es un fondo con buen potencial a largo plazo",
+            "segment_id": "s0008",
+            "start": 92.0,
+            "end": 108.0,
+            "verified": true
+          }
+        ]
+      },
+      {
+        "code": "costs_disclosed",
+        "title": "Costes informados",
+        "rule": "MiFID II art. 24.4.c; Reg. Del. 2017/565 art. 50",
+        "status": "no_evidence",
+        "explanation": "No se mencionan los costes del fondo.",
+        "evidence": []
+      },
+      {
+        "code": "commercial_pressure",
+        "title": "Sin presión comercial",
+        "rule": "MiFID II art. 24.1",
+        "status": "ok",
+        "explanation": "No se aprecia prisa ni presión para decidir.",
+        "evidence": []
+      },
+      {
+        "code": "conflicts_of_interest",
+        "title": "Conflictos de interés e incentivos",
+        "rule": "MiFID II arts. 23 y 24.9",
+        "status": "no_evidence",
+        "explanation": "No se habla de incentivos ni de conflictos de interés.",
+        "evidence": []
+      }
+    ],
+    "model": "fixture"
+  },
+  "client_summary": {
+    "title": "Resumen de tu reunión",
+    "points": [
+      {
+        "text": "Nos contaste que te jubilas dentro de tres años.",
+        "evidence": [
+          {
+            "quote": "me jubilo en tres años",
+            "segment_id": "s0003",
+            "start": 24.0,
+            "end": 38.5,
+            "verified": true
+          }
+        ]
+      },
+      {
+        "text": "Necesitarás unos 20 000 € el año que viene para la entrada del piso de tu hija.",
+        "evidence": [
+          {
+            "quote": "Necesitaré unos veinte mil euros el año que viene",
+            "segment_id": "s0005",
+            "start": 46.0,
+            "end": 61.0,
+            "verified": true
+          }
+        ]
+      },
+      {
+        "text": "Tu asesor te propuso invertir 30 000 € en un fondo de renta variable de países emergentes, vendiendo parte de tu renta fija.",
+        "evidence": [
+          {
+            "quote": "invertir treinta mil euros en un fondo indexado de renta variable emergente",
+            "segment_id": "s0006",
+            "start": 61.0,
+            "end": 84.0,
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "next_steps": [
+      {
+        "text": "Recibirás por correo la documentación del fondo y el informe antes del viernes.",
+        "evidence": [
+          {
+            "quote": "Le enviaré por correo la documentación del fondo y el informe antes del viernes",
+            "segment_id": "s0010",
+            "start": 121.0,
+            "end": 140.0,
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "model": "fixture"
+  },
   "timings": [
     {
       "stage": "stt",
@@ -524,6 +687,16 @@
     },
     {
       "stage": "check",
+      "seconds": 0.0,
+      "fake": true
+    },
+    {
+      "stage": "conduct",
+      "seconds": 0.0,
+      "fake": true
+    },
+    {
+      "stage": "summary",
       "seconds": 0.0,
       "fake": true
     },

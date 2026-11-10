@@ -11,7 +11,7 @@ from dotenv import load_dotenv
 ROOT = Path(__file__).resolve().parent.parent
 load_dotenv(ROOT / ".env")
 
-STAGES = ("stt", "extract", "check", "report")
+STAGES = ("stt", "extract", "check", "conduct", "summary", "report")
 
 
 def _fake_stages(raw: str) -> frozenset[str]:

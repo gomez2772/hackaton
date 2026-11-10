@@ -4,7 +4,8 @@ Los modelos de datos están en `app/schemas.py`; este documento explica cómo se
 fija las **firmas públicas** de cada módulo. Un ejemplo completo y válido de cada objeto
 está en `fixtures/demo/*.json` (regenerable con `python tools/make_fixtures.py`).
 
-Versión del contrato: **1.0** (`SCHEMA_VERSION`). Cambios: PR con etiqueta `contrato`,
+Versión del contrato: **1.1** (`SCHEMA_VERSION`). La 1.1 añade el chequeo de conducta y el
+resumen para el cliente (campos opcionales: no rompe nada de la 1.0). Cambios: PR con etiqueta `contrato`,
 aprobado por D y por el dueño afectado, y entrada en `docs/DECISIONS.md`.
 
 ---
@@ -25,6 +26,8 @@ Extraction (citas con segment_id/start/end/verified)
    │  C · app.engine.checker.check()   ◄── ClientProfile, KIDs, límites, precios
    ▼
 list[Flag]
+   │  B · app.engine.conduct.check_conduct()   → ConductCheck   (v1.1, «¿fue correcta la llamada?»)
+   │  B · app.engine.summary.summarize()       → ClientSummary  (v1.1, resumen para el cliente)
    │  B · app.engine.report.draft()
    ▼
 SuitabilityReport
@@ -123,12 +126,28 @@ def draft(extraction: Extraction, flags: list[Flag], client: ClientProfile,
     template_mode=True con frases 'no_evidence'."""
 ```
 
+### B · Conducta y resumen (v1.1) — `app/engine/conduct.py`, `app/engine/summary.py`
+```python
+# conduct.py
+CHECKLIST: list[tuple[str, str, str, str]]   # (code, title, rule, what to look for)
+def check_conduct(transcript: Transcript, extraction: Extraction) -> ConductCheck
+    """Una ConductItem por código de CHECKLIST. Citas literales, validadas con citations.locate.
+    ok = hecho bien (o, si es una prohibición, no se ha visto); breach = conducta incorrecta con cita;
+    no_evidence = obligación de la que no se habló. Es una ayuda a cumplimiento, no asesoramiento jurídico."""
+
+# summary.py
+def summarize(transcript: Transcript, extraction: Extraction) -> ClientSummary
+    """Resumen en lenguaje llano (tuteo) para el cliente: ≤ 5 puntos y ≤ 3 próximos pasos,
+    cada uno con su cita verificada. Sin valoraciones ni datos que no se dijeron."""
+```
+Si el LLM falla, el pipeline deja `conduct`/`client_summary` a `None` y añade un warning.
+
 ### B · Orquestador — `app/pipeline.py`
 ```python
 def analyze(audio_path: Path | None, client: ClientProfile, *,
             settings: Settings | None = None,
             on_stage: Callable[[str], None] | None = None) -> AnalysisResult
-    """stt → extract → validate → check → report. Respeta ACTA_FAKE_STAGES.
+    """stt → extract → validate → check → conduct → summary → report. Respeta ACTA_FAKE_STAGES.
     on_stage('stt'|'extract'|...) para que la UI muestre progreso.
     Nunca lanza por un fallo de LLM: degrada a template_mode y añade warning."""
 ```
@@ -144,7 +163,7 @@ secciones, banderas con su cálculo, cobertura de evidencia, y para cada frase s
 marca de tiempo `[mm:ss]`. Las frases `no_evidence` se marcan visiblemente. Pie con la
 declaración de datos sintéticos y «borrador generado con IA, requiere revisión del asesor».
 
-### A · API REST — `app/api/main.py` (FastAPI)
+### A · API REST — `app/api/main.py` (FastAPI) — FUERA DEL ALCANCE de las 10 h (solo `/v1/health`; se cuenta en el pitch)
 
 Autenticación: cabecera `X-API-Key` (= `ACTA_API_KEY`). Documentación automática en `/docs`.
 

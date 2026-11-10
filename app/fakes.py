@@ -14,6 +14,8 @@ from app.config import ROOT
 from app.schemas import (
     AnalysisResult,
     ClientProfile,
+    ClientSummary,
+    ConductCheck,
     Extraction,
     Flag,
     FundKID,
@@ -63,6 +65,16 @@ def flags() -> list[Flag]:
 def report() -> SuitabilityReport:
     """Report with 100 % coverage."""
     return SuitabilityReport.model_validate(_raw("report"))
+
+
+def conduct() -> ConductCheck:
+    """Conduct check: return promise and risks = breach; costs and conflicts = no evidence."""
+    return ConductCheck.model_validate(_raw("conduct"))
+
+
+def client_summary() -> ClientSummary:
+    """Plain-language summary for the client."""
+    return ClientSummary.model_validate(_raw("client_summary"))
 
 
 def analysis_result() -> AnalysisResult:

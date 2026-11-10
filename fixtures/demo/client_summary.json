@@ -1,0 +1,56 @@
+{
+  "title": "Resumen de tu reunión",
+  "points": [
+    {
+      "text": "Nos contaste que te jubilas dentro de tres años.",
+      "evidence": [
+        {
+          "quote": "me jubilo en tres años",
+          "segment_id": "s0003",
+          "start": 24.0,
+          "end": 38.5,
+          "verified": true
+        }
+      ]
+    },
+    {
+      "text": "Necesitarás unos 20 000 € el año que viene para la entrada del piso de tu hija.",
+      "evidence": [
+        {
+          "quote": "Necesitaré unos veinte mil euros el año que viene",
+          "segment_id": "s0005",
+          "start": 46.0,
+          "end": 61.0,
+          "verified": true
+        }
+      ]
+    },
+    {
+      "text": "Tu asesor te propuso invertir 30 000 € en un fondo de renta variable de países emergentes, vendiendo parte de tu renta fija.",
+      "evidence": [
+        {
+          "quote": "invertir treinta mil euros en un fondo indexado de renta variable emergente",
+          "segment_id": "s0006",
+          "start": 61.0,
+          "end": 84.0,
+          "verified": true
+        }
+      ]
+    }
+  ],
+  "next_steps": [
+    {
+      "text": "Recibirás por correo la documentación del fondo y el informe antes del viernes.",
+      "evidence": [
+        {
+          "quote": "Le enviaré por correo la documentación del fondo y el informe antes del viernes",
+          "segment_id": "s0010",
+          "start": 121.0,
+          "end": 140.0,
+          "verified": true
+        }
+      ]
+    }
+  ],
+  "model": "fixture"
+}
