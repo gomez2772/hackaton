@@ -2,7 +2,9 @@
 
 Scenario (synthetic): Lucía, risk profile 3, retires in three years and needs 20 000 €
 next year for her daughter's flat. The advisor proposes 30 000 € in an emerging-markets
-equity fund. Expected flags: horizon RED, volatility RED, concentration AMBER.
+equity fund and says she "won't lose money". Expected flags: horizon RED, volatility RED,
+concentration AMBER. Expected conduct: return promise and risks not explained = breach;
+costs and conflicts of interest = no evidence.
 
 Run:  python tools/make_fixtures.py
 """
@@ -20,7 +22,11 @@ from app.schemas import (  # noqa: E402
     AnalysisResult,
     CircumstanceChange,
     ClientProfile,
+    ClientSummary,
     Commitment,
+    ConductCheck,
+    ConductItem,
+    ConductStatus,
     Evidence,
     Extraction,
     Flag,
@@ -37,6 +43,7 @@ from app.schemas import (  # noqa: E402
     StageTiming,
     StatedNeed,
     SuitabilityReport,
+    SummaryPoint,
     Transcript,
 )
 
@@ -51,7 +58,7 @@ TURNS = [  # (speaker, start, end, text)
     ("speaker_1", 46.0, 61.0, "Sí, lo de la entrada del piso de mi hija. Necesitaré unos veinte mil euros el año que viene."),
     ("speaker_0", 61.0, 84.0, "Tomo nota. Ahora mismo los mercados emergentes están baratos. Le propongo invertir treinta mil euros en un fondo indexado de renta variable emergente."),
     ("speaker_1", 84.0, 92.0, "Bueno, si usted lo ve bien... no entiendo mucho de esto."),
-    ("speaker_0", 92.0, 108.0, "Es un fondo con buen potencial a largo plazo. Lo financiaríamos vendiendo parte de la renta fija."),
+    ("speaker_0", 92.0, 108.0, "Es un fondo con buen potencial a largo plazo y con este no va a perder dinero. Lo financiaríamos vendiendo parte de la renta fija."),
     ("speaker_1", 108.0, 121.0, "Lo que no quiero es llevarme sustos, que con la jubilación tan cerca me pone nerviosa."),
     ("speaker_0", 121.0, 140.0, "Lo entiendo. Le enviaré por correo la documentación del fondo y el informe antes del viernes."),
     ("speaker_1", 140.0, 146.0, "De acuerdo, muchas gracias."),
@@ -192,14 +199,50 @@ def build() -> dict[str, object]:
         ],
     )
 
+    ok, breach, none = ConductStatus.OK, ConductStatus.BREACH, ConductStatus.NO_EVIDENCE
+    conduct = ConductCheck(model="fixture", items=[
+        ConductItem(code="recording_notice", title="Aviso de grabación", rule="MiFID II art. 16.7; Reg. Del. 2017/565 art. 76",
+                    status=ok, explanation="El asesor informa de la grabación y la clienta lo acepta.",
+                    evidence=[ev("esta reunión se graba con su consentimiento", 0), ev("Sí, sin problema.", 1)]),
+        ConductItem(code="circumstances_updated", title="Se actualiza la situación del cliente", rule="Reg. Del. 2017/565 art. 54",
+                    status=ok, explanation="El asesor pregunta por gastos importantes antes de recomendar.",
+                    evidence=[ev("¿Hay algún gasto importante antes de esa fecha?", 4)]),
+        ConductItem(code="return_promise", title="Sin promesas de rentabilidad", rule="MiFID II art. 24.3",
+                    status=breach, explanation="Se asegura que la clienta no perderá dinero en un fondo de renta variable.",
+                    evidence=[ev("con este no va a perder dinero", 8)]),
+        ConductItem(code="risks_explained", title="Riesgos explicados", rule="MiFID II art. 24.4",
+                    status=breach, explanation="La clienta dice no entender el producto y no se le explican sus riesgos.",
+                    evidence=[ev("no entiendo mucho de esto", 7), ev("Es un fondo con buen potencial a largo plazo", 8)]),
+        ConductItem(code="costs_disclosed", title="Costes informados", rule="MiFID II art. 24.4.c; Reg. Del. 2017/565 art. 50",
+                    status=none, explanation="No se mencionan los costes del fondo."),
+        ConductItem(code="commercial_pressure", title="Sin presión comercial", rule="MiFID II art. 24.1",
+                    status=ok, explanation="No se aprecia prisa ni presión para decidir."),
+        ConductItem(code="conflicts_of_interest", title="Conflictos de interés e incentivos", rule="MiFID II arts. 23 y 24.9",
+                    status=none, explanation="No se habla de incentivos ni de conflictos de interés."),
+    ])
+
+    summary = ClientSummary(title="Resumen de tu reunión", model="fixture", points=[
+        SummaryPoint(text="Nos contaste que te jubilas dentro de tres años.", evidence=[ev("me jubilo en tres años", 3)]),
+        SummaryPoint(text="Necesitarás unos 20 000 € el año que viene para la entrada del piso de tu hija.",
+                     evidence=[ev("Necesitaré unos veinte mil euros el año que viene", 5)]),
+        SummaryPoint(text="Tu asesor te propuso invertir 30 000 € en un fondo de renta variable de países emergentes, "
+                          "vendiendo parte de tu renta fija.",
+                     evidence=[ev("invertir treinta mil euros en un fondo indexado de renta variable emergente", 6)]),
+    ], next_steps=[
+        SummaryPoint(text="Recibirás por correo la documentación del fondo y el informe antes del viernes.",
+                     evidence=[ev("Le enviaré por correo la documentación del fondo y el informe antes del viernes", 10)]),
+    ])
+
     result = AnalysisResult(
         analysis_id="AN-DEMO-0001", client=client, transcript=transcript, extraction=extraction,
-        flags=flags, report=report,
-        timings=[StageTiming(stage=st, seconds=0.0, fake=True) for st in ("stt", "extract", "validate", "check", "report")],
+        flags=flags, report=report, conduct=conduct, client_summary=summary,
+        timings=[StageTiming(stage=st, seconds=0.0, fake=True)
+                 for st in ("stt", "extract", "validate", "check", "conduct", "summary", "report")],
     )
     return {
         "transcript": transcript, "client": client, "kids": kids, "risk_limits": limits,
-        "extraction": extraction, "flags": flags, "report": report, "analysis_result": result,
+        "extraction": extraction, "flags": flags, "report": report, "conduct": conduct,
+        "client_summary": summary, "analysis_result": result,
     }
 
 

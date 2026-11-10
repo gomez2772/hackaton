@@ -1,0 +1,107 @@
+{
+  "items": [
+    {
+      "code": "recording_notice",
+      "title": "Aviso de grabación",
+      "rule": "MiFID II art. 16.7; Reg. Del. 2017/565 art. 76",
+      "status": "ok",
+      "explanation": "El asesor informa de la grabación y la clienta lo acepta.",
+      "evidence": [
+        {
+          "quote": "esta reunión se graba con su consentimiento",
+          "segment_id": "s0000",
+          "start": 0.0,
+          "end": 9.5,
+          "verified": true
+        },
+        {
+          "quote": "Sí, sin problema.",
+          "segment_id": "s0001",
+          "start": 9.5,
+          "end": 13.0,
+          "verified": true
+        }
+      ]
+    },
+    {
+      "code": "circumstances_updated",
+      "title": "Se actualiza la situación del cliente",
+      "rule": "Reg. Del. 2017/565 art. 54",
+      "status": "ok",
+      "explanation": "El asesor pregunta por gastos importantes antes de recomendar.",
+      "evidence": [
+        {
+          "quote": "¿Hay algún gasto importante antes de esa fecha?",
+          "segment_id": "s0004",
+          "start": 38.5,
+          "end": 46.0,
+          "verified": true
+        }
+      ]
+    },
+    {
+      "code": "return_promise",
+      "title": "Sin promesas de rentabilidad",
+      "rule": "MiFID II art. 24.3",
+      "status": "breach",
+      "explanation": "Se asegura que la clienta no perderá dinero en un fondo de renta variable.",
+      "evidence": [
+        {
+          "quote": "con este no va a perder dinero",
+          "segment_id": "s0008",
+          "start": 92.0,
+          "end": 108.0,
+          "verified": true
+        }
+      ]
+    },
+    {
+      "code": "risks_explained",
+      "title": "Riesgos explicados",
+      "rule": "MiFID II art. 24.4",
+      "status": "breach",
+      "explanation": "La clienta dice no entender el producto y no se le explican sus riesgos.",
+      "evidence": [
+        {
+          "quote": "no entiendo mucho de esto",
+          "segment_id": "s0007",
+          "start": 84.0,
+          "end": 92.0,
+          "verified": true
+        },
+        {
+          "quote": "Es un fondo con buen potencial a largo plazo",
+          "segment_id": "s0008",
+          "start": 92.0,
+          "end": 108.0,
+          "verified": true
+        }
+      ]
+    },
+    {
+      "code": "costs_disclosed",
+      "title": "Costes informados",
+      "rule": "MiFID II art. 24.4.c; Reg. Del. 2017/565 art. 50",
+      "status": "no_evidence",
+      "explanation": "No se mencionan los costes del fondo.",
+      "evidence": []
+    },
+    {
+      "code": "commercial_pressure",
+      "title": "Sin presión comercial",
+      "rule": "MiFID II art. 24.1",
+      "status": "ok",
+      "explanation": "No se aprecia prisa ni presión para decidir.",
+      "evidence": []
+    },
+    {
+      "code": "conflicts_of_interest",
+      "title": "Conflictos de interés e incentivos",
+      "rule": "MiFID II arts. 23 y 24.9",
+      "status": "no_evidence",
+      "explanation": "No se habla de incentivos ni de conflictos de interés.",
+      "evidence": []
+    }
+  ],
+  "model": "fixture"
+}

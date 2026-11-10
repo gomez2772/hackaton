@@ -15,12 +15,16 @@
       "app/engine/citations.py",
       "app/engine/report.py",
       "app/engine/prompts/*",
+      "app/engine/conduct.py",
+      "app/engine/summary.py",
       "app/pipeline.py",
       "tests/unit/test_llm*.py",
       "tests/unit/test_extraction*.py",
       "tests/unit/test_citations*.py",
       "tests/unit/test_report*.py",
-      "tests/unit/test_pipeline*.py"
+      "tests/unit/test_pipeline*.py",
+      "tests/unit/test_conduct*.py",
+      "tests/unit/test_summary*.py"
     ],
     "C": [
       "app/audio/*",

@@ -12,7 +12,7 @@ from typing import Literal
 
 from pydantic import BaseModel, Field
 
-SCHEMA_VERSION = "1.0"
+SCHEMA_VERSION = "1.1"
 
 
 # --------------------------------------------------------------------------- audio
@@ -210,9 +210,47 @@ class SuitabilityReport(BaseModel):
     template_mode: bool = Field(default=False, description="True if the LLM failed and fields are empty")
 
 
+# --------------------------------------------------------------------------- conduct (v1.1)
+class ConductStatus(str, Enum):
+    OK = "ok"  # done correctly, or (for prohibitions) no breach found
+    BREACH = "breach"  # evidence of incorrect conduct
+    NO_EVIDENCE = "no_evidence"  # an obligation that was never addressed in the meeting
+
+
+class ConductItem(BaseModel):
+    """One conduct check of the call (MiFID II). A compliance aid, not legal advice."""
+
+    code: str = Field(description="Stable code from engine.conduct.CHECKLIST, e.g. 'return_promise'")
+    title: str = Field(description="Short Spanish label")
+    rule: str = Field(description="Normative reference, e.g. 'MiFID II art. 24.3'")
+    status: ConductStatus
+    explanation: str = Field(description="One Spanish sentence")
+    evidence: list[Evidence] = Field(default_factory=list)
+
+
+class ConductCheck(BaseModel):
+    items: list[ConductItem] = Field(default_factory=list)
+    model: str = ""
+
+
+# --------------------------------------------------------------------------- client summary (v1.1)
+class SummaryPoint(BaseModel):
+    text: str = Field(description="Plain Spanish, addressed to the client")
+    evidence: list[Evidence] = Field(default_factory=list)
+
+
+class ClientSummary(BaseModel):
+    """Plain-language recap the advisor can send to the client after the meeting."""
+
+    title: str
+    points: list[SummaryPoint] = Field(default_factory=list)
+    next_steps: list[SummaryPoint] = Field(default_factory=list)
+    model: str = ""
+
+
 # --------------------------------------------------------------------------- result
 class StageTiming(BaseModel):
-    stage: Literal["stt", "extract", "validate", "check", "report"]
+    stage: Literal["stt", "extract", "validate", "check", "conduct", "summary", "report"]
     seconds: float
     fake: bool = False
 
@@ -226,5 +264,7 @@ class AnalysisResult(BaseModel):
     extraction: Extraction
     flags: list[Flag]
     report: SuitabilityReport
+    conduct: ConductCheck | None = None  # v1.1
+    client_summary: ClientSummary | None = None  # v1.1
     timings: list[StageTiming] = Field(default_factory=list)
     warnings: list[str] = Field(default_factory=list)

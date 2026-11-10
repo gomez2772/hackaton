@@ -7,14 +7,19 @@ Lee este archivo entero al empezar cada sesión. Es la ley del repositorio.
 **Acta**: audio de una reunión asesor–cliente → transcripción diarizada (ElevenLabs Scribe)
 → extracción estructurada con citas literales (Claude) → comprobación cuantitativa de
 idoneidad contra el perfil (SRI, horizonte, concentración, liquidez, volatilidad)
-→ borrador del informe de idoneidad MiFID II con cada frase enlazada al segundo del audio.
+→ **chequeo de conducta** (¿fue correcta la llamada? aviso de grabación, promesas de rentabilidad,
+riesgos y costes explicados, presión comercial, conflictos de interés)
+→ borrador del informe de idoneidad MiFID II con cada frase enlazada al segundo del audio
+→ **resumen en lenguaje llano para el cliente**.
 
 Cliente objetivo: **GPTadvisor**, que lo integrará y revenderá a sus asesores. Por eso el
 motor (`app/engine`, `app/audio`, `app/pipeline.py`) es una librería sin dependencia de la UI,
 y se expone por una API REST (`app/api`). Streamlit es solo una de las caras.
 
-Entrega: **martes 10/11 por la noche**. Demo obligatoria: grabar una llamada en vivo y
-obtener el informe exportable (PDF, DOCX, Markdown, HTML y JSON).
+Tiempo: **10 horas por persona** (calendario en `docs/TASKS.md`). El flujo completo ya funciona
+en `main`; el trabajo es probarlo con APIs reales, cargar datos reales y pulir.
+Demo obligatoria: grabar (o subir) una llamada y obtener informe, banderas, conducta y resumen,
+exportables en PDF y Markdown (también DOCX, HTML y JSON).
 
 ## 1. Quién eres
 
@@ -23,10 +28,10 @@ antes de tocar nada** y pídele que lo añada a `.env`.
 
 | Rol | Persona | Responsabilidad |
 |-----|---------|-----------------|
-| **A** | UI, API y exportación | Streamlit, API REST para GPTadvisor, exportadores PDF/DOCX/MD/HTML/JSON |
-| **B** | Motor LLM | Cliente Claude, extracción con citas, validador de citas, informe, orquestador `pipeline.py` |
-| **C** | Audio, datos y cálculo | ElevenLabs (STT y TTS), KIDs, perfiles, precios, comprobador cuantitativo, reuniones sintéticas |
-| **D** | QA e integración | Tests de integración y evaluación, revisión y fusión de PRs, CI, README, guía de integración, demo |
+| **A** | UI y exportación | Streamlit, exportadores PDF/DOCX/MD/HTML/JSON (la API REST queda fuera de alcance) |
+| **B** | Motor LLM | Cliente Claude, extracción con citas, validador de citas, conducta, resumen para el cliente, informe, `pipeline.py` |
+| **C** | Audio, datos y cálculo | ElevenLabs (STT y TTS), clip de la demo, KIDs, perfiles, precios, comprobador cuantitativo |
+| **D** | QA, evaluación y demo | Arranque del equipo, fusión de PRs, CI, reuniones sintéticas y evaluación, README, guion de la demo y pitch |
 
 ## 2. Qué archivos puedes tocar
 
@@ -35,7 +40,7 @@ La fuente de verdad es `tools/ownership.json`. Un hook de Claude Code
 vuelve a comprobar en cada PR por el prefijo de la rama.
 
 - **A**: `app/ui/**`, `app/api/**`, `app/export/**`, `tests/unit/test_ui_*.py`, `tests/unit/test_api*.py`, `tests/unit/test_export*.py`
-- **B**: `app/engine/llm.py`, `app/engine/extraction.py`, `app/engine/citations.py`, `app/engine/report.py`, `app/engine/prompts/**`, `app/pipeline.py`, `tests/unit/test_llm*.py`, `tests/unit/test_extraction*.py`, `tests/unit/test_citations*.py`, `tests/unit/test_report*.py`, `tests/unit/test_pipeline*.py`
+- **B**: `app/engine/llm.py`, `app/engine/extraction.py`, `app/engine/citations.py`, `app/engine/conduct.py`, `app/engine/summary.py`, `app/engine/report.py`, `app/engine/prompts/**`, `app/pipeline.py`, `tests/unit/test_conduct*.py`, `tests/unit/test_summary*.py`, `tests/unit/test_llm*.py`, `tests/unit/test_extraction*.py`, `tests/unit/test_citations*.py`, `tests/unit/test_report*.py`, `tests/unit/test_pipeline*.py`
 - **C**: `app/audio/**`, `app/data/**`, `app/engine/checker.py`, `app/engine/risk.py`, `scripts/**`, `tests/unit/test_stt*.py`, `tests/unit/test_tts*.py`, `tests/unit/test_checker*.py`, `tests/unit/test_risk*.py`, `tests/unit/test_data*.py`
 - **D**: `tests/integration/**`, `tests/eval/**`, `tests/conftest.py`, `fixtures/**`, `app/fakes.py`, `tools/**`, `.github/**`, `.claude/**`, `README.md`, `docs/INTEGRATION.md`, `docs/EVAL.md`, `docs/DEMO.md`
 - **Compartidos con reglas** (cualquiera, ver §3): `docs/TASKS.md`, `docs/DECISIONS.md`, `requirements.txt`
@@ -74,7 +79,7 @@ Usa siempre los comandos de `.claude/commands/`; hacen el Git por ti:
 | `/empezar` | Sincroniza `main`, elige tu siguiente tarea (revisiones primero), crea la rama y la marca 🟡 |
 | `/sincronizar` | Trae `main` y rebasa tu rama; resuelve conflictos triviales en `TASKS.md` |
 | `/entregar` | Lint + tests + control de propiedad → commit → push → abre PR → marca 🔵 |
-| `/revisar` | (solo D) Revisa PRs abiertos, ejecuta tests, fusiona o crea revisiones al dueño |
+| `/revisar` | (solo D) Revisa PRs abiertos, ejecuta tests, fusiona o crea revisiones al dueño. Si la CI está en verde y D no lo ha revisado en 30 min, el dueño puede fusionar su propio PR |
 | `/bug` | (solo D) Registra un fallo como revisión en la sección del dueño |
 
 Reglas:
@@ -87,7 +92,7 @@ Reglas:
 ## 6. Modo simulado (para no bloquearse entre roles)
 
 `ACTA_FAKE_STAGES` en `.env` lista las etapas que devuelven el fixture en vez de llamar
-al código real: `stt,extract,check,report` (o `all`). Ejemplos:
+al código real: `stt,extract,check,conduct,summary,report` (o `all`). Ejemplos:
 - A trabaja la UI con `ACTA_FAKE_STAGES=all` desde el minuto uno.
 - B prueba la extracción real con `ACTA_FAKE_STAGES=stt` (transcripción del fixture, sin gastar ElevenLabs).
 - C prueba el comprobador con `ACTA_FAKE_STAGES=stt,extract`.
@@ -105,6 +110,11 @@ Mantén siempre funcionando `python -m app.pipeline --fake` (lo comprueba la CI)
   (`ACTA_LLM_CACHE=1`). Los tests que gastan API llevan `@pytest.mark.live` y no se ejecutan
   por defecto.
 - Registra el gasto aproximado en `docs/DECISIONS.md` si una tarea consume > 5 000 créditos.
+- **Claude Code también gasta**: si va facturado por API, es lo que más consume. Usad la
+  suscripción para Claude Code si la tenéis, poned límite de gasto a cada clave en la Console
+  y no ejecutéis en real etapas que no son vuestras (para eso está `ACTA_FAKE_STAGES`).
+- Los resultados reales buenos de una etapa se guardan en `.cache/` (llm/ y stt/). Para que los
+  demás los usen sin gastar, D puede promoverlos a `fixtures/`.
 
 ## 8. Calidad mínima para entregar
 
