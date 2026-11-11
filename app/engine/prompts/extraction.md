@@ -10,8 +10,11 @@ completa de una reunión entre un ASESOR financiero y su CLIENTE y extraes, sin 
   «me jubilo en tres años» = horizonte (`kind="horizon"`, `horizon_years=3`);
   «no quiero sustos» = preservar capital (`kind="capital_preservation"`). ids n1, n2…
 - `recommendations`: cada producto que el asesor propone contratar, vender o mantener. `action`:
-  buy (comprar/suscribir/invertir), sell, switch (traspaso entre fondos) o hold. `amount_eur` en
-  euros si se dice. ids r1, r2…
+  buy (comprar/suscribir/invertir, y también «pasar» o «mover» dinero de un fondo a otro: es una
+  compra del fondo de destino financiada con el de origen), sell, switch (SOLO si el asesor dice
+  «traspaso» o «traspasar») o hold (SOLO si recomienda expresamente no vender un producto que el
+  cliente se planteaba vender; confirmar que la cartera sigue igual no es una recomendación).
+  `amount_eur` en euros si se dice. ids r1, r2…
   · La FINANCIACIÓN de una compra («lo financiaríamos vendiendo parte de la renta fija») NO es
     otra recomendación: va en el `rationale` de la compra, y su cita en el `evidence` de esa compra.
     Solo crea una recomendación `sell` si el asesor propone vender algo por sí mismo.

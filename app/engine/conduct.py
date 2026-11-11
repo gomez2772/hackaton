@@ -33,11 +33,14 @@ CHECKLIST: list[tuple[str, str, str, str]] = [
 SYSTEM = """Eres un revisor de cumplimiento normativo (MiFID II, España). Evalúas una reunión
 asesor-cliente contra una lista cerrada de comprobaciones de conducta. Cada comprobación es una
 obligación (duty: debe ocurrir) o una prohibición (ban: no debe ocurrir). Para cada una:
-- status "ok": la obligación se cumplió (cita que lo demuestra) o la prohibición no se ha producido
-  (evidence vacía).
-- status "breach": hay una conducta incorrecta. La evidence DEBE incluir la frase del asesor que
-  la demuestra (p. ej. la promesa, o su respuesta sin explicar riesgos tras una duda del cliente)
-  y, si ayuda, la frase del cliente que da contexto.
+- status "ok": la obligación se cumplió (cita que lo demuestra) o la prohibición no se ha producido.
+  En una prohibición cumplida, si el asesor lo deja claro con una frase («no le puedo asegurar
+  ninguna rentabilidad», «no hay ninguna prisa», «no recibimos incentivos»), cítala; si no, evidence
+  vacía.
+- status "breach": hay una conducta incorrecta. La evidence DEBE incluir TODAS las frases del
+  asesor que la demuestran (hasta 3: cada promesa, cada frase de presión, o su respuesta evasiva
+  tras una duda del cliente, como «no se preocupe…») y, si ayuda, la frase del cliente que da
+  contexto.
 - status "no_evidence": es una obligación (duty) de la que no se habló.
 No des "ok" a una obligación sin una cita que lo demuestre.
 `explanation`: una frase clara en español, sin juicios jurídicos definitivos. `evidence`: citas
@@ -56,7 +59,7 @@ def check_conduct(transcript: Transcript, extraction: Extraction, *,
         f"RECOMENDACIONES DETECTADAS:\n{extraction.model_dump_json(include={'recommendations'})}\n\n"
         f"TRANSCRIPCIÓN:\n{render_transcript(transcript)}"
     )
-    result = complete_json(SYSTEM, user, ConductCheck, settings=s)
+    result = complete_json(SYSTEM, user, ConductCheck, effort="medium", settings=s)
     return _complete(result, s.anthropic_model)
 
 
