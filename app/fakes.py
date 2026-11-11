@@ -33,7 +33,7 @@ def _raw(name: str) -> object:
 
 
 def transcript() -> Transcript:
-    """Demo transcript (12 turns, 146 s)."""
+    """Demo transcript (12 turns, 76,6 s; times of the real clip app/data/audio/demo_clip.mp3)."""
     return Transcript.model_validate(_raw("transcript"))
 
 

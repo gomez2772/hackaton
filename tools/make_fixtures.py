@@ -49,19 +49,19 @@ from app.schemas import (  # noqa: E402
 
 OUT = ROOT / "fixtures" / "demo"
 
-TURNS = [  # (speaker, start, end, text)
-    ("speaker_0", 0.0, 9.5, "Buenos días, Lucía. Antes de empezar, le recuerdo que esta reunión se graba con su consentimiento."),
-    ("speaker_1", 9.5, 13.0, "Sí, sin problema."),
-    ("speaker_0", 13.0, 24.0, "Perfecto. Revisando su cartera, tiene unos cien mil euros, la mayor parte en renta variable global y una parte en renta fija."),
-    ("speaker_1", 24.0, 38.5, "Eso es. Le cuento una novedad: me jubilo en tres años, así que quiero ir pensando en tener el dinero disponible para entonces."),
-    ("speaker_0", 38.5, 46.0, "Entendido, tres años. ¿Hay algún gasto importante antes de esa fecha?"),
-    ("speaker_1", 46.0, 61.0, "Sí, lo de la entrada del piso de mi hija. Necesitaré unos veinte mil euros el año que viene."),
-    ("speaker_0", 61.0, 84.0, "Tomo nota. Ahora mismo los mercados emergentes están baratos. Le propongo invertir treinta mil euros en un fondo indexado de renta variable emergente."),
-    ("speaker_1", 84.0, 92.0, "Bueno, si usted lo ve bien... no entiendo mucho de esto."),
-    ("speaker_0", 92.0, 108.0, "Es un fondo con buen potencial a largo plazo y con este no va a perder dinero. Lo financiaríamos vendiendo parte de la renta fija."),
-    ("speaker_1", 108.0, 121.0, "Lo que no quiero es llevarme sustos, que con la jubilación tan cerca me pone nerviosa."),
-    ("speaker_0", 121.0, 140.0, "Lo entiendo. Le enviaré por correo la documentación del fondo y el informe antes del viernes."),
-    ("speaker_1", 140.0, 146.0, "De acuerdo, muchas gracias."),
+TURNS = [  # (speaker, start, end, text) — times from the real demo clip (C-2, Scribe)
+    ("speaker_0", 0.1, 6.18, "Buenos días, Lucía. Antes de empezar, le recuerdo que esta reunión se graba con su consentimiento."),
+    ("speaker_1", 7.24, 8.14, "Sí, sin problema."),
+    ("speaker_0", 9.18, 17.56, "Perfecto. Revisando su cartera, tiene unos cien mil euros, la mayor parte en renta variable global y una parte en renta fija."),
+    ("speaker_1", 18.6, 26.66, "Eso es. Le cuento una novedad: me jubilo en tres años, así que quiero ir pensando en tener el dinero disponible para entonces."),
+    ("speaker_0", 27.7, 31.66, "Entendido, tres años. ¿Hay algún gasto importante antes de esa fecha?"),
+    ("speaker_1", 32.78, 38.36, "Sí, lo de la entrada del piso de mi hija. Necesitaré unos veinte mil euros el año que viene."),
+    ("speaker_0", 39.38, 49.22, "Tomo nota. Ahora mismo los mercados emergentes están baratos. Le propongo invertir treinta mil euros en un fondo indexado de renta variable emergente."),
+    ("speaker_1", 50.22, 53.46, "Bueno, si usted lo ve bien... no entiendo mucho de esto."),
+    ("speaker_0", 54.48, 62.92, "Es un fondo con buen potencial a largo plazo y con este no va a perder dinero. Lo financiaríamos vendiendo parte de la renta fija."),
+    ("speaker_1", 63.94, 68.02, "Lo que no quiero es llevarme sustos, que con la jubilación tan cerca me pone nerviosa."),
+    ("speaker_0", 69.02, 74.04, "Lo entiendo. Le enviaré por correo la documentación del fondo y el informe antes del viernes."),
+    ("speaker_1", 75.02, 76.22, "De acuerdo, muchas gracias."),
 ]
 
 
@@ -76,7 +76,7 @@ def build() -> dict[str, object]:
                 start=a, end=b, text=t)
         for i, (sp, a, b, t) in enumerate(TURNS)
     ]
-    transcript = Transcript(audio_id="demo0000clip0001", duration_s=146.0, segments=segments,
+    transcript = Transcript(audio_id="dfdf840d54fbc7fb", duration_s=76.62, segments=segments,
                             stt_provider="fixture")
 
     client = ClientProfile(
