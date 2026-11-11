@@ -16,3 +16,5 @@ Formato: `- AAAA-MM-DD HH:MM · Rol · Decisión — Motivo`
 - 2026-11-10 19:45 · D · Volatilidad: covarianza de precios si existen; si no, aproximación por punto medio de la clase SRI de PRIIPs con correlación 0,8 entre activos de riesgo (se declara) — la demo no depende de internet ni de C-5
 - 2026-11-10 19:45 · D · Demo: en el guion, el asesor dice «con este no va a perder dinero» — para que la demo muestre un incumplimiento de conducta claro
 - 2026-11-10 19:45 · D · Si la CI está en verde y D no revisa en 30 min, el dueño fusiona su PR — con 10 h no puede haber cuellos de botella
+- 2026-11-11 09:20 · B · `extract`, `check_conduct` y `summarize` aceptan `settings=` opcional (keyword) y `analyze` se los pasa — antes el LLM leía siempre `.env` e ignoraba los settings del pipeline/tests; compatible con CONTRACT
+- 2026-11-11 09:20 · B · En la extracción, la financiación de una compra va en el `rationale` de esa recomendación, no como `sell` aparte — evita una recomendación fantasma en el informe y en el comprobador
