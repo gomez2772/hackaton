@@ -43,8 +43,14 @@
     "esta reunión se graba para cumplir la normativa",
     "necesitaré unos diez mil euros",
     "invertir cinco mil euros más en el fondo indexado global",
-    "puede caer un treinta por ciento en un mal año",
-    "gastos corrientes de cero coma dos por ciento al año",
+    [
+      "puede caer un treinta por ciento en un mal año",
+      "puede caer un 30 % en un mal año"
+    ],
+    [
+      "gastos corrientes de cero coma dos por ciento al año",
+      "gastos corrientes de 0,2 % al año"
+    ],
     "no recibimos nada de la gestora",
     "No le puedo garantizar ninguna rentabilidad"
   ],

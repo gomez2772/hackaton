@@ -99,16 +99,18 @@ públicas en [docs/CONTRACT.md](docs/CONTRACT.md).
 ## Resultados
 
 Evaluación sobre 5 reuniones sintéticas (2 con conflicto de idoneidad, 2 con fallos de conducta y
-1 correcta), con la transcripción del guion. Detalle en [docs/EVAL.md](docs/EVAL.md):
+1 correcta), **de extremo a extremo**: audio (TTS) → transcripción real de ElevenLabs Scribe →
+pipeline. Con la transcripción del guion las cifras son las mismas. Detalle en [docs/EVAL.md](docs/EVAL.md):
 
 | | Resultado |
 |---|---|
 | Recomendaciones detectadas e importes | 100 % |
 | Banderas con la severidad esperada | 18/18 |
 | Comprobaciones de conducta correctas | 35/35 |
-| Citas verificadas literalmente | 99/99 |
+| Citas verificadas literalmente | 98/98 |
 | Citas clave encontradas | 33/35 |
-| Tiempo de proceso por reunión (sin transcripción) | 13,2 s |
+| Tiempo de proceso por reunión (sin contar la transcripción) | 12,3 s |
+| Turnos con el hablante correcto en la transcripción | 89/89 |
 
 **Advertencia**: son 5 reuniones cortas, escritas por el equipo y evaluadas con Claude. Es una
 prueba de concepto, no una validación estadística. Los prompts se revisaron para que no copien
@@ -130,7 +132,6 @@ frases de las reuniones de evaluación (ver DECISIONS).
 ## Límites conocidos
 
 - Prueba de concepto: reuniones de 1–2 minutos y en español. Las reuniones largas y su troceo quedan fuera.
-- Evaluación solo en modo guion. Falta medir con la transcripción real de los audios de evaluación.
 - El origen del dinero de una compra va en texto. El cálculo de la cartera resultante supone que sale
   del fondo de menor SRI. El campo estructurado (`funding_isins`, contrato 1.2) queda para después.
 - La API REST para GPTadvisor solo expone `/v1/health`.
