@@ -26,6 +26,6 @@ def summarize(transcript: Transcript, extraction: Extraction, *,
         f"DATOS EXTRAÍDOS:\n{extraction.model_dump_json(exclude={'speaker_roles'})}\n\n"
         f"TRANSCRIPCIÓN:\n{render_transcript(transcript)}"
     )
-    out = complete_json(SYSTEM, user, ClientSummary, max_tokens=2000, settings=s)
+    out = complete_json(SYSTEM, user, ClientSummary, effort="low", settings=s)
     return out.model_copy(update={"model": s.anthropic_model,
                                   "points": out.points[:5], "next_steps": out.next_steps[:3]})

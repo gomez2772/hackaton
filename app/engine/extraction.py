@@ -39,7 +39,7 @@ def extract(transcript: Transcript, client: ClientProfile, *, settings: Settings
         f"CATÁLOGO DE FONDOS (para el ISIN de lo recomendado):\n{json.dumps(catalogue, ensure_ascii=False)}\n\n"
         f"TRANSCRIPCIÓN (una línea por turno: [id mm:ss hablante] texto):\n{render_transcript(transcript)}"
     )
-    out = complete_json(PROMPT.read_text(encoding="utf-8"), user, Extraction, settings=settings)
+    out = complete_json(PROMPT.read_text(encoding="utf-8"), user, Extraction, effort="medium", settings=settings)
     return resolve_isins(out, kids)
 
 

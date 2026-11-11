@@ -12,7 +12,7 @@ import json
 import logging
 import re
 import time
-from typing import Any, TypeVar
+from typing import Any, Literal, TypeVar
 
 from pydantic import BaseModel, ValidationError
 
@@ -20,21 +20,29 @@ from app.config import Settings, get_settings
 
 log = logging.getLogger(__name__)
 T = TypeVar("T", bound=BaseModel)
+Effort = Literal["low", "medium", "high", "xhigh", "max"]
+# The SDK refuses non-streaming requests whose max_tokens implies > 10 min; stay below that.
+MAX_TOKENS_CEILING = 21000
 
 
 class LLMError(RuntimeError):
     """The model did not return valid JSON for the schema after retries."""
 
 
-def complete_json(system: str, user: str, schema: type[T], *, max_tokens: int = 8000,
-                  settings: Settings | None = None, client: Any = None) -> T:
-    """Call Claude (settings.anthropic_model) and return a validated `schema` instance."""
+def complete_json(system: str, user: str, schema: type[T], *, max_tokens: int = 16000,
+                  effort: Effort = "medium", settings: Settings | None = None, client: Any = None) -> T:
+    """Call Claude (settings.anthropic_model) and return a validated `schema` instance.
+
+    Current models think before answering and thinking counts as output, so `max_tokens` must be
+    generous; `effort` controls how much it thinks (and costs). A response cut at max_tokens is
+    retried with a larger limit, never fed back as a JSON error.
+    """
     s = settings or get_settings()
     full_system = (
         f"{system}\n\nResponde SOLO con un objeto JSON válido que cumpla este JSON Schema, "
         f"sin texto antes ni después:\n{json.dumps(schema.model_json_schema(), ensure_ascii=False)}"
     )
-    key = hashlib.sha256(f"{s.anthropic_model}\n{full_system}\n{user}".encode()).hexdigest()[:24]
+    key = hashlib.sha256(f"{s.anthropic_model}\n{effort}\n{full_system}\n{user}".encode()).hexdigest()[:24]
     cache_file = s.cache_dir / "llm" / f"{key}.json"
     if s.llm_cache and cache_file.exists():
         try:
@@ -51,14 +59,23 @@ def complete_json(system: str, user: str, schema: type[T], *, max_tokens: int = 
 
     messages: list[dict[str, str]] = [{"role": "user", "content": user}]
     last_error: Exception | None = None
+    limit = min(max_tokens, MAX_TOKENS_CEILING)
     for attempt in range(3):  # first try + 2 retries feeding back the error
         try:
-            resp = client.messages.create(model=s.anthropic_model, max_tokens=max_tokens,
+            resp = client.messages.create(model=s.anthropic_model, max_tokens=limit,
+                                          output_config={"effort": effort},
                                           system=full_system, messages=messages)
         except Exception as e:  # network / API errors
             raise LLMError(f"Error llamando a Claude: {e}") from e
         _log_usage(s, resp)
-        text = "".join(getattr(b, "text", "") for b in resp.content)
+        text = "".join(b.text for b in resp.content if getattr(b, "type", "text") == "text")
+        if getattr(resp, "stop_reason", None) == "max_tokens":
+            last_error = LLMError(f"respuesta cortada al llegar a max_tokens={limit}")
+            log.warning("respuesta cortada en max_tokens=%d (intento %d)", limit, attempt + 1)
+            if limit >= MAX_TOKENS_CEILING:
+                break
+            limit = MAX_TOKENS_CEILING  # retry the same request with more room
+            continue
         try:
             out = schema.model_validate_json(_json_block(text))
         except (ValidationError, ValueError) as e:
