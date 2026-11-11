@@ -7,7 +7,7 @@ import io
 import pypdf
 import pytest
 
-from app.export import FOOTER, export, verdict
+from app.export import FOOTER, export, mmss, verdict
 from app.export.pdf import _esc
 
 
@@ -42,7 +42,8 @@ def test_pdf_contains_everything_the_contract_lists(demo_result):
         assert f.title in text and " ".join(f.explanation.split()) in text
     # coverage and citations with [mm:ss]
     assert "Cobertura de evidencia" in text and "100 %" in text
-    assert "[00:24] «me jubilo en tres años»" in text
+    ev = r.sections[0].sentences[0].evidence[0]  # time taken from the fixture: survives regenerating it (A-8)
+    assert f"[{mmss(ev.start)}] «{ev.quote}»" in text
     # conduct and client summary
     assert "NO CUMPLE" in text and "Resumen para el cliente" in text
     # disclaimer: synthetic data and AI draft
