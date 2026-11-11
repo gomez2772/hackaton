@@ -37,7 +37,6 @@ from app.schemas import (  # noqa: E402
     ClientProfile,
     Evidence,
     FundKID,
-    Holding,
     Recommendation,
     Segment,
     Transcript,
@@ -91,29 +90,12 @@ def script_transcript(m: Meeting) -> Transcript:
                       segments=segs, stt_provider="fixture")
 
 
-def remap_client(client: ClientProfile, demo: dict[str, FundKID], catalog: dict[str, FundKID]) -> ClientProfile:
-    """Swap demo ISINs for a real catalogue fund of the same asset class (once C-3 exists)."""
-    by_class: dict[str, FundKID] = {}
-    for k in catalog.values():
-        by_class.setdefault(k.asset_class, k)
-    holdings = []
-    for h in client.portfolio:
-        if h.isin in catalog or h.isin not in demo or demo[h.isin].asset_class not in by_class:
-            holdings.append(h)
-            continue
-        real = by_class[demo[h.isin].asset_class]
-        holdings.append(Holding(isin=real.isin, name=real.name, amount_eur=h.amount_eur))
-    return client.model_copy(update={"portfolio": holdings})
-
-
 def run_meeting(m: Meeting, source: str) -> AnalysisResult:
     """Run the real pipeline on one meeting."""
-    from app import fakes
-    from app.data.loaders import load_kids
     from app.pipeline import analyze
 
     settings = get_settings(fake_stages=frozenset())
-    client = remap_client(m.client, fakes.kids(), load_kids())
+    client = m.client  # real catalogue ISINs (C-3), see tests/eval/meetings/README.md
     if source == "audio":
         audio = AUDIO / m.id / "audio.mp3"
         if not audio.exists():

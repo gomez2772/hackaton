@@ -13,6 +13,7 @@ import run_eval as ev  # noqa: E402
 
 from app import fakes  # noqa: E402
 from app.config import STAGES, get_settings  # noqa: E402
+from app.data.loaders import load_kids, load_risk_limits  # noqa: E402
 from app.engine.checker import check  # noqa: E402
 from app.engine.citations import locate  # noqa: E402
 from app.schemas import (  # noqa: E402
@@ -27,7 +28,8 @@ from app.schemas import (  # noqa: E402
 )
 
 MEETINGS = {m.id: m for m in ev.load_meetings()}
-DEMO_ISIN = {k.asset_class: k.isin for k in fakes.kids().values()}
+KIDS = load_kids()
+REAL_ISIN = {"equity_global": "IE00B03HD191", "equity_em": "IE0031786696", "bond_short_eur": "LU0290356871"}
 
 
 def perfect(m: ev.Meeting) -> AnalysisResult:
@@ -35,7 +37,7 @@ def perfect(m: ev.Meeting) -> AnalysisResult:
     tr = ev.script_transcript(m)
     quotes = [locate(q, tr) for q in m.truth["key_quotes"]]
     t = m.truth
-    recs = [Recommendation(id=r["id"], product_name=r["asset_class"], isin=DEMO_ISIN[r["asset_class"]],
+    recs = [Recommendation(id=r["id"], product_name=r["asset_class"], isin=REAL_ISIN[r["asset_class"]],
                            action=r["action"], amount_eur=r["amount_eur"], rationale="", evidence=quotes[:1])
             for r in t["recommendations"]]
     needs = [StatedNeed(id=f"n{i}", kind=n["kind"], description="", amount_eur=n.get("amount_eur"),
@@ -43,7 +45,7 @@ def perfect(m: ev.Meeting) -> AnalysisResult:
              for i, n in enumerate(t["stated_needs"], 1)]
     x = Extraction(recommendations=recs, stated_needs=needs,
                    commitments=[], circumstance_changes=[])
-    flags = check(x, m.client, kids=fakes.kids(), limits=fakes.risk_limits())
+    flags = check(x, m.client, kids=KIDS, limits=load_risk_limits())
     conduct = ConductCheck(items=[ConductItem(code=c, title=c, rule="", status=ConductStatus(s), explanation="",
                                               evidence=quotes) for c, s in t["conduct"].items()])
     base = fakes.analysis_result()
@@ -64,7 +66,7 @@ def test_script_transcript_contains_every_key_quote():
 @pytest.mark.parametrize("mid", sorted(MEETINGS))
 def test_perfect_prediction_scores_100(mid):
     m = MEETINGS[mid]
-    s = ev.score(m, perfect(m), fakes.kids())
+    s = ev.score(m, perfect(m), KIDS)
     assert s["recommendations"]["recall"] == 1 and s["recommendations"]["precision"] == 1
     assert s["recommendations"]["amount_ok"] == len(m.truth["recommendations"])
     assert s["needs"]["fn"] == 0 and s["needs"]["fp"] == 0
@@ -78,7 +80,7 @@ def test_missed_breaches_and_wrong_flags_are_counted():
     r = perfect(m)
     lazy = ConductCheck(items=[it.model_copy(update={"status": ConductStatus.OK}) for it in r.conduct.items])
     red = [f.model_copy(update={"severity": type(f.severity)("red")}) for f in r.flags]
-    s = ev.score(m, r.model_copy(update={"conduct": lazy, "flags": red}), fakes.kids())
+    s = ev.score(m, r.model_copy(update={"conduct": lazy, "flags": red}), KIDS)
     assert s["conduct"]["breach"]["recall"] == 0 and s["conduct"]["breach"]["fn"] == 2
     assert s["flags"]["correct"] == 0 and s["flags"]["red"]["fp"] == s["flags"]["total"]
 
@@ -88,7 +90,7 @@ def test_acceptable_alternative_is_not_a_false_positive():
     r = perfect(m)
     items = [it.model_copy(update={"status": ConductStatus.BREACH}) if it.code == "risks_explained" else it
              for it in r.conduct.items]
-    s = ev.score(m, r.model_copy(update={"conduct": ConductCheck(items=items)}), fakes.kids())
+    s = ev.score(m, r.model_copy(update={"conduct": ConductCheck(items=items)}), KIDS)
     assert s["conduct"]["correct"] == 7 and s["conduct"]["breach"]["fp"] == 0
 
 
@@ -106,15 +108,6 @@ def test_unverified_quotes_do_not_count():
     assert s["key_found"] == 0 and s["verified"] == 0
 
 
-def test_remap_client_to_real_catalogue():
-    demo = fakes.kids()
-    real = {"IE00REAL0001": demo["DEMO00000001"].model_copy(update={"isin": "IE00REAL0001", "name": "Real global"})}
-    c = ev.remap_client(MEETINGS["m05_correcta"].client, demo, real)
-    isins = [h.isin for h in c.portfolio]
-    assert "IE00REAL0001" in isins and "DEMO00000002" in isins  # no real RF yet: kept
-    assert sum(h.amount_eur for h in c.portfolio) == 100000
-
-
 def test_run_meeting_script_mode_uses_the_script_transcript(monkeypatch):
     """Full pipeline wiring with LLM stages faked: STT must come from the script, not the demo fixture."""
     no_llm = frozenset(STAGES) - {"stt"}
@@ -127,6 +120,6 @@ def test_run_meeting_script_mode_uses_the_script_transcript(monkeypatch):
 
 def test_markdown_report_renders():
     m = MEETINGS["m05_correcta"]
-    scores = [ev.score(m, perfect(m), fakes.kids())]
+    scores = [ev.score(m, perfect(m), KIDS)]
     doc = ev.markdown(scores, ev.aggregate(scores), "script", "modelo-x")
     assert "# EVAL.md" in doc and "| m05_correcta |" in doc and "Ninguno." in doc and "sintéticas" in doc
