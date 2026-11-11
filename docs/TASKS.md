@@ -45,27 +45,46 @@ Ruta crítica de la demo: C-1 → C-2 → B-1 → B-2 → A-2 → D-5.
 
 ---
 
-## Tareas comunes (sin rol asignado) · añadidas el 11-nov
+## Tareas comunes: Verbatim · añadidas el 11-nov (respuestas del equipo a las 18:55)
 
-Las coge quien quede libre: márcala 🟡 con tu letra al empezar, p. ej. «🟡 (A) **T-1**».
-Toca solo los archivos listados. Los marcados como congelados van por PR con etiqueta `contrato`.
-Orden recomendado: T-1 → T-2 → T-3 → T-4 (T-4 es la única con riesgo técnico).
+**Decisiones del equipo**
+1. Se quitan **todas** las menciones a GPTadvisor: el producto es genérico, para entidades y asesores financieros.
+2. La app se llama **Verbatim**. Se quita el icono 📝 y se renombra el paquete interno (`pyproject.toml`). El repositorio **no** se renombra.
+3. Ejecutable = **lanzador con doble clic** para **Windows y Mac** (necesita Python 3.11+ instalado; no hay .exe).
+4. El lanzador abre la app en **modo real**: lee `ANTHROPIC_API_KEY` y `ELEVENLABS_API_KEY` de `.env` y, si faltan, las pide la primera vez.
+5. Las hacen los Claude de cada uno, cogiéndolas de este tablero.
 
-- ⬜ **T-1** · (0,5 h) · **Quitar «para GPTadvisor» de lo que se ve** — `app/ui/streamlit_app.py` (l. 140 subtítulo de la barra lateral, l. 175 cabecera «📝 Acta :gray[· para GPTadvisor]»), `app/export/pdf.py` (l. 140 cabecera de cada página; l. 324 y 364 metadatos `creator` del PDF), `tests/unit/test_ui_demo.py` (l. 29 comprueba ese texto), `docs/TASKS.md` (A-7) · — · `git grep -i "para GPTadvisor"` no devuelve nada en `app/` ni en `tests/`, la app y el PDF no muestran el texto y `pytest -q` en verde. **No** se tocan README, DEMO.md, CONTRACT.md ni CLAUDE.md salvo que el equipo lo decida (ver pregunta abierta 1)
-- ⬜ **T-2** · (1–1,5 h) · **Renombrar la app a «Verbatim»** (solo lo visible) — UI: `app/ui/streamlit_app.py` (l. 37 `page_title`, l. 139 título, l. 175 cabecera); PDF: `app/export/pdf.py` (l. 137 cabecera «Acta», l. 140 desplazamiento del texto, metadatos `author`/`creator`); otros exportadores: `app/export/__init__.py` (pie y títulos si nombran la app); CLI: `app/pipeline.py` (l. 140 descripción); docs: `README.md`, `docs/DEMO.md`, `docs/EVAL.md`, `CLAUDE.md` §0 y `pyproject.toml` (`name`, `description`; los dos últimos son congelados); tests: `tests/unit/test_ui_demo.py` · T-1 · `git grep -n -w "Acta"` solo devuelve los usos de la palabra común «acta» (p. ej. «acta presencial», art. 76.9) y lo que se decida conservar; tests en verde; el PDF dice «Verbatim». **Fuera de esta tarea**: variables `ACTA_*` de `.env` (las usan los 4 `.env` y la CI), nombre del repo, docstrings internos y `app/data/normativa/**` (ver avisos)
-- ⬜ **T-3** · (1 h) · **Barra lateral compacta, sin scroll y plegable** — `app/ui/streamlit_app.py` (bloque `with st.sidebar:`, l. 137-170, y el botón «↺ Nuevo análisis» de l. 240); si hace falta CSS, un `st.markdown(<style>)` en el mismo archivo · — · con la ventana a 1366 × 768 y 1920 × 1080 la barra lateral cabe entera sin scroll en las 3 opciones de audio (clip, grabar, subir con archivo cargado); se sigue pudiendo plegar con la flecha nativa de Streamlit; nada se pierde (los ajustes poco usados pueden ir en un desplegable). Ideas: título y subtítulo en una línea; «Audio» como control segmentado horizontal (`st.segmented_control` o `st.radio(horizontal=True)`); «Asesor» y «Redactar con IA» dentro de un `st.expander("Opciones")`; quitar el aviso de etapas simuladas en modo demo (ya se hace); reducir el relleno superior con CSS (`[data-testid="stSidebarContent"]`)
-- ⬜ **T-4** · (1 h lanzador · +2–3 h si es .exe autónomo) · **Ejecutable para abrir la app con doble clic** — nuevos: `launcher/` (o `scripts/launch_*.{bat,command,py}`), `.streamlit/config.toml` (sin la pantalla de correo de bienvenida de Streamlit, `headless`, navegador automático), `README.md` (cómo abrirla) · T-2 · en un ordenador del equipo, un doble clic abre la app en el navegador sin escribir comandos y con el modo elegido. Opción 1 (recomendada): lanzador `Verbatim.bat` (Windows) / `Verbatim.command` (Mac) que crea el entorno la primera vez, instala dependencias y ejecuta `streamlit run app/ui/streamlit_app.py`; necesita Python instalado. Opción 2: `.exe` autónomo con PyInstaller (no necesita Python, pero pesa unos 300–500 MB, Streamlit requiere `--collect-all streamlit` y un script de arranque propio, hay que compilar en el sistema destino y el antivirus puede bloquearlo). Ver pregunta abierta 2
-- ⬜ **T-5** · (0,5 h) · **Revisión final del cambio** — · T-1…T-4 · se repasa la demo entera con el nombre nuevo (UI, PDF, Markdown, resumen para el cliente) y se actualiza `docs/DEMO.md` si el guion dice «Acta»
+**Por qué cada tarea dice qué Claude puede hacerla**: el candado de `tools/guard_edit.py` solo deja editar los
+archivos del propio rol. No es un reparto: es quién *puede* tocar esos archivos. Los archivos nuevos del
+lanzador (`Verbatim.bat`, `Verbatim.command`, `launcher/**`, `.streamlit/**`) son **compartidos**: los puede crear cualquiera.
 
-**Avisos para T-1…T-5**
-- «acta» también es una palabra normal en la normativa («acta presencial», «la orden firmada solo sirve como acta»): **nada de buscar y reemplazar a ciegas**.
-- `app/data/normativa/**` entra en el prompt de la conducta: si se cambia su texto, la caché del LLM deja de valer y la siguiente ejecución vuelve a gastar tokens (y conviene repetir la evaluación). Recomendación: no tocarla ahora.
-- Las cifras de `docs/EVAL.md` y del README no cambian con el nombre.
+**Orden y conflictos**: T-1 y T-5 tocan el mismo archivo (`streamlit_app.py`): T-5 después de fusionar T-1.
+El resto puede ir en paralelo. Al coger una tarea, márcala 🟡 con tu letra, p. ej. «🟡 (A) **T-1**».
 
-### Preguntas abiertas (contestar aquí antes de cerrar la tarea)
-1. T-1: ¿solo se quita «para GPTadvisor» de la app y del PDF, o se borra toda mención a GPTadvisor (README, DEMO.md, pitch, API)?
-2. T-4: ¿el ejecutable tiene que funcionar en un ordenador sin Python (por ejemplo, el del jurado) o basta con que lo abráis vosotros? ¿Windows, Mac o ambos? ¿Con qué modo arranca: simulado (sin claves) o real (lee las claves de `.env`)?
-3. T-2: ¿se cambia también el icono 📝, el nombre del paquete en `pyproject.toml` y el nombre del repositorio?
+**Cuidado al renombrar**: «acta» también es una palabra normal en la normativa («acta presencial», art. 76.9): **nada de
+buscar y reemplazar a ciegas**. No se tocan `app/data/normativa/**` (entra en el prompt de conducta: cambiarla invalida la caché
+y vuelve a gastar tokens), las variables `ACTA_*` de `.env` ni las líneas antiguas de `DECISIONS.md` (solo se añade).
+
+- ⬜ **T-1** · (1 h) · Claude de **A** · **Pantalla, PDF y API: Verbatim, sin GPTadvisor y sin 📝** — `app/ui/streamlit_app.py` (l. 37 `page_title="Verbatim"` y sin `page_icon="📝"`; l. 139 título «Verbatim»; l. 140 subtítulo sin «· para GPTadvisor»; l. 175 cabecera «#### Verbatim» sin icono ni GPTadvisor), `app/export/pdf.py` (l. 137 «Verbatim»; l. 140 quitar «· para GPTadvisor» y su desplazamiento; l. 324 y 364 `author`/`creator="Verbatim"`), `app/export/__init__.py` (si el pie o los títulos nombran la app), `app/api/__init__.py` y `app/api/main.py` (docstrings: «API REST de Verbatim para integrarlo en plataformas de asesoramiento»), `tests/unit/test_ui_demo.py` (l. 29) · — · `git grep -n -i "gptadvisor\|📝" -- app tests` vacío; la app y el PDF dicen «Verbatim»; `pytest -q` en verde
+- ⬜ **T-2** · (10 min) · Claude de **B** · **CLI con el nombre nuevo** — `app/pipeline.py` (l. 140 `description="Ejecuta el pipeline de Verbatim"`) · — · `python -m app.pipeline --help` dice Verbatim
+- ⬜ **T-3** · (1 h) · Claude de **D** · **Documentación: Verbatim y genérico** — `README.md` (título; l. 4-5 «Pensado para integrarse en GPTadvisor» → «pensado para entidades y asesores financieros»; l. 83 y 137), `docs/DEMO.md` (pitch: el cliente pasa a ser «entidades financieras y asesores independientes»; quitar los `[PENDIENTE]` que piden datos a GPTadvisor y reescribir l. 101-117 y 127), `docs/EVAL.md`, `tests/eval/run_eval.py` (l. 1, 310, 392, 399: «Evaluación de Verbatim»), `tests/eval/meetings/README.md`, `docs/TASKS.md` (A-7 y la línea de «Fuera del alcance») · — · `git grep -n -i "gptadvisor" -- README.md docs/DEMO.md docs/EVAL.md tests` vacío y `git grep -n -w "Acta"` solo devuelve la palabra común; el guion de la demo se lee igual de bien sin cliente concreto
+- ⬜ **T-4** · (30 min) · Claude de **D en modo contrato** (`ACTA_CONTRACT_EDIT=1`, PR con etiqueta `contrato`) · **Archivos congelados** — `pyproject.toml` (`name = "verbatim"`, `description` con Verbatim), `CLAUDE.md` (título y §0: «Verbatim», quitar el párrafo «Cliente objetivo: GPTadvisor» → «producto genérico para entidades y asesores; el motor es una librería sin dependencia de la UI»), `docs/CONTRACT.md` (l. 36 y 177), `app/__init__.py` (docstring; es compartido) · — · `git grep -n -i "gptadvisor"` solo queda en líneas antiguas de `DECISIONS.md`; `pytest -q` en verde
+- ⬜ **T-5** · (1 h) · Claude de **A** · **Barra lateral compacta, sin scroll y plegable** — `app/ui/streamlit_app.py` (bloque `with st.sidebar:`, l. 137-170, y «↺ Nuevo análisis», l. 240) · T-1 · con la ventana a 1366 × 768 y 1920 × 1080 la barra lateral cabe sin scroll con las 3 opciones de audio (también «Subir» con un archivo cargado); se sigue plegando con la flecha nativa de Streamlit; no se pierde ninguna opción. Ideas: título en una línea y subtítulo corto; «Audio» como `st.segmented_control`; «Asesor» y «Redactar con IA» dentro de `st.expander("Opciones")`; menos relleno con CSS en `[data-testid="stSidebarContent"]`
+- ⬜ **T-6** · (1,5–2 h) · Claude de **cualquiera** · **Lanzador con doble clic para Windows y Mac, en modo real** — nuevos: `Verbatim.bat` (Windows), `Verbatim.command` (Mac), `launcher/launch.py` (lógica común), `launcher/README.md`, `.streamlit/config.toml`; `README.md` solo una sección «Abrir con doble clic» (si no eres D, pídeselo en sus Peticiones) · T-1 (para que se abra ya como Verbatim) · ver especificación debajo
+- ⬜ **T-7** · (45 min) · Claude de **D** · **Prueba final** — · T-1…T-6 · en un Windows y un Mac **con solo Python instalado** (sin `.venv` ni `.env`): doble clic → pide las 2 claves → instala → abre Verbatim en el navegador en modo real → analiza el clip de la demo sin gastar créditos de ElevenLabs → descarga el PDF. Se actualiza `docs/DEMO.md` con cómo abrirla
+
+**Especificación de T-6 (lanzador)**
+- `Verbatim.bat`: `cd /d "%~dp0"`; busca `py -3` y si no, `python`; si no hay Python ≥ 3.11 muestra «Instala Python 3.11 o superior desde python.org (marca "Add Python to PATH")» y hace `pause`; ejecuta `launcher\launch.py`; si algo falla, `pause` para que la ventana no se cierre sin que se lea el error.
+- `Verbatim.command`: `cd "$(dirname "$0")"`; usa `python3`; mismo mensaje si falta; ejecuta `launcher/launch.py`. **Debe guardarse con permiso de ejecución**: `git update-index --chmod=+x Verbatim.command`. En `launcher/README.md`, explicar que en Mac la primera vez hay que hacer clic derecho → Abrir (Gatekeeper) y, si el archivo llegó sin permiso, `chmod +x Verbatim.command`.
+- `launcher/launch.py` (solo librería estándar), en este orden:
+  1. Crea `.venv` si no existe e instala `requirements.txt`; guarda el hash de `requirements.txt` en `.venv/.req-hash` y solo reinstala si cambia (las siguientes veces arranca en segundos).
+  2. Si no existe `.env`, lo copia de `.env.example`. Si `ANTHROPIC_API_KEY` o `ELEVENLABS_API_KEY` están vacías, las pide por la terminal y las escribe en `.env` (solo en ese ordenador).
+  3. **Modo real**: arranca Streamlit con `ACTA_FAKE_STAGES=` vacío en el entorno, aunque `.env` diga otra cosa.
+  4. Copia `app/data/audio/demo_clip.transcript.json` a `.cache/stt/dfdf840d54fbc7fb.json` si no existe, para que el clip de la demo no gaste ElevenLabs.
+  5. Lanza `.venv` → `python -m streamlit run app/ui/streamlit_app.py` y abre `http://localhost:8501` en el navegador (con `webbrowser`) cuando el puerto responda.
+- `.streamlit/config.toml`: `[browser] gatherUsageStats = false` y `[server] headless = true` (evita la pregunta del correo de Streamlit en la primera ejecución; el navegador lo abre el lanzador).
+- **Claves (seguridad)**: nunca en el repositorio, ni en un zip, ni en el código. `.env` ya está en `.gitignore`. Para el jurado: claves **propias para la demo con límite de gasto** (Console de Anthropic y ElevenLabs), que se teclean al abrir por primera vez o se entregan aparte, y que se revocan después del hackathon.
+- Test: `tests/unit/test_launcher.py` no puede crearse sin dueño; basta con probar a mano en T-7.
 
 ## A · UI y exportación (10 h)
 
