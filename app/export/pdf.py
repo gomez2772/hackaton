@@ -25,7 +25,7 @@ from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.pdfgen import canvas as rl_canvas
 from reportlab.platypus import KeepTogether, Paragraph, SimpleDocTemplate, Spacer, Table, TableStyle
 
-from app.export import CONDUCT, FOOTER, SEV_TXT, mmss, verdict
+from app.export import CONDUCT, CONFIRMED_LABEL, FOOTER, SEV_TXT, is_confirmed, mmss, sentence_text, verdict
 from app.schemas import AnalysisResult, Evidence
 
 # ------------------------------------------------------------------ palette and fonts
@@ -241,7 +241,11 @@ def _sections(result: AnalysisResult, s: dict[str, ParagraphStyle]) -> list:
         for sent in sec.sentences:
             chips = " ".join(f"<font color='#{_hex(SEV_COLOR[flag_sev[f]])}'><b>[{SEV_TXT[flag_sev[f]]}]</b></font>"
                              for f in sent.flag_ids if f in flag_sev)
-            text = _esc(sent.text) + (f"  {chips}" if chips else "")
+            text = _esc(sentence_text(sent)) + (f"  {chips}" if chips else "")
+            if is_confirmed(sent):
+                block.append(Paragraph(text, s["body"]))
+                block.append(Paragraph(f"{CONFIRMED_LABEL.capitalize()}.", s["cite"]))
+                continue
             if sent.status == "no_evidence":
                 block.append(Paragraph(f"<font color='#{_hex(SEV_COLOR['amber'])}'><b>SIN EVIDENCIA · el asesor "
                                        f"debe confirmarlo.</b></font> {text}", s["missing"]))
