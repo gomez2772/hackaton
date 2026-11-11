@@ -30,6 +30,15 @@ def num(x: float, dec: int = 1) -> str:
     return f"{x:.{dec}f}".replace(".", ",")
 
 
+def years(x: float) -> str:
+    """5 -> '5 años' ; 1 -> '1 año' ; 0.08 -> '1 mes' ; 1.5 -> '1,5 años'."""
+    if x < 1:
+        m = max(1, round(x * 12))
+        return f"{m} mes" if m == 1 else f"{m} meses"
+    n = num(x, 0) if float(x).is_integer() else num(x)
+    return f"{n} año" if x == 1 else f"{n} años"
+
+
 def check(extraction: Extraction, client: ClientProfile,
           kids: dict[str, FundKID] | None = None,
           limits: dict[int, RiskProfileLimits] | None = None) -> list[Flag]:
@@ -75,15 +84,15 @@ def check(extraction: Extraction, client: ClientProfile,
 
         if horizon is None:
             add(type=FlagType.HORIZON, severity=AMBER, recommendation_id=rid, title="Horizonte no declarado",
-                explanation=f"El KID recomienda {num(kid.recommended_holding_years, 0)} años y no consta el horizonte del cliente",
+                explanation=f"El KID recomienda {years(kid.recommended_holding_years)} y no consta el horizonte del cliente",
                 value=None, limit=kid.recommended_holding_years, unit="años")
         else:
             k = kid.recommended_holding_years
             sev = RED if k > horizon else AMBER if k == horizon else GREEN
             add(type=FlagType.HORIZON, severity=sev, recommendation_id=rid,
                 title="Horizonte insuficiente" if sev == RED else "Horizonte justo" if sev == AMBER else "Horizonte adecuado",
-                explanation=f"Horizonte recomendado KID {num(k, 0)} años {'>' if k > horizon else '≤'} "
-                            f"{num(horizon, 0)} años declarados",
+                explanation=f"Horizonte recomendado KID {years(k)} {'>' if k > horizon else '≤'} "
+                            f"{years(horizon)} declarados",
                 value=horizon, limit=k, unit="años", evidence=hz_ev)
 
         w = 100 * pf.get(kid.isin, 0.0) / total

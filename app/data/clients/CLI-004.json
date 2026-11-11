@@ -1,0 +1,7 @@
+{"client_id": "CLI-004", "name": "Miguel Torres (sintético)", "risk_profile": 4, "horizon_years": 10.0, "liquidity_need_eur": 15000.0,
+ "portfolio": [
+  {"isin": "IE00B03HD191", "name": "Vanguard Global Stock Index Fund EUR Acc", "amount_eur": 100000.0},
+  {"isin": "IE0007987708", "name": "Vanguard European Stock Index Fund EUR Acc", "amount_eur": 50000.0},
+  {"isin": "IE00B18GC888", "name": "Vanguard Global Bond Index Fund EUR Hedged Acc", "amount_eur": 60000.0},
+  {"isin": "LU0290358497", "name": "Xtrackers II EUR Overnight Rate Swap UCITS ETF 1C", "amount_eur": 40000.0}
+ ], "synthetic": true}

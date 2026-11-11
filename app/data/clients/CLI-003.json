@@ -1,0 +1,5 @@
+{"client_id": "CLI-003", "name": "Andrés Gómez (sintético)", "risk_profile": 1, "horizon_years": 2.0, "liquidity_need_eur": 10000.0,
+ "portfolio": [
+  {"isin": "LU0290358497", "name": "Xtrackers II EUR Overnight Rate Swap UCITS ETF 1C", "amount_eur": 50000.0},
+  {"isin": "LU1650487413", "name": "Amundi Euro Government Bond 1-3Y UCITS ETF Acc", "amount_eur": 30000.0}
+ ], "synthetic": true}
