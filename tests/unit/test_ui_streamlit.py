@@ -72,7 +72,8 @@ def test_unknown_speakers_get_readable_names(demo_result):
 def test_jump_button_moves_player_and_reuses_exports(demo_result):
     at = render(demo_result)
     cached = dict(at.session_state["exports"])
-    assert {fmt for _, fmt in cached} == {"pdf", "docx", "md", "html", "json"}
+    assert {fmt for _, kind, fmt in cached if kind == "report"} == {"pdf", "docx", "md", "html", "json"}
+    assert {fmt for _, kind, fmt in cached if kind == "summary"} == {"pdf", "md"}
     at.tabs[1].button[0].click().run()
     assert at.session_state["t"] > 0
     assert at.session_state["exports"] == cached

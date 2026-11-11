@@ -99,9 +99,8 @@ def _cites(evs: list[Evidence]) -> str:
 
 
 # ------------------------------------------------------------------ page chrome (header, footer, page n of N)
-def _canvas_class(result: AnalysisResult) -> type[rl_canvas.Canvas]:
-    right = f"Informe de idoneidad · {result.report.client_name} · {result.analysis_id}"
-    footer_lines = [s.strip() + "." for s in FOOTER.rstrip(".").split(". ")]
+def _canvas_class(right: str, footer: str = FOOTER) -> type[rl_canvas.Canvas]:
+    footer_lines = [s.strip() + "." for s in footer.rstrip(".").split(". ")]
 
     class NumberedCanvas(rl_canvas.Canvas):
         def __init__(self, *args, **kwargs) -> None:
@@ -303,5 +302,46 @@ def render(result: AnalysisResult) -> bytes:
     doc = SimpleDocTemplate(buf, pagesize=A4, leftMargin=MARGIN, rightMargin=MARGIN, topMargin=22 * mm,
                             bottomMargin=22 * mm, title=f"Informe de idoneidad · {result.report.client_name}",
                             author="Acta", subject=f"Análisis {result.analysis_id}", creator="Acta · para GPTadvisor")
-    doc.build(story, canvasmaker=_canvas_class(result))
+    right = f"Informe de idoneidad · {result.report.client_name} · {result.analysis_id}"
+    doc.build(story, canvasmaker=_canvas_class(right))
+    return buf.getvalue()
+
+
+def render_summary(result: AnalysisResult) -> bytes:
+    """One-page letter with the plain-language summary, to send to the client (A-5)."""
+    from app.export import SUMMARY_NOTE, SUMMARY_SYNTHETIC, first_name, human_date
+
+    cs = result.client_summary
+    if cs is None:
+        raise ValueError("este análisis no tiene resumen para el cliente")
+    _register_fonts()
+    s = _styles()
+    r = result.report
+    big = ParagraphStyle("big", s["body"], fontSize=11, leading=16, spaceAfter=4)
+    name = first_name(r.client_name)
+    story: list = [
+        Paragraph(_esc(cs.title), s["title"]),
+        Paragraph(f"Reunión del {_esc(human_date(r.meeting_date))} · tu asesor: {_esc(r.advisor_name)}", s["subtitle"]),
+        Spacer(1, 6),
+        Paragraph(f"Hola, {_esc(name)}:" if name else "Hola:", big),
+        Spacer(1, 4),
+    ]
+    story += [Paragraph(f"•  {_esc(p.text)}", big) for p in cs.points]
+    if cs.next_steps:
+        steps = [Paragraph("<b>Próximos pasos</b>", ParagraphStyle("ns", big, textColor=NAVY))]
+        steps += [Paragraph(f"{i}.  {_esc(p.text)}", big) for i, p in enumerate(cs.next_steps, start=1)]
+        box = Table([[steps]], colWidths=[WIDTH])
+        box.setStyle(TableStyle([("BACKGROUND", (0, 0), (-1, -1), SOFT), ("LINEBEFORE", (0, 0), (0, -1), 3, NAVY),
+                                 ("LEFTPADDING", (0, 0), (-1, -1), 12), ("TOPPADDING", (0, 0), (-1, -1), 8),
+                                 ("BOTTOMPADDING", (0, 0), (-1, -1), 8)]))
+        story += [Spacer(1, 12), box]
+    story += [Spacer(1, 16), Paragraph(_esc(SUMMARY_NOTE), big), Spacer(1, 10),
+              Paragraph("Un saludo,", big), Paragraph(f"<b>{_esc(r.advisor_name)}</b>", big)]
+
+    buf = io.BytesIO()
+    doc = SimpleDocTemplate(buf, pagesize=A4, leftMargin=MARGIN, rightMargin=MARGIN, topMargin=22 * mm,
+                            bottomMargin=22 * mm, title=cs.title, author=r.advisor_name,
+                            subject=f"Resumen para {r.client_name}", creator="Acta · para GPTadvisor")
+    footer = f"Resumen preparado por tu asesor con ayuda de IA a partir de la grabación. {SUMMARY_SYNTHETIC}"
+    doc.build(story, canvasmaker=_canvas_class(f"Resumen de tu reunión · {human_date(r.meeting_date)}", footer))
     return buf.getvalue()
