@@ -83,17 +83,18 @@ y lo calculado; lo que no tiene cita se marca y lo confirma el asesor.
 
 ### 4.4 Métricas (40 s)
 Evaluación sobre 5 reuniones sintéticas (2 con conflicto de idoneidad, 2 con fallos de conducta y
-1 correcta), modo guion (sin transcripción):
+1 correcta), de extremo a extremo (audio → transcripción real → pipeline):
 - Recomendaciones detectadas: **100 %**, con importes correctos 5/5.
 - Banderas de idoneidad con la severidad correcta: **18/18**.
 - Comprobaciones de conducta correctas: **35/35**; incumplimientos detectados sin falsos positivos.
-- Citas verificadas literalmente en la transcripción: **99/99**; citas clave encontradas 33/35.
-- Unos **13 s** de procesamiento por reunión (sin contar la transcripción).
+- Citas verificadas literalmente en la transcripción: **98/98**; citas clave encontradas 33/35.
+- Transcripción: **89/89 turnos** con el hablante correcto.
+- Unos **12 s** de procesamiento por reunión (sin contar la transcripción).
 - Con voces reales del equipo (no TTS): grabación de 28 s con una interrupción a propósito,
   **8/8 turnos** bien atribuidos.
 
 Decirlo así, con la advertencia: **«Son 5 reuniones sintéticas: es una prueba de concepto, no una
-validación estadística.»** Cifras ya medidas con los prompts limpios (B-5). `[PENDIENTE: añadir las de --source audio si C sube las transcripciones.]`
+validación estadística.»** Cifras medidas con los prompts limpios (B-5); con la transcripción del guion salen iguales.
 
 ### 4.5 Negocio (40 s)
 - **Cliente**: GPTadvisor, que lo integra en su producto y lo ofrece a sus asesores. Por eso el
@@ -134,7 +135,8 @@ validación estadística.»** Cifras ya medidas con los prompts limpios (B-5). `
 | 8 fondos con KID real (5 Vanguard, 2 Xtrackers, 1 Amundi) | DECISIONS 2026-11-11 16:30 · C |
 | 3 años de precios diarios, covarianza | DECISIONS 2026-11-11 16:45 · C (C-5) |
 | Voces reales: 28 s, 8/8 turnos | DECISIONS 2026-11-11 16:45 · C (C-1) |
-| 100 % recomendaciones, 18/18 banderas, 35/35 conducta, 99/99 citas, 33/35 citas clave, 13,2 s | `docs/EVAL.md` (D-4, modo guion, prompts de B-5) |
+| 100 % recomendaciones, 18/18 banderas, 35/35 conducta, 98/98 citas, 33/35 citas clave, 12,3 s | `docs/EVAL.md` (D-4, con audio, prompts de B-5) |
+| 89/89 turnos con el hablante correcto | Nota de C en TASKS (sección D) y PR #37 (C-10) |
 | ≈ 0,06 USD por análisis del clip | DECISIONS 2026-11-11 17:17 · D (Hito 1) |
 | ≈ 0,05 USD extra con la base normativa | DECISIONS 2026-11-11 20:15 · B |
 | ≈ 330 créditos por minuto de transcripción | CLAUDE.md §7 |
