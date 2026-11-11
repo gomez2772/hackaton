@@ -92,6 +92,15 @@ def build_env(keys: dict[str, str]) -> str:
     return "\n".join(lines) + "\n"
 
 
+def fixed_line_endings(name: str, data: bytes) -> bytes:
+    """LF for the Mac launcher (bash breaks on CRLF) and CRLF for the .bat, whatever git checked out."""
+    if name.endswith(".command"):
+        return data.replace(b"\r\n", b"\n")
+    if name.endswith(".bat"):
+        return data.replace(b"\r\n", b"\n").replace(b"\n", b"\r\n")
+    return data
+
+
 def zip_info(arcname: str, mode: int = 0o100644) -> zipfile.ZipInfo:
     """ZipInfo with Unix permissions so macOS keeps the executable bit."""
     info = zipfile.ZipInfo(arcname, date_time=time.localtime()[:6])
@@ -109,7 +118,7 @@ def build_zip(files: list[str], env_text: str) -> None:
         zf.writestr(zip_info("LEEME_JURADO.txt"), README_JURY.read_bytes())
         for name in files:
             mode = 0o100755 if name in EXECUTABLE else 0o100644
-            zf.writestr(zip_info(f"{TOP}/{name}", mode), (ROOT / name).read_bytes())
+            zf.writestr(zip_info(f"{TOP}/{name}", mode), fixed_line_endings(name, (ROOT / name).read_bytes()))
         zf.writestr(zip_info(f"{TOP}/.env", 0o100600), env_text.encode("utf-8"))
         zf.writestr(zip_info(f"{TOP}/{DEMO_CACHE}"), (ROOT / DEMO_TRANSCRIPT).read_bytes())
     tmp.replace(OUT)
