@@ -54,7 +54,7 @@ Ruta crítica de la demo: C-1 → C-2 → B-1 → B-2 → A-2 → D-5.
 - ⬜ **A-3** · ② (1 h) · Transcripción: resaltar fragmentos citados por tipo (circunstancia, necesidad, recomendación, compromiso, conducta) con leyenda — `app/ui/**` · A-1 · se ven resaltadas las citas del fixture
 - ✅ **A-4** · ② (1,5 h) · PDF del informe con aspecto profesional (cabecera, banderas en color, citas con `[mm:ss]`, pie de datos sintéticos) — `app/export/**`, `tests/unit/test_export*.py` · A-0 · PDF del fixture revisado por el equipo
 - ✅ **A-5** · ② (1 h) · Resumen para el cliente: botón «copiar» y descarga en PDF/MD para enviárselo — `app/ui/**`, `app/export/**` · A-0 · se descarga el resumen del fixture
-- ⬜ **A-6** · ② (1,5 h) · (opcional) Editar o confirmar frases `no_evidence` antes de exportar — `app/ui/**` · A-4 · la frase editada sale en la exportación
+- 🟡 **A-6** · ② (1,5 h) · (opcional) Editar o confirmar frases `no_evidence` antes de exportar — `app/ui/**` · A-4 · la frase editada sale en la exportación
 - ⬜ **A-7** · F (1 h) · Modo demo: cliente y clip precargados, marca «Acta · para GPTadvisor», sin pantallas vacías — `app/ui/**` · A-2 · D ensaya sin tocar código
 - ⬜ **A-8** · F (1,5 h) · Colchón + ensayos con D
 
