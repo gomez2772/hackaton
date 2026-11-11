@@ -69,7 +69,7 @@ def request_run() -> None:
 
 def reset_analysis() -> None:
     """Back to the landing page (between rehearsals)."""
-    for k in ("result", "audio", "exports", "edits"):
+    for k in ("result", "audio", "exports", "edits", "t_end", "autoplay"):
         st.session_state.pop(k, None)
     st.session_state.t = 0
 
@@ -98,9 +98,16 @@ def exported(res: AnalysisResult, fmt: str, kind: str = "report") -> bytes:
     return cache[key]
 
 
-def jump(second: float | None) -> None:
+AUDIO_MIME = {".mp3": "audio/mpeg", ".wav": "audio/wav", ".m4a": "audio/mp4", ".webm": "audio/webm", ".ogg": "audio/ogg"}
+
+
+def jump(second: float | None, end: float | None = None) -> None:
+    """▶: play the cited turn right away and stop at its end (DEMO.md 0:55 «se oye "me jubilo en tres años"»)."""
     # on_click runs BEFORE the rerun, so the player is drawn at the right second
-    st.session_state.t = int(second or 0)
+    start = int(second or 0)
+    st.session_state.t = start
+    st.session_state.t_end = int(end) + 1 if end is not None and end > start else None
+    st.session_state.autoplay = True
 
 
 def confirm_sentence(analysis_id: str, sentence_id: str, widget_key: str) -> None:
@@ -124,7 +131,7 @@ def evidence_buttons(evs: list[Evidence], key: str) -> None:
         return
     cols = st.columns(min(len(ok), 4) + 3)
     for i, e in enumerate(ok[:4]):
-        cols[i].button(f"▶ {mmss(e.start)}", key=f"{key}-{i}", help=f"«{e.quote}»", on_click=jump, args=(e.start,))
+        cols[i].button(f"▶ {mmss(e.start)}", key=f"{key}-{i}", help=f"«{e.quote}»", on_click=jump, args=(e.start, e.end))
 
 
 # ------------------------------------------------------------------ sidebar
@@ -198,8 +205,12 @@ if go:
         bar.progress(1.0, text=f"{len(STAGE_ORDER)}/{len(STAGE_ORDER)} etapas")
         board.markdown(prog.markdown(STAGE_LABEL))
         total = sum(t.seconds for t in result.timings)
-        status.update(label=f"Análisis completado en {secs(total)}", state="complete", expanded=False)
+        simulated = all(t.fake for t in result.timings)
+        # demo: keep the 7 ✅ on screen while the presenter talks (DEMO.md 0:15); no simulated «0,1 s»
+        status.update(label="Análisis completado" if demo and simulated else f"Análisis completado en {secs(total)}",
+                      state="complete", expanded=demo)
     st.session_state.result, st.session_state.audio, st.session_state.t = result, audio_path, 0
+    st.session_state.pop("t_end", None)
     st.session_state.polish_requested = polish
     st.session_state.exports = {}
 
@@ -236,8 +247,11 @@ for w in res.warnings:
 # ------------------------------------------------------------------ player + headline
 audio_path = st.session_state.get("audio")
 if audio_path and Path(audio_path).exists():
-    st.audio(str(audio_path), start_time=st.session_state.t)
-    st.caption(f"Reproduciendo desde {mmss(st.session_state.t)} · pulsa ▶ en cualquier frase para saltar a ese momento")
+    t_end = st.session_state.get("t_end")
+    st.audio(str(audio_path), format=AUDIO_MIME.get(Path(audio_path).suffix.lower(), "audio/wav"),
+             start_time=st.session_state.t, end_time=t_end, autoplay=st.session_state.pop("autoplay", False))
+    st.caption(f"Reproduciendo desde {mmss(st.session_state.t)}" + (f" hasta {mmss(t_end)}" if t_end else "")
+               + " · pulsa ▶ en cualquier frase para oír ese momento")
 elif demo:
     st.caption("Audio no disponible en esta demostración: cada ▶ indica el minuto exacto de la cita.")
 else:
@@ -333,7 +347,7 @@ with t_tr:
     for seg in res.transcript.segments:
         who = speaker_label(seg.role.value, seg.speaker_id)
         a, b = st.columns([1, 9])
-        a.button(mmss(seg.start), key=f"seg-{seg.id}", on_click=jump, args=(seg.start,))
+        a.button(mmss(seg.start), key=f"seg-{seg.id}", on_click=jump, args=(seg.start, seg.end))
         b.markdown(f"{who}: " + render_segment(seg.text, cited.get(seg.id, [])))
 
 with t_sum:
