@@ -21,6 +21,10 @@ from app.schemas import (
 
 log = logging.getLogger(__name__)
 RED, AMBER, GREEN = Severity.RED, Severity.AMBER, Severity.GREEN
+# Output order: most severe first; ties in this type order (same as fixtures/demo/flags.json)
+SEVERITY_ORDER = {RED: 0, AMBER: 1, GREEN: 2}
+TYPE_ORDER = {FlagType.HORIZON: 0, FlagType.VOLATILITY: 1, FlagType.CONCENTRATION: 2,
+              FlagType.SRI: 3, FlagType.LIQUIDITY: 4}
 
 
 def num(x: float, dec: int = 1) -> str:
@@ -123,7 +127,13 @@ def check(extraction: Extraction, client: ClientProfile,
                         f"{'>' if vol > lim.max_volatility_pct else '≤'} {num(lim.max_volatility_pct)} % límite del "
                         f"perfil {client.risk_profile} ({lim.label}) · {method}",
             value=round(vol, 1), limit=lim.max_volatility_pct, unit="%")
-    return flags
+    return order_flags(flags)
+
+
+def order_flags(flags: list[Flag]) -> list[Flag]:
+    """Sort by severity, then type, then original position, and renumber ids f1, f2..."""
+    ranked = sorted(enumerate(flags), key=lambda p: (SEVERITY_ORDER[p[1].severity], TYPE_ORDER[p[1].type], p[0]))
+    return [f.model_copy(update={"id": f"f{i}"}) for i, (_, f) in enumerate(ranked, start=1)]
 
 
 def _volatility(weights: dict[str, float], kids: dict[str, FundKID]) -> tuple[float, str]:
