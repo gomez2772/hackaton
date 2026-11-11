@@ -11,7 +11,7 @@ import html
 import io
 from typing import Literal
 
-from app.schemas import AnalysisResult, Evidence
+from app.schemas import AnalysisResult, Evidence, ReportSentence
 
 Format = Literal["pdf", "docx", "md", "html", "json"]
 
@@ -41,6 +41,39 @@ def _cites(evs: list[Evidence]) -> str:
     return " ".join(f"[{mmss(e.start)} «{e.quote}»]" for e in ok)
 
 
+# ------------------------------------------------------------------ advisor confirmation of no_evidence sentences (A-6)
+# The frozen schema has no "confirmed" status, and CLAUDE.md §9 forbids presenting a sentence without a quote as
+# supported. So a confirmed sentence keeps status="no_evidence" and carries this suffix; exporters show it as
+# «sin cita en el audio · confirmado por el asesor» instead of «SIN EVIDENCIA: confirmar».
+CONFIRMED_SUFFIX = " ⟦confirmado por el asesor⟧"
+CONFIRMED_LABEL = "sin cita en el audio · confirmado por el asesor"
+
+
+def is_confirmed(sentence: ReportSentence) -> bool:
+    """True if the advisor confirmed this no_evidence sentence (see `apply_edits`)."""
+    return sentence.status == "no_evidence" and sentence.text.endswith(CONFIRMED_SUFFIX)
+
+
+def sentence_text(sentence: ReportSentence) -> str:
+    """Sentence text as shown to people (without the confirmation suffix)."""
+    return sentence.text.removesuffix(CONFIRMED_SUFFIX)
+
+
+def apply_edits(result: AnalysisResult, edits: dict[str, str]) -> AnalysisResult:
+    """Copy of `result` where each no_evidence sentence id in `edits` takes the advisor's text, marked as confirmed.
+
+    Sentences with evidence are never changed: they stay tied to the quote in the audio."""
+    if not edits:
+        return result
+    out = result.model_copy(deep=True)
+    for sec in out.report.sections:
+        for s in sec.sentences:
+            text = edits.get(s.id, "").strip()
+            if s.status == "no_evidence" and text:
+                s.text = text + CONFIRMED_SUFFIX
+    return out
+
+
 def blocks(result: AnalysisResult) -> list[Block]:
     """Format-neutral content of the export."""
     r = result.report
@@ -52,9 +85,11 @@ def blocks(result: AnalysisResult) -> list[Block]:
     for sec in r.sections:
         out.append(("h2", sec.title))
         for s in sec.sentences:
-            mark = " [SIN EVIDENCIA: confirmar]" if s.status == "no_evidence" else ""
+            mark = ""
+            if s.status == "no_evidence":
+                mark = f" [{CONFIRMED_LABEL}]" if is_confirmed(s) else " [SIN EVIDENCIA: confirmar]"
             cites = _cites(s.evidence) if s.kind == "claim" else ""
-            out.append(("li", f"{s.text}{mark}" + (f" {cites}" if cites else "")))
+            out.append(("li", f"{sentence_text(s)}{mark}" + (f" {cites}" if cites else "")))
     out.append(("h2", "Banderas del comprobador"))
     for f in result.flags:
         out.append(("li", f"{SEV_TXT[f.severity.value]} · {f.title}: {f.explanation}"))

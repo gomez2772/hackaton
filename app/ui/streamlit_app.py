@@ -16,7 +16,17 @@ import streamlit as st  # noqa: E402
 from app import fakes  # noqa: E402
 from app.config import get_settings  # noqa: E402
 from app.data.loaders import list_clients  # noqa: E402
-from app.export import FORMATS, SUMMARY_FORMATS, export, export_summary, summary_text  # noqa: E402
+from app.export import (  # noqa: E402
+    CONFIRMED_LABEL,
+    FORMATS,
+    SUMMARY_FORMATS,
+    apply_edits,
+    export,
+    export_summary,
+    is_confirmed,
+    sentence_text,
+    summary_text,
+)
 from app.pipeline import analyze  # noqa: E402
 from app.schemas import AnalysisResult, Evidence  # noqa: E402
 from app.ui.progress import STAGE_ORDER, StageProgress, save_audio, secs  # noqa: E402
@@ -60,6 +70,20 @@ def exported(res: AnalysisResult, fmt: str, kind: str = "report") -> bytes:
 def jump(second: float | None) -> None:
     # on_click runs BEFORE the rerun, so the player is drawn at the right second
     st.session_state.t = int(second or 0)
+
+
+def confirm_sentence(analysis_id: str, sentence_id: str, widget_key: str) -> None:
+    """Advisor confirms (possibly edited) a sentence without evidence; exports are rebuilt."""
+    text = str(st.session_state.get(widget_key, "")).strip()
+    if text:
+        st.session_state.setdefault("edits", {}).setdefault(analysis_id, {})[sentence_id] = text
+        st.session_state.exports = {}
+
+
+def undo_confirmation(analysis_id: str, sentence_id: str) -> None:
+    """Back to «sin evidencia, pendiente de confirmar»."""
+    st.session_state.get("edits", {}).get(analysis_id, {}).pop(sentence_id, None)
+    st.session_state.exports = {}
 
 
 def evidence_buttons(evs: list[Evidence], key: str) -> None:
@@ -168,17 +192,38 @@ t_rep, t_flags, t_cond, t_tr, t_sum = st.tabs(
 with t_rep:
     if res.report.template_mode:
         st.warning("Modo plantilla: la extracción con IA falló; completa el informe a mano.")
-    for si, sec in enumerate(res.report.sections):
+    # A-6: the advisor can edit and confirm sentences without evidence; exports use the confirmed text
+    view = apply_edits(res, st.session_state.get("edits", {}).get(res.analysis_id, {}))
+    pending = 0
+    for si, sec in enumerate(view.report.sections):
         st.subheader(sec.title)
         for pi, s in enumerate(sec.sentences):
             flag_marks = " ".join(SEV[f.severity.value] for f in res.flags if f.id in s.flag_ids)
-            st.markdown(f"{s.text} {flag_marks}")
-            if s.kind == "claim":
-                evidence_buttons(s.evidence, f"rep-{si}-{pi}")
+            if is_confirmed(s):
+                st.markdown(f"{sentence_text(s)} {flag_marks}")
+                a, b = st.columns([5, 1])
+                a.caption(f"✔ {CONFIRMED_LABEL.capitalize()}")
+                b.button("Deshacer", key=f"undo-{s.id}", on_click=undo_confirmation, args=(res.analysis_id, s.id))
+            elif s.status == "no_evidence":
+                pending += 1
+                box = st.container(border=True)
+                box.markdown(":orange[**Sin evidencia en el audio.**] Revisa la frase, corrígela si hace falta y "
+                             "confírmala; saldrá marcada como confirmada por el asesor.")
+                key = f"edit-{res.analysis_id}-{s.id}"
+                box.text_area("Frase del informe", value=s.text, key=key, label_visibility="collapsed")
+                box.button("✔ Confirmar frase", key=f"ok-{s.id}", on_click=confirm_sentence,
+                           args=(res.analysis_id, s.id, key))
+            else:
+                st.markdown(f"{s.text} {flag_marks}")
+                if s.kind == "claim":
+                    evidence_buttons(s.evidence, f"rep-{si}-{pi}")
     st.divider()
+    if pending:
+        st.warning(f"{pending} frase(s) sin evidencia pendientes de confirmar: si exportas ahora, saldrán marcadas "
+                   "«SIN EVIDENCIA».")
     cols = st.columns(len(FORMATS))
     for col, fmt in zip(cols, FORMATS, strict=True):
-        col.download_button(fmt.upper(), exported(res, fmt), file_name=f"informe_{res.analysis_id}.{fmt}",
+        col.download_button(fmt.upper(), exported(view, fmt), file_name=f"informe_{res.analysis_id}.{fmt}",
                             mime=FORMATS[fmt], use_container_width=True)
 
 with t_flags:
