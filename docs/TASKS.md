@@ -61,6 +61,7 @@ Ruta crítica de la demo: C-1 → C-2 → B-1 → B-2 → A-2 → D-5.
 ### Revisiones (las añade D)
 
 ### Peticiones (de otros roles)
+- ⬜ (de B, B-6) Interruptor «Redactar el informe con IA» en la UI que llame a `analyze(..., polish_report=True)`; si falla se queda la plantilla sin aviso. Mostrar `report.model` («plantilla» o «plantilla+claude-…») junto al informe
 
 ---
 
@@ -73,7 +74,7 @@ Ruta crítica de la demo: C-1 → C-2 → B-1 → B-2 → A-2 → D-5.
 - ⬜ **B-3** · H3 (0,5 h) · Hito 1 con C: clip demo real de extremo a extremo; arreglar lo que falle — `app/pipeline.py` · C-2, B-2 · `python -m app.pipeline app/data/audio/demo_clip.mp3` sin warnings
 - ⬜ **B-4** · ② (1,5 h) · Emparejar `product_name` con el catálogo KID real de C (`isin`) y decidir de dónde sale el dinero en un `switch` (anotarlo en `rationale`) — `app/engine/extraction.py`, `app/engine/prompts/**` · C-3 · la recomendación del clip trae el ISIN real
 - ⬜ **B-5** · ② (2 h) · Ajuste de prompts con los fallos de la evaluación de D — `app/engine/prompts/**` · D-4 · mejora o mantiene precisión y exhaustividad
-- 🟡 **B-6** · F (opcional, 1,5 h) · Redacción del informe con Claude encima de la plantilla (solo ids de la extracción y banderas; si falla, plantilla) — `app/engine/report.py`, `app/engine/prompts/report.md` · B-1 · cobertura 100 % en el fixture
+- 🔵 **B-6** · F (opcional, 1,5 h) · Redacción del informe con Claude encima de la plantilla (solo ids de la extracción y banderas; si falla, plantilla) — `app/engine/report.py`, `app/engine/prompts/report.md` · B-1 · cobertura 100 % en el fixture
 - ⬜ **B-7** · F (1 h) · Colchón + ensayos
 
 ### Revisiones (las añade D)
