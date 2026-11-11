@@ -18,3 +18,4 @@ Formato: `- AAAA-MM-DD HH:MM · Rol · Decisión — Motivo`
 - 2026-11-10 19:45 · D · Si la CI está en verde y D no revisa en 30 min, el dueño fusiona su PR — con 10 h no puede haber cuellos de botella
 - 2026-11-11 09:20 · B · `extract`, `check_conduct` y `summarize` aceptan `settings=` opcional (keyword) y `analyze` se los pasa — antes el LLM leía siempre `.env` e ignoraba los settings del pipeline/tests; compatible con CONTRACT
 - 2026-11-11 09:20 · B · En la extracción, la financiación de una compra va en el `rationale` de esa recomendación, no como `sell` aparte — evita una recomendación fantasma en el informe y en el comprobador
+- 2026-11-11 09:45 · B · Referencias de `CHECKLIST` precisadas: circunstancias = MiFID II 25.2 + Reg. Del. 2017/565 arts. 54-55; promesas = 24.3 + art. 44; riesgos = 24.4 + art. 48 — base normativa más exacta para el pitch; códigos sin cambios
