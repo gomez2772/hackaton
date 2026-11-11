@@ -137,7 +137,7 @@ def _apply_roles(transcript: Transcript, extraction: Extraction) -> Transcript:
 
 
 def main() -> None:
-    ap = argparse.ArgumentParser(description="Ejecuta el pipeline de Acta")
+    ap = argparse.ArgumentParser(description="Ejecuta el pipeline de Verbatim")
     ap.add_argument("audio", nargs="?", type=Path)
     ap.add_argument("--client", default="CLI-DEMO-001")
     ap.add_argument("--fake", action="store_true", help="todas las etapas simuladas")
