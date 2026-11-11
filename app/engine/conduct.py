@@ -16,11 +16,11 @@ from app.schemas import ConductCheck, ConductItem, ConductStatus, Extraction, Tr
 CHECKLIST: list[tuple[str, str, str, str]] = [
     ("recording_notice", "Aviso de grabación", "MiFID II art. 16.7; Reg. Del. 2017/565 art. 76",
      "duty: se informa al cliente de que la conversación se graba."),
-    ("circumstances_updated", "Se actualiza la situación del cliente", "Reg. Del. 2017/565 art. 54",
+    ("circumstances_updated", "Se actualiza la situación del cliente", "MiFID II art. 25.2; Reg. Del. 2017/565 arts. 54 y 55",
      "duty: el asesor pregunta por cambios de situación, objetivos, horizonte o liquidez antes de recomendar."),
-    ("return_promise", "Sin promesas de rentabilidad", "MiFID II art. 24.3",
+    ("return_promise", "Sin promesas de rentabilidad", "MiFID II art. 24.3; Reg. Del. 2017/565 art. 44",
      "ban: presentar rentabilidades como seguras o asegurar que no se perderá dinero en un producto con riesgo."),
-    ("risks_explained", "Riesgos explicados", "MiFID II art. 24.4",
+    ("risks_explained", "Riesgos explicados", "MiFID II art. 24.4; Reg. Del. 2017/565 art. 48",
      "duty: se explican los riesgos del producto recomendado; es breach si el cliente dice no entender y no se le explica."),
     ("costs_disclosed", "Costes informados", "MiFID II art. 24.4.c; Reg. Del. 2017/565 art. 50",
      "duty: se mencionan los costes o comisiones del producto."),
@@ -31,13 +31,19 @@ CHECKLIST: list[tuple[str, str, str, str]] = [
 ]
 
 SYSTEM = """Eres un revisor de cumplimiento normativo (MiFID II, España). Evalúas una reunión
-asesor-cliente contra una lista cerrada de comprobaciones de conducta. Para cada una:
-- status "ok": se hizo correctamente; o, si es una prohibición (ban), no se ha producido.
-- status "breach": hay una cita que demuestra una conducta incorrecta.
+asesor-cliente contra una lista cerrada de comprobaciones de conducta. Cada comprobación es una
+obligación (duty: debe ocurrir) o una prohibición (ban: no debe ocurrir). Para cada una:
+- status "ok": la obligación se cumplió (cita que lo demuestra) o la prohibición no se ha producido
+  (evidence vacía).
+- status "breach": hay una conducta incorrecta. La evidence DEBE incluir la frase del asesor que
+  la demuestra (p. ej. la promesa, o su respuesta sin explicar riesgos tras una duda del cliente)
+  y, si ayuda, la frase del cliente que da contexto.
 - status "no_evidence": es una obligación (duty) de la que no se habló.
-`explanation`: una frase clara en español. `evidence`: citas COPIADAS LITERALMENTE de la
-transcripción (4–15 palabras, sin cambiar nada); vacía si no hay. Deja segment_id, start y end a
-null y verified a false. Mantén code, title y rule exactamente como se dan y no añadas otros ítems."""
+No des "ok" a una obligación sin una cita que lo demuestre.
+`explanation`: una frase clara en español, sin juicios jurídicos definitivos. `evidence`: citas
+COPIADAS LITERALMENTE de la transcripción, de un solo turno, entre 4 y 15 palabras, sin cambiar
+nada (ni números, ni signos). Deja segment_id, start y end a null y verified a false. Mantén
+code, title y rule exactamente como se dan, un ítem por code, y no añadas otros."""
 
 
 def check_conduct(transcript: Transcript, extraction: Extraction, *,

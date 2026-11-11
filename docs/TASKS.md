@@ -51,11 +51,11 @@ Ruta crítica de la demo: C-1 → C-2 → B-1 → B-2 → A-2 → D-5.
 - ✅ **A-0** · Base: UI con 5 pestañas (transcripción, banderas, conducta, informe, resumen), salto al audio, exportación en 5 formatos — `app/ui/**`, `app/export/**` · — · ya en `main`
 - ✅ **A-1** · ① (1 h) · Repasar la UI con `ACTA_FAKE_STAGES=all` y con el clip real; arreglar lo que se vea mal — `app/ui/**` · — · demo completa sin errores en pantalla
 - ✅ **A-2** · ① (1,5 h) · Grabar en el navegador (`st.audio_input`) además de subir; progreso por etapa con `on_stage`; tiempos por etapa visibles — `app/ui/**` · A-1 · grabar 10 s y ver pasar las 7 etapas
-- ⬜ **A-3** · ② (1 h) · Transcripción: resaltar fragmentos citados por tipo (circunstancia, necesidad, recomendación, compromiso, conducta) con leyenda — `app/ui/**` · A-1 · se ven resaltadas las citas del fixture
+- ✅ **A-3** · ② (1 h) · Transcripción: resaltar fragmentos citados por tipo (circunstancia, necesidad, recomendación, compromiso, conducta) con leyenda — `app/ui/**` · A-1 · se ven resaltadas las citas del fixture
 - ✅ **A-4** · ② (1,5 h) · PDF del informe con aspecto profesional (cabecera, banderas en color, citas con `[mm:ss]`, pie de datos sintéticos) — `app/export/**`, `tests/unit/test_export*.py` · A-0 · PDF del fixture revisado por el equipo
 - ✅ **A-5** · ② (1 h) · Resumen para el cliente: botón «copiar» y descarga en PDF/MD para enviárselo — `app/ui/**`, `app/export/**` · A-0 · se descarga el resumen del fixture
 - ⬜ **A-6** · ② (1,5 h) · (opcional) Editar o confirmar frases `no_evidence` antes de exportar — `app/ui/**` · A-4 · la frase editada sale en la exportación
-- ⬜ **A-7** · F (1 h) · Modo demo: cliente y clip precargados, marca «Acta · para GPTadvisor», sin pantallas vacías — `app/ui/**` · A-2 · D ensaya sin tocar código
+- ✅ **A-7** · F (1 h) · Modo demo: cliente y clip precargados, marca «Acta · para GPTadvisor», sin pantallas vacías — `app/ui/**` · A-2 · D ensaya sin tocar código
 - ⬜ **A-8** · F (1,5 h) · Colchón + ensayos con D
 
 ### Revisiones (las añade D)
@@ -69,7 +69,7 @@ Ruta crítica de la demo: C-1 → C-2 → B-1 → B-2 → A-2 → D-5.
 ### Tareas
 - ✅ **B-0** · Base: `llm.complete_json` (caché, 2 reintentos, log de tokens), citas (`normalize`, `locate` incluso entre 2 segmentos), `extract`, `check_conduct`, `summarize`, `draft` en plantilla determinista, pipeline de 7 etapas con modo degradado — `app/engine/**`, `app/pipeline.py` · — · ya en `main`
 - ✅ **B-1** · ① (2 h) · Extracción real sobre el fixture (`ACTA_FAKE_STAGES=stt`): afinar `prompts/extraction.md` hasta cobertura 100 % y r1, n1, n2, n3, cc1, c1 correctos — `app/engine/extraction.py`, `app/engine/prompts/**` · — · test `live` en `tests/unit/test_extraction_live.py`
-- ⬜ **B-2** · ① (1,5 h) · Conducta y resumen reales sobre el fixture: `return_promise` y `risks_explained` = breach; todas las citas verificadas; revisar las referencias normativas de `CHECKLIST` — `app/engine/conduct.py`, `app/engine/summary.py`, `app/engine/prompts/**` · B-1 · igual que `fixtures/demo/conduct.json` en lo esencial
+- ✅ **B-2** · ① (1,5 h) · Conducta y resumen reales sobre el fixture: `return_promise` y `risks_explained` = breach; todas las citas verificadas; revisar las referencias normativas de `CHECKLIST` — `app/engine/conduct.py`, `app/engine/summary.py`, `app/engine/prompts/**` · B-1 · igual que `fixtures/demo/conduct.json` en lo esencial
 - ⬜ **B-3** · H3 (0,5 h) · Hito 1 con C: clip demo real de extremo a extremo; arreglar lo que falle — `app/pipeline.py` · C-2, B-2 · `python -m app.pipeline app/data/audio/demo_clip.mp3` sin warnings
 - ⬜ **B-4** · ② (1,5 h) · Emparejar `product_name` con el catálogo KID real de C (`isin`) y decidir de dónde sale el dinero en un `switch` (anotarlo en `rationale`) — `app/engine/extraction.py`, `app/engine/prompts/**` · C-3 · la recomendación del clip trae el ISIN real
 - ⬜ **B-5** · ② (2 h) · Ajuste de prompts con los fallos de la evaluación de D — `app/engine/prompts/**` · D-4 · mejora o mantiene precisión y exhaustividad
@@ -86,8 +86,8 @@ Ruta crítica de la demo: C-1 → C-2 → B-1 → B-2 → A-2 → D-5.
 
 ### Tareas
 - ✅ **C-0** · Base: `transcribe` (Scribe con caché por hash), `synthesize_dialogue` (TTS con caché por frase), `check` con las 5 reglas de CONTRACT, `resulting_portfolio`, `portfolio_volatility`, `load_returns` y respaldo por SRI si no hay precios — `app/audio/**`, `app/engine/checker.py`, `app/engine/risk.py`, `app/data/loaders.py` · — · ya en `main`
-- ⬜ **C-1** · ① (1 h) · STT real: transcribir un audio vuestro de 20 s; comprobar que el SDK/endpoint y el formato de respuesta cuadran con `stt.py`; la segunda llamada no gasta créditos — `app/audio/stt.py` · — · `Transcript` válido con 2 hablantes
-- ⬜ **C-2** · ① (1,5 h) · **Clip de la demo**: `scripts/make_demo_clip.py` con los turnos de `tools/make_fixtures.py` → `app/data/audio/demo_clip.mp3` (TTS con 2 voces) **y** una versión grabada por dos del equipo — `scripts/**`, `app/data/audio/**` · C-1 · el clip transcrito contiene literalmente «me jubilo en tres años»
+- ✅ **C-1** · ① (1 h) · STT real: transcribir un audio vuestro de 20 s; comprobar que el SDK/endpoint y el formato de respuesta cuadran con `stt.py`; la segunda llamada no gasta créditos — `app/audio/stt.py` · — · `Transcript` válido con 2 hablantes
+- ✅ **C-2** · ① (1,5 h) · **Clip de la demo**: `scripts/make_demo_clip.py` con los turnos de `tools/make_fixtures.py` → `app/data/audio/demo_clip.mp3` (TTS con 2 voces) **y** una versión grabada por dos del equipo — `scripts/**`, `app/data/audio/**` · C-1 · el clip transcrito contiene literalmente «me jubilo en tres años»
 - ⬜ **C-3** · ② (2 h) · Catálogo KID real: 8 fondos indexados (Vanguard, Amundi, iShares…) con SRI, horizonte, costes, liquidez, ETF proxy y `source_url`; al menos 1 RV emergente, 1 RV global, 2 RF corto plazo, 1 monetario — `app/data/kids.json` · — · valida contra `FundKID`
 - ⬜ **C-4** · ② (0,5 h) · `app/data/risk_limits.json` y 4 clientes sintéticos en `app/data/clients/` (incluido `CLI-DEMO-001` con ISIN reales) — `app/data/**` · C-3 · `list_clients()` los devuelve
 - ⬜ **C-5** · ② (1,5 h) · Precios: `scripts/fetch_prices.py` (yfinance, 3 años diarios) → `app/data/prices/<ticker>.csv` versionados; volatilidad por covarianza real — `scripts/**`, `app/data/prices/**` · C-3 · test con 2 activos de covarianza conocida
@@ -117,3 +117,4 @@ Ruta crítica de la demo: C-1 → C-2 → B-1 → B-2 → A-2 → D-5.
 ### Revisiones (las añade D)
 
 ### Peticiones (de otros roles)
+- C → D: el clip real `app/data/audio/demo_clip.mp3` dura 77 s y los tiempos de `fixtures/demo/transcript.json` son de 146 s. Su transcripción real (Scribe, 12/12 turnos correctos) está en `app/data/audio/demo_clip.transcript.json`: promuévela a `fixtures/demo/transcript.json` (y si quieres a `.cache/stt/dfdf840d54fbc7fb.json` en las instrucciones de arranque) para que los saltos al audio cuadren y nadie vuelva a gastar STT en el clip
