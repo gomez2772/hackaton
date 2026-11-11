@@ -75,3 +75,14 @@ def test_effort_is_part_of_the_cache_key(tmp_path):
     s = _settings(tmp_path)
     assert complete_json("sys", "u", ClientSummary, effort="low", settings=s, client=a).title == "A"
     assert complete_json("sys", "u", ClientSummary, effort="high", settings=s, client=b).title == "B"
+
+
+def test_knowledge_sends_cached_regulation_block_first(tmp_path):
+    fake = RecordingClient([("end_turn", '{"title": "T"}')])
+    complete_json("sys", "u", ClientSummary, knowledge=True, settings=_settings(tmp_path), client=fake)
+    system = fake.calls[0]["system"]
+    assert isinstance(system, list) and system[0]["cache_control"] == {"type": "ephemeral"}
+    assert "<checklist>" in system[0]["text"] and system[-1]["text"].startswith("sys")
+    plain = RecordingClient([("end_turn", '{"title": "P"}')])
+    out = complete_json("sys", "u", ClientSummary, settings=_settings(tmp_path), client=plain)
+    assert out.title == "P" and isinstance(plain.calls[0]["system"], str)  # different cache key
