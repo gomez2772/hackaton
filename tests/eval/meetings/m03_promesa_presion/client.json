@@ -1,0 +1,13 @@
+{
+  "client_id": "CLI-EVAL-003",
+  "name": "Antonio Navarro (sintético)",
+  "risk_profile": 4,
+  "horizon_years": 15,
+  "liquidity_need_eur": null,
+  "portfolio": [
+    {"isin": "DEMO00000001", "name": "Fondo índice RV global (demo)", "amount_eur": 30000},
+    {"isin": "DEMO00000003", "name": "Fondo índice RV emergente (demo)", "amount_eur": 40000},
+    {"isin": "DEMO00000002", "name": "Fondo RF corto plazo euro (demo)", "amount_eur": 130000}
+  ],
+  "synthetic": true
+}

@@ -1,0 +1,38 @@
+{
+  "meeting_id": "m01_horizonte_sri",
+  "scenario": "suitability_conflict",
+  "description": "Perfil 2 con horizonte de 2 años (compra de casa). El asesor propone pasar 50 000 € de RF corto a RV global. Conducta correcta.",
+  "recommendations": [
+    {"id": "r1", "action": "buy", "asset_class": "equity_global", "amount_eur": 50000, "funded_from": "bond_short_eur"}
+  ],
+  "stated_needs": [
+    {"kind": "horizon", "horizon_years": 2},
+    {"kind": "capital_preservation"}
+  ],
+  "flags": {
+    "sri": "red",
+    "horizon": "red",
+    "concentration": "red",
+    "liquidity": null,
+    "volatility": null
+  },
+  "flag_notes": "RV global pasa a 70 000 / 80 000 = 87,5 % (> 40 %). KID de RV ≥ 5 años > 2 declarados. SRI 4 > 3 máximo del perfil 2. La volatilidad depende del catálogo real.",
+  "conduct": {
+    "recording_notice": "ok",
+    "circumstances_updated": "ok",
+    "return_promise": "ok",
+    "risks_explained": "ok",
+    "costs_disclosed": "ok",
+    "commercial_pressure": "ok",
+    "conflicts_of_interest": "ok"
+  },
+  "key_quotes": [
+    "esta conversación se graba",
+    "Queremos hacerlo dentro de dos años",
+    "pasar cincuenta mil euros de la renta fija al fondo de renta variable global",
+    "puede caer un treinta por ciento o más",
+    "gastos corrientes de cero coma dos por ciento al año",
+    "no recibimos incentivos de la gestora del fondo",
+    "le enviaré el documento de datos fundamentales"
+  ]
+}

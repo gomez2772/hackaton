@@ -14,6 +14,7 @@ import logging
 import time
 import uuid
 from collections.abc import Callable
+from concurrent.futures import ThreadPoolExecutor
 from datetime import date
 from pathlib import Path
 from typing import Any
@@ -29,8 +30,12 @@ def analyze(audio_path: Path | None, client: ClientProfile, *,
             settings: Settings | None = None,
             on_stage: Callable[[str], None] | None = None,
             advisor_name: str | None = None,
-            meeting_date: str | None = None) -> AnalysisResult:
-    """Run the full pipeline and return everything the UI/API/exporters need."""
+            meeting_date: str | None = None,
+            polish_report: bool = False) -> AnalysisResult:
+    """Run the full pipeline and return everything the UI/API/exporters need.
+
+    polish_report=True lets Claude rephrase the template report (B-6); falls back to the template.
+    """
     s = settings or get_settings()
     timings: list[StageTiming] = []
     warnings: list[str] = []
@@ -77,20 +82,27 @@ def analyze(audio_path: Path | None, client: ClientProfile, *,
         flags = stage("check", False, lambda: check(extraction, client), fallback=list)
 
     # 5. Conduct («¿fue correcta la llamada?»)
-    if s.is_fake("conduct"):
-        conduct = stage("conduct", True, fakes.conduct)
-    else:
-        from app.engine.conduct import check_conduct
-        conduct = stage("conduct", False, lambda: validate(check_conduct(transcript, extraction, settings=s), transcript),
-                        fallback=lambda: None)
+    # The summary only needs transcript + extraction, so it runs in a background thread while the
+    # conduct check runs (saves ~6 s in the demo). on_stage is still called from this thread, in order.
+    with ThreadPoolExecutor(max_workers=1) as pool:
+        summary_job = None
+        if not s.is_fake("summary"):
+            from app.engine.summary import summarize
+            summary_job = pool.submit(lambda: validate(summarize(transcript, extraction, settings=s), transcript))
 
-    # 6. Plain-language summary for the client
-    if s.is_fake("summary"):
-        summary = stage("summary", True, fakes.client_summary)
-    else:
-        from app.engine.summary import summarize
-        summary = stage("summary", False, lambda: validate(summarize(transcript, extraction, settings=s), transcript),
-                        fallback=lambda: None)
+        if s.is_fake("conduct"):
+            conduct = stage("conduct", True, fakes.conduct)
+        else:
+            from app.engine.conduct import check_conduct
+            conduct = stage("conduct", False,
+                            lambda: validate(check_conduct(transcript, extraction, settings=s), transcript),
+                            fallback=lambda: None)
+
+        # 6. Plain-language summary for the client
+        if summary_job is None:
+            summary = stage("summary", True, fakes.client_summary)
+        else:
+            summary = stage("summary", False, summary_job.result, fallback=lambda: None)
 
     # 7. Report
     if s.is_fake("report"):
@@ -101,6 +113,7 @@ def analyze(audio_path: Path | None, client: ClientProfile, *,
             extraction, flags, client, transcript,
             advisor_name=advisor_name or s.advisor_name,
             meeting_date=meeting_date or date.today().isoformat(),
+            polish=polish_report and not template_mode, settings=s,
         ))
         if template_mode:
             report = report.model_copy(update={"template_mode": True})
@@ -129,13 +142,14 @@ def main() -> None:
     ap.add_argument("--client", default="CLI-DEMO-001")
     ap.add_argument("--fake", action="store_true", help="todas las etapas simuladas")
     ap.add_argument("--out", type=Path, help="guarda el AnalysisResult en JSON")
+    ap.add_argument("--pulir", action="store_true", help="redacta el informe con Claude sobre la plantilla (B-6)")
     args = ap.parse_args()
     logging.basicConfig(level=logging.INFO, format="%(levelname)s %(name)s: %(message)s")
 
     settings = get_settings(fake_stages=frozenset(STAGES)) if args.fake else get_settings()
     from app.data.loaders import load_client
     result = analyze(args.audio, load_client(args.client), settings=settings,
-                     on_stage=lambda st: log.info("etapa: %s", st))
+                     on_stage=lambda st: log.info("etapa: %s", st), polish_report=args.pulir)
     breaches = sum(it.status.value == "breach" for it in result.conduct.items) if result.conduct else 0
     log.info("análisis %s · %d banderas (%d rojas) · %d incumplimientos de conducta · cobertura %.1f %%",
              result.analysis_id, len(result.flags), sum(f.severity.value == "red" for f in result.flags),

@@ -1,0 +1,41 @@
+{
+  "meeting_id": "m03_promesa_presion",
+  "scenario": "conduct_failure",
+  "description": "Perfil 4 con horizonte de 15 años. La recomendación (15 000 € más en RV global) es idónea, pero el asesor promete un 8 % seguro y presiona para firmar hoy. No menciona costes ni conflictos.",
+  "recommendations": [
+    {"id": "r1", "action": "buy", "asset_class": "equity_global", "amount_eur": 15000, "funded_from": "bond_short_eur"}
+  ],
+  "stated_needs": [
+    {"kind": "horizon", "horizon_years": 15}
+  ],
+  "flags": {
+    "sri": "green",
+    "horizon": "green",
+    "concentration": "green",
+    "liquidity": null,
+    "volatility": "green"
+  },
+  "flag_notes": "RV global pasa a 45 000 / 200 000 = 22,5 % (≤ 25 %). KID 5 años ≤ 15. SRI 4 ≤ 5 del perfil 4. Renta variable al 42,5 %: volatilidad muy por debajo del 18 %.",
+  "conduct": {
+    "recording_notice": "ok",
+    "circumstances_updated": "ok",
+    "return_promise": "breach",
+    "risks_explained": "no_evidence",
+    "costs_disclosed": "no_evidence",
+    "commercial_pressure": "breach",
+    "conflicts_of_interest": "no_evidence"
+  },
+  "conduct_acceptable": {
+    "risks_explained": ["no_evidence", "breach"]
+  },
+  "conduct_notes": "risks_explained: el cliente no dice que no entienda, pero la promesa oculta el riesgo; se aceptan no_evidence o breach.",
+  "key_quotes": [
+    "Esta conversación se graba",
+    "es para dentro de quince años o más",
+    "invertir quince mil euros más en el fondo de renta variable global",
+    "le va a dar un ocho por ciento seguro al año",
+    "tiene que decidirlo hoy",
+    "Si no firma ahora, la perdemos",
+    "No hay tiempo para eso"
+  ]
+}
