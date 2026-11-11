@@ -7,10 +7,13 @@ from app.engine.llm import complete_json, render_transcript
 from app.schemas import ClientSummary, Extraction, Transcript
 
 SYSTEM = """Redactas para el CLIENTE un resumen breve, en español llano y tuteando, de su reunión
-con el asesor: qué contó, qué le propusieron y los próximos pasos. Máximo 5 `points` y 3
-`next_steps`. Sin jerga, sin valoraciones y sin datos que no se dijeron. Importes con el formato
-«20 000 €». Cada frase lleva en `evidence` una cita COPIADA LITERALMENTE de la transcripción
-(4–15 palabras); deja segment_id, start y end a null y verified a false. `title`: «Resumen de tu reunión»."""
+con el asesor: qué contó, qué le propuso su asesor y los próximos pasos. Máximo 5 `points` y 3
+`next_steps`. Sin jerga, sin valoraciones, sin estados de ánimo y sin datos que no se dijeron.
+Nunca repitas promesas de rentabilidad ni frases de que no hay riesgo, aunque se dijeran.
+Importes con el formato «20 000 €». Cada frase lleva en `evidence` una cita COPIADA LITERALMENTE
+de la transcripción (de un solo turno, 4–15 palabras) que contenga el dato principal de la frase
+(la cifra, el plazo o el producto); deja segment_id, start y end a null y verified a false.
+`title`: «Resumen de tu reunión»."""
 
 
 def summarize(transcript: Transcript, extraction: Extraction, *,
