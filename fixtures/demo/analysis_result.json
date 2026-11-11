@@ -1,7 +1,7 @@
 {
   "schema_version": "1.1",
   "analysis_id": "AN-DEMO-0001",
-  "created_at": "2026-11-11T15:09:54.943254Z",
+  "created_at": "2026-11-11T15:23:07.510973Z",
   "client": {
     "client_id": "CLI-DEMO-001",
     "name": "Lucía Martín (sintético)",
@@ -281,8 +281,8 @@
       "severity": "red",
       "recommendation_id": "r1",
       "title": "Volatilidad por encima del perfil",
-      "explanation": "Volatilidad anual de la cartera resultante 16,0 % > 12,0 % límite del perfil 3 (Moderado)",
-      "value": 16.0,
+      "explanation": "Volatilidad anual de la cartera resultante 12,2 % > 12,0 % límite del perfil 3 (Moderado) · estimación por SRI",
+      "value": 12.2,
       "limit": 12.0,
       "unit": "%",
       "evidence": []
@@ -302,10 +302,10 @@
     {
       "id": "f4",
       "type": "sri",
-      "severity": "green",
+      "severity": "amber",
       "recommendation_id": "r1",
-      "title": "SRI dentro del perfil",
-      "explanation": "SRI del producto 4 ≤ 4 máximo del perfil 3",
+      "title": "Riesgo en el límite con preferencia por preservar capital",
+      "explanation": "SRI del producto 4 ≤ 4 máximo del perfil 3 (Moderado)",
       "value": 4.0,
       "limit": 4.0,
       "unit": "SRI",
@@ -317,8 +317,8 @@
       "severity": "green",
       "recommendation_id": "r1",
       "title": "Liquidez suficiente",
-      "explanation": "Activos con liquidez ≤ T+3 tras la operación 70 000 € ≥ 20 000 € necesarios en 1 año",
-      "value": 70000.0,
+      "explanation": "Activos con liquidez ≤ T+3 tras la operación 100 000 € ≥ 20 000 € necesarios",
+      "value": 100000.0,
       "limit": 20000.0,
       "unit": "€",
       "evidence": [
@@ -451,7 +451,7 @@
           },
           {
             "id": "p6",
-            "text": "La volatilidad estimada de la cartera resultante (16,0 %) excede el límite del perfil Moderado (12,0 %).",
+            "text": "La volatilidad estimada de la cartera resultante (12,2 %) excede el límite del perfil Moderado (12,0 %).",
             "kind": "computed",
             "evidence": [],
             "flag_ids": [

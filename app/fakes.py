@@ -58,7 +58,7 @@ def extraction() -> Extraction:
 
 
 def flags() -> list[Flag]:
-    """Expected flags: horizon RED, volatility RED, concentration AMBER, SRI and liquidity GREEN."""
+    """Expected flags (same as the real checker): horizon and volatility RED, concentration and SRI AMBER, liquidity GREEN."""
     return [Flag.model_validate(f) for f in _raw("flags")]  # type: ignore[union-attr]
 
 

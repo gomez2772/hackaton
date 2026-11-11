@@ -2,8 +2,8 @@
 
 Scenario (synthetic): Lucía, risk profile 3, retires in three years and needs 20 000 €
 next year for her daughter's flat. The advisor proposes 30 000 € in an emerging-markets
-equity fund and says she "won't lose money". Expected flags: horizon RED, volatility RED,
-concentration AMBER. Expected conduct: return promise and risks not explained = breach;
+equity fund and says she "won't lose money". Expected flags (= real checker): horizon RED, volatility RED (12,2 %, SRI approximation),
+concentration AMBER, SRI AMBER (= profile max and she wants to preserve capital), liquidity GREEN. Expected conduct: return promise and risks not explained = breach;
 costs and conflicts of interest = no evidence.
 
 Run:  python tools/make_fixtures.py
@@ -144,19 +144,20 @@ def build() -> dict[str, object]:
              value=3, limit=5, unit="años", evidence=[ev("me jubilo en tres años", 3)]),
         Flag(id="f2", type=FlagType.VOLATILITY, severity=Severity.RED, recommendation_id="r1",
              title="Volatilidad por encima del perfil",
-             explanation="Volatilidad anual de la cartera resultante 16,0 % > 12,0 % límite del perfil 3 (Moderado)",
-             value=16.0, limit=12.0, unit="%"),
+             explanation="Volatilidad anual de la cartera resultante 12,2 % > 12,0 % límite del perfil 3 (Moderado) · estimación por SRI",
+             value=12.2, limit=12.0, unit="%"),
         Flag(id="f3", type=FlagType.CONCENTRATION, severity=Severity.AMBER, recommendation_id="r1",
              title="Concentración elevada",
              explanation="RV emergente pasaría a 30,0 % de la cartera > 25,0 % máximo por producto",
              value=30.0, limit=25.0, unit="%"),
-        Flag(id="f4", type=FlagType.SRI, severity=Severity.GREEN, recommendation_id="r1",
-             title="SRI dentro del perfil", explanation="SRI del producto 4 ≤ 4 máximo del perfil 3",
+        Flag(id="f4", type=FlagType.SRI, severity=Severity.AMBER, recommendation_id="r1",
+             title="Riesgo en el límite con preferencia por preservar capital",
+             explanation="SRI del producto 4 ≤ 4 máximo del perfil 3 (Moderado)",
              value=4, limit=4, unit="SRI"),
         Flag(id="f5", type=FlagType.LIQUIDITY, severity=Severity.GREEN, recommendation_id="r1",
              title="Liquidez suficiente",
-             explanation="Activos con liquidez ≤ T+3 tras la operación 70 000 € ≥ 20 000 € necesarios en 1 año",
-             value=70_000, limit=20_000, unit="€",
+             explanation="Activos con liquidez ≤ T+3 tras la operación 100 000 € ≥ 20 000 € necesarios",
+             value=100_000, limit=20_000, unit="€",
              evidence=[ev("Necesitaré unos veinte mil euros el año que viene", 5)]),
     ]
 
@@ -185,7 +186,7 @@ def build() -> dict[str, object]:
             ReportSection(key="suitability_assessment", title="Evaluación de idoneidad", sentences=[
                 s("p5", "El horizonte mínimo recomendado del producto (5 años) supera el horizonte declarado (3 años).",
                   [ev("me jubilo en tres años", 3)], ["f1"]),
-                s("p6", "La volatilidad estimada de la cartera resultante (16,0 %) excede el límite del perfil Moderado (12,0 %).",
+                s("p6", "La volatilidad estimada de la cartera resultante (12,2 %) excede el límite del perfil Moderado (12,0 %).",
                   [], ["f2"], kind="computed"),
             ]),
             ReportSection(key="risks_and_warnings", title="Riesgos y advertencias", sentences=[
