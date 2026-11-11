@@ -18,3 +18,4 @@ Formato: `- AAAA-MM-DD HH:MM · Rol · Decisión — Motivo`
 - 2026-11-10 19:45 · D · Si la CI está en verde y D no revisa en 30 min, el dueño fusiona su PR — con 10 h no puede haber cuellos de botella
 - 2026-11-11 09:20 · B · `extract`, `check_conduct` y `summarize` aceptan `settings=` opcional (keyword) y `analyze` se los pasa — antes el LLM leía siempre `.env` e ignoraba los settings del pipeline/tests; compatible con CONTRACT
 - 2026-11-11 09:20 · B · En la extracción, la financiación de una compra va en el `rationale` de esa recomendación, no como `sell` aparte — evita una recomendación fantasma en el informe y en el comprobador
+- 2026-11-11 13:06 · D · Reuniones de evaluación de ~1,5–2 min (190–310 palabras) en vez de 3–4 min — C-7 cuesta ≈ 6 000 créditos en vez de ≈ 13 000 y se generan antes; los guiones los escribe D en sesión (sin coste aparte de API)

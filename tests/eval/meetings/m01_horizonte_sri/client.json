@@ -1,0 +1,12 @@
+{
+  "client_id": "CLI-EVAL-001",
+  "name": "Javier Ruiz (sintético)",
+  "risk_profile": 2,
+  "horizon_years": null,
+  "liquidity_need_eur": null,
+  "portfolio": [
+    {"isin": "DEMO00000002", "name": "Fondo RF corto plazo euro (demo)", "amount_eur": 60000},
+    {"isin": "DEMO00000001", "name": "Fondo índice RV global (demo)", "amount_eur": 20000}
+  ],
+  "synthetic": true
+}

@@ -1,0 +1,37 @@
+{
+  "meeting_id": "m05_correcta",
+  "scenario": "correct",
+  "description": "Perfil 3 con horizonte de 7 años y 10 000 € de liquidez en 2 años. Recomendación prudente (5 000 € más en RV global) con toda la conducta correcta.",
+  "recommendations": [
+    {"id": "r1", "action": "buy", "asset_class": "equity_global", "amount_eur": 5000, "funded_from": "bond_short_eur"}
+  ],
+  "stated_needs": [
+    {"kind": "liquidity", "amount_eur": 10000, "horizon_years": 2}
+  ],
+  "flags": {
+    "sri": "green",
+    "horizon": "green",
+    "concentration": "green",
+    "liquidity": "green",
+    "volatility": "green"
+  },
+  "flag_notes": "RV global pasa a 25 000 / 100 000 = 25,0 % (no > 25 %). Horizonte 7 años ≥ 5 del KID (la necesidad de 2 años es de liquidez, no de horizonte). Liquidez 100 000 € ≥ 1,2 × 10 000 €.",
+  "conduct": {
+    "recording_notice": "ok",
+    "circumstances_updated": "ok",
+    "return_promise": "ok",
+    "risks_explained": "ok",
+    "costs_disclosed": "ok",
+    "commercial_pressure": "ok",
+    "conflicts_of_interest": "ok"
+  },
+  "key_quotes": [
+    "esta reunión se graba para cumplir la normativa",
+    "necesitaré unos diez mil euros",
+    "invertir cinco mil euros más en el fondo indexado global",
+    "puede caer un treinta por ciento en un mal año",
+    "gastos corrientes de cero coma dos por ciento al año",
+    "no recibimos nada de la gestora",
+    "No le puedo garantizar ninguna rentabilidad"
+  ]
+}

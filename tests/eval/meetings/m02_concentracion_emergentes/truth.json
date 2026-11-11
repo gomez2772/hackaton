@@ -1,0 +1,37 @@
+{
+  "meeting_id": "m02_concentracion_emergentes",
+  "scenario": "suitability_conflict",
+  "description": "Perfil 3 con horizonte de 10 años. El asesor propone 90 000 € en RV emergente financiados con RF. La concentración se dispara. Conducta correcta.",
+  "recommendations": [
+    {"id": "r1", "action": "buy", "asset_class": "equity_em", "amount_eur": 90000, "funded_from": "bond_short_eur"}
+  ],
+  "stated_needs": [
+    {"kind": "horizon", "horizon_years": 10}
+  ],
+  "flags": {
+    "sri": null,
+    "horizon": "green",
+    "concentration": "red",
+    "liquidity": null,
+    "volatility": null
+  },
+  "flag_notes": "RV emergente pasa a 90 000 / 200 000 = 45 % (> 40 %). KID 5 años ≤ 10 declarados. El SRI (4 o 5) y la volatilidad dependen del fondo real.",
+  "conduct": {
+    "recording_notice": "ok",
+    "circumstances_updated": "ok",
+    "return_promise": "ok",
+    "risks_explained": "ok",
+    "costs_disclosed": "ok",
+    "commercial_pressure": "ok",
+    "conflicts_of_interest": "ok"
+  },
+  "key_quotes": [
+    "esta llamada queda grabada",
+    "no voy a necesitar este dinero en al menos diez años",
+    "invertir noventa mil euros en un fondo indexado de renta variable de mercados emergentes",
+    "Pueden caer un cuarenta por ciento en un mal año",
+    "gastos corrientes del fondo son de cero coma veinticinco por ciento al año",
+    "nuestra entidad no cobra retrocesiones de esta gestora",
+    "No le puedo asegurar ninguna rentabilidad"
+  ]
+}
