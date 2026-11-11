@@ -63,7 +63,11 @@
     "app/engine/__init__.py",
     ".env",
     ".cache/*",
-    ".claude/settings.local.json"
+    ".claude/settings.local.json",
+    "Verbatim.bat",
+    "Verbatim.command",
+    "launcher/**",
+    ".streamlit/**"
   ],
   "frozen": [
     "app/schemas.py",
