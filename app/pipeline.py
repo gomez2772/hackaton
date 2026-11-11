@@ -14,6 +14,7 @@ import logging
 import time
 import uuid
 from collections.abc import Callable
+from concurrent.futures import ThreadPoolExecutor
 from datetime import date
 from pathlib import Path
 from typing import Any
@@ -81,20 +82,27 @@ def analyze(audio_path: Path | None, client: ClientProfile, *,
         flags = stage("check", False, lambda: check(extraction, client), fallback=list)
 
     # 5. Conduct («¿fue correcta la llamada?»)
-    if s.is_fake("conduct"):
-        conduct = stage("conduct", True, fakes.conduct)
-    else:
-        from app.engine.conduct import check_conduct
-        conduct = stage("conduct", False, lambda: validate(check_conduct(transcript, extraction, settings=s), transcript),
-                        fallback=lambda: None)
+    # The summary only needs transcript + extraction, so it runs in a background thread while the
+    # conduct check runs (saves ~6 s in the demo). on_stage is still called from this thread, in order.
+    with ThreadPoolExecutor(max_workers=1) as pool:
+        summary_job = None
+        if not s.is_fake("summary"):
+            from app.engine.summary import summarize
+            summary_job = pool.submit(lambda: validate(summarize(transcript, extraction, settings=s), transcript))
 
-    # 6. Plain-language summary for the client
-    if s.is_fake("summary"):
-        summary = stage("summary", True, fakes.client_summary)
-    else:
-        from app.engine.summary import summarize
-        summary = stage("summary", False, lambda: validate(summarize(transcript, extraction, settings=s), transcript),
-                        fallback=lambda: None)
+        if s.is_fake("conduct"):
+            conduct = stage("conduct", True, fakes.conduct)
+        else:
+            from app.engine.conduct import check_conduct
+            conduct = stage("conduct", False,
+                            lambda: validate(check_conduct(transcript, extraction, settings=s), transcript),
+                            fallback=lambda: None)
+
+        # 6. Plain-language summary for the client
+        if summary_job is None:
+            summary = stage("summary", True, fakes.client_summary)
+        else:
+            summary = stage("summary", False, summary_job.result, fallback=lambda: None)
 
     # 7. Report
     if s.is_fake("report"):

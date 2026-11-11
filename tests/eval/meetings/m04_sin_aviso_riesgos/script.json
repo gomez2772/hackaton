@@ -1,0 +1,25 @@
+{
+  "meeting_id": "m04_sin_aviso_riesgos",
+  "client_id": "CLI-EVAL-004",
+  "synthetic": true,
+  "turns": [
+    ["advisor", "Hola, Carmen, ¿qué tal? Le llamo para comentarle una idea sobre su cartera."],
+    ["client", "Hola. Muy bien, dígame."],
+    ["advisor", "Tiene ciento sesenta mil euros, casi todo en renta fija a corto plazo: ciento cuarenta mil. Y veinte mil en renta variable global."],
+    ["client", "Sí, más o menos."],
+    ["advisor", "Le propongo mover quince mil euros de la renta fija al fondo indexado de renta variable global."],
+    ["client", "Mire, le soy sincera: no entiendo bien qué es eso de la renta variable."],
+    ["advisor", "No se preocupe, es un fondo muy conocido, lo tiene muchísima gente. Es lo normal hoy en día."],
+    ["client", "Ya, pero ¿qué puede pasar con mi dinero?"],
+    ["advisor", "Nada raro, de verdad. Es un producto de una gestora muy grande."],
+    ["client", "Bueno. ¿Y cuánto cuesta?"],
+    ["advisor", "Tiene una comisión de cero coma dos por ciento al año, muy barata comparada con otros fondos."],
+    ["client", "Ah, eso está bien."],
+    ["advisor", "Y no le estoy prometiendo nada: puede subir o bajar, como cualquier fondo."],
+    ["client", "Vale. Déjeme que lo piense."],
+    ["advisor", "Claro, decídalo cuando quiera, no hay ninguna prisa. Si le parece, la llamo el jueves."],
+    ["client", "El jueves me va bien, por la tarde."],
+    ["advisor", "Perfecto, el jueves por la tarde la llamo. Que tenga buen día."],
+    ["client", "Igualmente, gracias."]
+  ]
+}

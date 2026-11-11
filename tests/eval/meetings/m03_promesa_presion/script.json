@@ -1,0 +1,24 @@
+{
+  "meeting_id": "m03_promesa_presion",
+  "client_id": "CLI-EVAL-003",
+  "synthetic": true,
+  "turns": [
+    ["advisor", "Buenos días, Antonio. Esta conversación se graba, como siempre. ¿De acuerdo?"],
+    ["client", "Sí, sí, de acuerdo."],
+    ["advisor", "¿Sigue todo igual? ¿Trabajo, familia, algún gasto importante en los próximos años?"],
+    ["client", "Todo igual. El dinero de la cartera es para dentro de quince años o más, no lo voy a tocar."],
+    ["advisor", "Estupendo. Tiene doscientos mil euros: treinta mil en renta variable global, cuarenta mil en emergentes y ciento treinta mil en renta fija a corto plazo."],
+    ["client", "Correcto."],
+    ["advisor", "Le llamo porque tenemos una oportunidad muy buena. Le propongo invertir quince mil euros más en el fondo de renta variable global, sacándolos de la renta fija."],
+    ["client", "Ajá. ¿Y qué rentabilidad puedo esperar?"],
+    ["advisor", "Este fondo le va a dar un ocho por ciento seguro al año. Eso se lo garantizo yo."],
+    ["client", "¿Seguro? Vaya, eso está muy bien."],
+    ["advisor", "Sí. Pero tiene que decidirlo hoy, porque la oferta solo vale hasta esta tarde. Si no firma ahora, la perdemos."],
+    ["client", "Hombre, me gustaría pensarlo un poco, consultarlo con mi mujer."],
+    ["advisor", "No hay tiempo para eso, Antonio. Mañana ya no podré ofrecérselo. Yo que usted firmaría ya."],
+    ["client", "Bueno… si usted lo dice. Venga, adelante."],
+    ["advisor", "Perfecto. Le preparo la orden ahora mismo y se la mando para que la firme digitalmente en diez minutos."],
+    ["client", "De acuerdo, quedo atento al correo."],
+    ["advisor", "Gracias, Antonio. Ha hecho muy bien."]
+  ]
+}

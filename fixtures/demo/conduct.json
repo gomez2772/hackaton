@@ -10,15 +10,15 @@
         {
           "quote": "esta reunión se graba con su consentimiento",
           "segment_id": "s0000",
-          "start": 0.0,
-          "end": 9.5,
+          "start": 0.1,
+          "end": 6.18,
           "verified": true
         },
         {
           "quote": "Sí, sin problema.",
           "segment_id": "s0001",
-          "start": 9.5,
-          "end": 13.0,
+          "start": 7.24,
+          "end": 8.14,
           "verified": true
         }
       ]
@@ -33,8 +33,8 @@
         {
           "quote": "¿Hay algún gasto importante antes de esa fecha?",
           "segment_id": "s0004",
-          "start": 38.5,
-          "end": 46.0,
+          "start": 27.7,
+          "end": 31.66,
           "verified": true
         }
       ]
@@ -49,8 +49,8 @@
         {
           "quote": "con este no va a perder dinero",
           "segment_id": "s0008",
-          "start": 92.0,
-          "end": 108.0,
+          "start": 54.48,
+          "end": 62.92,
           "verified": true
         }
       ]
@@ -65,15 +65,15 @@
         {
           "quote": "no entiendo mucho de esto",
           "segment_id": "s0007",
-          "start": 84.0,
-          "end": 92.0,
+          "start": 50.22,
+          "end": 53.46,
           "verified": true
         },
         {
           "quote": "Es un fondo con buen potencial a largo plazo",
           "segment_id": "s0008",
-          "start": 92.0,
-          "end": 108.0,
+          "start": 54.48,
+          "end": 62.92,
           "verified": true
         }
       ]

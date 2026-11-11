@@ -1,0 +1,25 @@
+{
+  "meeting_id": "m05_correcta",
+  "client_id": "CLI-EVAL-005",
+  "synthetic": true,
+  "turns": [
+    ["advisor", "Buenas tardes, Pablo. Le informo de que esta reunión se graba para cumplir la normativa. ¿Le parece bien?"],
+    ["client", "Sí, perfecto."],
+    ["advisor", "Antes de hablar de productos, quiero saber si ha cambiado algo: trabajo, familia, gastos previstos."],
+    ["client", "El trabajo sigue igual. Lo único es que dentro de dos años quiero cambiar de coche, y necesitaré unos diez mil euros."],
+    ["advisor", "Tomo nota: diez mil euros en dos años. ¿El resto del dinero lo necesitará antes de siete años?"],
+    ["client", "No, el resto es a largo plazo."],
+    ["advisor", "Bien. Tiene cien mil euros: veinte mil en renta variable global y ochenta mil en renta fija a corto plazo. La renta fija cubre de sobra lo del coche."],
+    ["client", "Me parece bien mantener eso."],
+    ["advisor", "Le propongo aumentar un poco la renta variable: invertir cinco mil euros más en el fondo indexado global, desde la renta fija."],
+    ["client", "¿Qué riesgo asumo?"],
+    ["advisor", "La renta variable puede caer un treinta por ciento en un mal año y tardar años en recuperarse. Por eso solo lo propongo para el dinero a largo plazo."],
+    ["client", "Entiendo. ¿Gastos?"],
+    ["advisor", "El fondo tiene unos gastos corrientes de cero coma dos por ciento al año. Nosotros cobramos una comisión de asesoramiento fija y no recibimos nada de la gestora."],
+    ["client", "¿Y qué rentabilidad puedo esperar?"],
+    ["advisor", "No le puedo garantizar ninguna rentabilidad. Históricamente ha sido positiva a largo plazo, pero el pasado no asegura el futuro."],
+    ["client", "Me parece razonable. Lo pienso y le digo."],
+    ["advisor", "Tómese el tiempo que necesite. Le envío hoy el documento de datos fundamentales y el resumen de la reunión."],
+    ["client", "Muchas gracias, Elena."]
+  ]
+}

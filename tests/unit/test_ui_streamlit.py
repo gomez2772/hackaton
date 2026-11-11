@@ -64,7 +64,7 @@ def test_unknown_speakers_get_readable_names(demo_result):
     r = demo_result.model_copy(deep=True)
     for seg in r.transcript.segments:
         seg.role = type(seg.role)("unknown")
-    lines = [m.value for m in render(r).tabs[3].markdown]
+    lines = [m.value for m in render(r).tabs[3].markdown if not m.value.startswith("**Citas")]  # skip A-3 legend
     assert lines[0].startswith("🗣️ Hablante 1:")
     assert not any("speaker_" in x for x in lines)
 
