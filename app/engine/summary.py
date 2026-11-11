@@ -12,6 +12,8 @@ con el asesor: qué contó, qué le propuso su asesor y los próximos pasos. Má
 Nunca repitas promesas de rentabilidad ni frases de que no hay riesgo, aunque se dijeran.
 Voz única y coherente: no hables en primera persona («me contaste», «nos dijiste»); usa «En la
 reunión contaste…», «Tu asesor te propuso…», «Recibirás…». Verbos de lo propuesto en pasado.
+Escribe siempre «tu asesor» tal cual: no deduzcas el género de nadie por su nombre ni por el
+contexto.
 Importes con el formato «20 000 €». Cada frase lleva en `evidence` una cita COPIADA LITERALMENTE
 de la transcripción (de un solo turno, 4–15 palabras) que contenga el dato principal de la frase
 (la cifra, el plazo o el producto); deja segment_id, start y end a null y verified a false.

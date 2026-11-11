@@ -7,10 +7,14 @@ citations.validate (pipeline). It is a compliance aid, not legal advice.
 from __future__ import annotations
 
 import json
+import logging
+import re
 
 from app.config import Settings, get_settings
 from app.engine.llm import complete_json, render_transcript
 from app.schemas import ConductCheck, ConductItem, ConductStatus, Extraction, Transcript
+
+log = logging.getLogger(__name__)
 
 # (code, title, rule, what to look for). kind: "duty" (must happen) or "ban" (must not happen)
 CHECKLIST: list[tuple[str, str, str, str]] = [
@@ -30,6 +34,15 @@ CHECKLIST: list[tuple[str, str, str, str]] = [
      "duty: si hay incentivos o conflictos de interés, se comunican."),
 ]
 
+# Ids of C's local checklist (app/data/normativa/checklist_mifid.json) behind each check. Set by
+# code, never by the model; shown appended to `rule`. Checks the checklist doesn't cover have none.
+REQUIREMENT_IDS: dict[str, list[str]] = {
+    "recording_notice": ["REG-01"],
+    "circumstances_updated": ["KYC-01", "KYC-02", "KYC-05"],
+    "risks_explained": ["AJU-05"],
+    "costs_disclosed": ["COS-01"],
+}
+
 SYSTEM = """Eres un revisor de cumplimiento normativo (MiFID II, España). Evalúas una reunión
 asesor-cliente contra una lista cerrada de comprobaciones de conducta. Cada comprobación es una
 obligación (duty: debe ocurrir) o una prohibición (ban: no debe ocurrir). Para cada una:
@@ -43,6 +56,8 @@ obligación (duty: debe ocurrir) o una prohibición (ban: no debe ocurrir). Para
   contexto.
 - status "no_evidence": es una obligación (duty) de la que no se habló.
 No des "ok" a una obligación sin una cita que lo demuestre.
+Juzga con la normativa de <normativa> y el <checklist>; en `explanation` puedes mencionar el id del
+checklist que aplica (p. ej. REG-01), nunca uno que no exista.
 `explanation`: una frase clara en español, sin juicios jurídicos definitivos. `evidence`: citas
 COPIADAS LITERALMENTE de la transcripción, de un solo turno, entre 4 y 15 palabras, sin cambiar
 nada (ni números, ni signos). Deja segment_id, start y end a null y verified a false. Mantén
@@ -59,16 +74,33 @@ def check_conduct(transcript: Transcript, extraction: Extraction, *,
         f"RECOMENDACIONES DETECTADAS:\n{extraction.model_dump_json(include={'recommendations'})}\n\n"
         f"TRANSCRIPCIÓN:\n{render_transcript(transcript)}"
     )
-    result = complete_json(SYSTEM, user, ConductCheck, effort="medium", settings=s)
+    result = complete_json(SYSTEM, user, ConductCheck, effort="medium", knowledge=True, settings=s)
     return _complete(result, s.anthropic_model)
 
 
+def rule_with_ids(code: str, rule: str) -> str:
+    """'MiFID II art. 16.7; …' + ' · REG-01' when the local checklist covers the check."""
+    ids = REQUIREMENT_IDS.get(code, [])
+    return f"{rule} · {', '.join(ids)}" if ids else rule
+
+
+def _strip_invalid_ids(text: str) -> str:
+    """Remove checklist ids that do not exist (the model must never invent a reference)."""
+    from app.data.regulation import invalid_references
+
+    for bad in invalid_references(text):
+        log.warning("conducta: referencia inexistente %s eliminada", bad)
+        text = re.sub(rf"\s*\(?\b{re.escape(bad)}\b\)?", "", text)
+    return text
+
+
 def _complete(result: ConductCheck, model: str) -> ConductCheck:
-    """Keep checklist order, drop unknown codes and add missing ones as no_evidence."""
+    """Keep checklist order, drop unknown codes, add missing ones as no_evidence, set rule ids by code."""
     by_code = {it.code: it for it in result.items}
     items = []
     for code, title, rule, _ in CHECKLIST:
         it = by_code.get(code) or ConductItem(code=code, title=title, rule=rule, status=ConductStatus.NO_EVIDENCE,
                                               explanation="El modelo no evaluó este punto; revisar a mano.")
-        items.append(it.model_copy(update={"title": title, "rule": rule}))
+        items.append(it.model_copy(update={"title": title, "rule": rule_with_ids(code, rule),
+                                           "explanation": _strip_invalid_ids(it.explanation)}))
     return ConductCheck(items=items, model=model)

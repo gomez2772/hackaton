@@ -30,19 +30,28 @@ class LLMError(RuntimeError):
 
 
 def complete_json(system: str, user: str, schema: type[T], *, max_tokens: int = 16000,
-                  effort: Effort = "medium", settings: Settings | None = None, client: Any = None) -> T:
+                  effort: Effort = "medium", knowledge: bool = False,
+                  settings: Settings | None = None, client: Any = None) -> T:
     """Call Claude (settings.anthropic_model) and return a validated `schema` instance.
 
     Current models think before answering and thinking counts as output, so `max_tokens` must be
     generous; `effort` controls how much it thinks (and costs). A response cut at max_tokens is
-    retried with a larger limit, never fed back as a JSON error.
+    retried with a larger limit, never fed back as a JSON error. `knowledge=True` prepends C's
+    local regulation (app.data.regulation, ~11k tokens) as a cached system block.
     """
     s = settings or get_settings()
     full_system = (
         f"{system}\n\nResponde SOLO con un objeto JSON válido que cumpla este JSON Schema, "
         f"sin texto antes ni después:\n{json.dumps(schema.model_json_schema(), ensure_ascii=False)}"
     )
-    key = hashlib.sha256(f"{s.anthropic_model}\n{effort}\n{full_system}\n{user}".encode()).hexdigest()[:24]
+    system_param: str | list[dict] = full_system
+    key_src = f"{s.anthropic_model}\n{effort}\n{full_system}\n{user}"
+    if knowledge:
+        from app.data.regulation import knowledge_text, system_blocks
+
+        system_param = system_blocks(full_system)
+        key_src = f"kb:{hashlib.sha256(knowledge_text().encode()).hexdigest()[:12]}\n{key_src}"
+    key = hashlib.sha256(key_src.encode()).hexdigest()[:24]
     cache_file = s.cache_dir / "llm" / f"{key}.json"
     if s.llm_cache and cache_file.exists():
         try:
@@ -64,7 +73,7 @@ def complete_json(system: str, user: str, schema: type[T], *, max_tokens: int = 
         try:
             resp = client.messages.create(model=s.anthropic_model, max_tokens=limit,
                                           output_config={"effort": effort},
-                                          system=full_system, messages=messages)
+                                          system=system_param, messages=messages)
         except Exception as e:  # network / API errors
             raise LLMError(f"Error llamando a Claude: {e}") from e
         _log_usage(s, resp)
@@ -104,8 +113,11 @@ def _log_usage(s: Settings, resp: Any) -> None:
     if usage is None:
         return
     rec = {"t": round(time.time()), "model": getattr(resp, "model", s.anthropic_model),
-           "in": getattr(usage, "input_tokens", 0), "out": getattr(usage, "output_tokens", 0)}
-    log.info("tokens: %d entrada · %d salida", rec["in"], rec["out"])
+           "in": getattr(usage, "input_tokens", 0), "out": getattr(usage, "output_tokens", 0),
+           "cache_w": getattr(usage, "cache_creation_input_tokens", 0) or 0,
+           "cache_r": getattr(usage, "cache_read_input_tokens", 0) or 0}
+    log.info("tokens: %d entrada · %d salida · caché %d escritos / %d leídos",
+             rec["in"], rec["out"], rec["cache_w"], rec["cache_r"])
     path = s.cache_dir / "llm" / "usage.jsonl"
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("a", encoding="utf-8") as f:
