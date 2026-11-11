@@ -18,7 +18,8 @@ En el portátil que proyecta:
    Debe acabar en «5 banderas (2 rojas) · 2 incumplimientos de conducta · cobertura 100.0 %» y sin `WARNING`.
    Así, en directo, el análisis sale de la caché: rápido y sin depender de la red.
 5. `streamlit run app/ui/streamlit_app.py`, abrir `http://localhost:8501/?demo=1` y dejarlo en la portada.
-6. Volumen del portátil al máximo y salida de audio probada (el ▶ reproduce el clip).
+6. Volumen del portátil al máximo y salida de audio probada. En el navegador del portátil, comprobar que el
+   ▶ de la bandera de horizonte **suena solo** (00:18–00:27, «me jubilo en tres años»). Si no suena, el plan de la sección 3 vale.
 7. Tener abierto, en otra pestaña, el **vídeo de respaldo** (D-7) y, en otra, un PDF ya exportado.
 
 ## 2. Guion de la demo (2:00)
@@ -29,8 +30,8 @@ Presenta una persona y otra maneja el ratón. Lo que está entre comillas se dic
 |---|---|---|---|
 | 0:00–0:15 | Portada `?demo=1` (Lucía, perfil 3, cartera de 100 000 €) | Nada | «Lucía, perfil moderado, 100 000 € invertidos. Acaba de tener una llamada de 77 segundos con su asesor. Esto es lo que el asesor tendría que escribir a mano después. Acta lo hace a partir de la grabación.» |
 | 0:15–0:30 | Pulsar **▶ Analizar la reunión de demostración** | Se ven pasar las 7 etapas | «Transcribe con ElevenLabs separando quién habla, extrae con Claude lo que se dijo con citas literales, y comprueba la recomendación con cálculos, sin IA.» |
-| 0:30–0:55 | Pestaña **Banderas** | Señalar las dos rojas | «El asesor propone 30 000 € en un fondo de emergentes. Acta lo cruza con el KID real del fondo y la cartera: la volatilidad pasa del 7,9 % al 12,8 %, por encima del 12 % de su perfil. Y el fondo pide 5 años, pero ella se jubila en 3.» |
-| 0:55–1:10 | Pulsar el **▶** de la bandera de horizonte | Se oye «me jubilo en tres años» | «Cada afirmación lleva al segundo exacto del audio en que se dijo. Nada inventado: si no hay cita, se marca en ámbar.» |
+| 0:30–0:55 | Pestaña **Banderas** | Señalar las dos rojas (en pantalla se ve «12,8 % > 12,0 %»; el 7,9 % se dice, no se señala) | «El asesor propone 30 000 € en un fondo de emergentes. Acta lo cruza con el KID real del fondo y la cartera: la volatilidad pasa del 7,9 % al 12,8 %, por encima del 12 % de su perfil. Y el fondo pide 5 años, pero ella se jubila en 3.» |
+| 0:55–1:10 | Pulsar el **▶** de la bandera de horizonte | Suena solo «me jubilo en tres años» y se para al acabar la frase | «Cada afirmación lleva al segundo exacto del audio en que se dijo. Nada inventado: si no hay cita, se marca en ámbar.» |
 | 1:10–1:30 | Pestaña **Conducta** | Señalar los dos incumplimientos | «Y además, ¿fue correcta la llamada? El asesor dijo "con este no va a perder dinero" en un fondo de renta variable: promesa de rentabilidad. Y la clienta dijo "no entiendo mucho de esto" y nadie le explicó los riesgos.» |
 | 1:30–1:45 | Pestaña **Informe de idoneidad** → botón **PDF** | Abrir el PDF | «El borrador del informe de idoneidad MiFID II, listo para revisar, con cada frase enlazada a su cita.» |
 | 1:45–2:00 | Pestaña **Resumen para el cliente** | Señalar el texto | «Y un resumen en lenguaje llano para enviárselo a Lucía. Todo en unos segundos por llamada.» |
