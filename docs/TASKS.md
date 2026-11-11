@@ -61,7 +61,7 @@ Ruta crítica de la demo: C-1 → C-2 → B-1 → B-2 → A-2 → D-5.
 ### Revisiones (las añade D)
 
 ### Peticiones (de otros roles)
-- ⬜ (de B, B-6) Interruptor «Redactar el informe con IA» en la UI que llame a `analyze(..., polish_report=True)`; si falla se queda la plantilla sin aviso. Mostrar `report.model` («plantilla» o «plantilla+claude-…») junto al informe
+- 🔵 (de B, B-6) Interruptor «Redactar el informe con IA» en la UI que llame a `analyze(..., polish_report=True)`; si falla se queda la plantilla sin aviso. Mostrar `report.model` («plantilla» o «plantilla+claude-…») junto al informe
 
 ---
 
@@ -100,6 +100,7 @@ Ruta crítica de la demo: C-1 → C-2 → B-1 → B-2 → A-2 → D-5.
 
 ### Peticiones (de otros roles)
 - ✅ **PET-1** · de D · C-7 desbloqueada: guiones en `tests/eval/meetings/<id>/script.json` (`turns` = lista `[quién, texto]` para `synthesize_dialogue`, Flash) → `app/data/meetings/<id>/audio.mp3`. Son ~1,5–2 min: ≈ 6 000 créditos en total. Cuando tengas el catálogo real (C-3), dime la ISIN equivalente a `equity_global`, `equity_em` y `bond_short_eur` para el mapeo de `run_eval.py`.
+- ⬜ (de A, 11-nov) `checker.check`: cuando una recomendación no tiene ISIN del catálogo KID, hoy solo se registra en el log y no sale ninguna bandera de SRI/horizonte/concentración → con liquidez y volatilidad en verde el análisis parecía «Idóneo». En la UI y las exportaciones ya sale «Comprobación incompleta» (A-8), pero el JSON para GPTadvisor no lo dice: proponed una bandera ámbar «Producto fuera del catálogo KID» o un warning en el resultado. Relacionado con B-4 (emparejar `product_name` con el ISIN).
 
 ---
 
