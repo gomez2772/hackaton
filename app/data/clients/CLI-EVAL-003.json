@@ -1,0 +1,25 @@
+{
+  "client_id": "CLI-EVAL-003",
+  "name": "Antonio Navarro (sintético)",
+  "risk_profile": 4,
+  "horizon_years": 15,
+  "liquidity_need_eur": null,
+  "portfolio": [
+    {
+      "isin": "IE00B03HD191",
+      "name": "Vanguard Global Stock Index Fund - EUR Accumulation Shares",
+      "amount_eur": 30000
+    },
+    {
+      "isin": "IE0031786696",
+      "name": "Vanguard Emerging Markets Stock Index Fund - EUR Accumulation Shares",
+      "amount_eur": 40000
+    },
+    {
+      "isin": "LU0290356871",
+      "name": "Xtrackers II Eurozone Government Bond 1-3 UCITS ETF 1C",
+      "amount_eur": 130000
+    }
+  ],
+  "synthetic": true
+}

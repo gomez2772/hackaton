@@ -24,3 +24,16 @@ def test_clients_are_synthetic_and_use_catalogue_isins():
 def test_demo_client_matches_the_clip():
     c = load_client("CLI-DEMO-001")
     assert c.risk_profile == 3 and sum(h.amount_eur for h in c.portfolio) == 100_000
+
+
+def test_eval_clients_copied_to_app_are_in_sync():
+    """app/data/clients/CLI-EVAL-*.json must equal tests/eval/meetings/*/client.json (owned by D)."""
+    import json
+
+    from app.data.loaders import DATA
+
+    root = DATA.parents[1] / "tests" / "eval" / "meetings"
+    for f in sorted(root.glob("*/client.json")):
+        src = json.loads(f.read_text(encoding="utf-8"))
+        copy = DATA / "clients" / f"{src['client_id']}.json"
+        assert copy.exists() and json.loads(copy.read_text(encoding="utf-8")) == src, f"{copy.name} desfasado"
