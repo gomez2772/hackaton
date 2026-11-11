@@ -1,4 +1,4 @@
-# DEMO.md — Guion de la demo y pitch de Acta (D-5)
+# DEMO.md — Guion de la demo y pitch de Verbatim (D-5)
 
 Para el equipo que presenta. Cada cifra lleva su fuente en la tabla del final. **Si una cifra no
 está en esa tabla, no se dice.** Lo marcado como `[PENDIENTE: …]` hay que completarlo o quitarlo
@@ -28,9 +28,9 @@ Presenta una persona y otra maneja el ratón. Lo que está entre comillas se dic
 
 | Tiempo | Pantalla | Se hace | Se dice |
 |---|---|---|---|
-| 0:00–0:15 | Portada `?demo=1` (Lucía, perfil 3, cartera de 100 000 €) | Nada | «Lucía, perfil moderado, 100 000 € invertidos. Acaba de tener una llamada de 77 segundos con su asesor. Esto es lo que el asesor tendría que escribir a mano después. Acta lo hace a partir de la grabación.» |
+| 0:00–0:15 | Portada `?demo=1` (Lucía, perfil 3, cartera de 100 000 €) | Nada | «Lucía, perfil moderado, 100 000 € invertidos. Acaba de tener una llamada de 77 segundos con su asesor. Esto es lo que el asesor tendría que escribir a mano después. Verbatim lo hace a partir de la grabación.» |
 | 0:15–0:30 | Pulsar **▶ Analizar la reunión de demostración** | Se ven pasar las 7 etapas | «Transcribe con ElevenLabs separando quién habla, extrae con Claude lo que se dijo con citas literales, y comprueba la recomendación con cálculos, sin IA.» |
-| 0:30–0:55 | Pestaña **Banderas** | Señalar las dos rojas (en pantalla se ve «12,8 % > 12,0 %»; el 7,9 % se dice, no se señala) | «El asesor propone 30 000 € en un fondo de emergentes. Acta lo cruza con el KID real del fondo y la cartera: la volatilidad pasa del 7,9 % al 12,8 %, por encima del 12 % de su perfil. Y el fondo pide 5 años, pero ella se jubila en 3.» |
+| 0:30–0:55 | Pestaña **Banderas** | Señalar las dos rojas (en pantalla se ve «12,8 % > 12,0 %»; el 7,9 % se dice, no se señala) | «El asesor propone 30 000 € en un fondo de emergentes. Verbatim lo cruza con el KID real del fondo y la cartera: la volatilidad pasa del 7,9 % al 12,8 %, por encima del 12 % de su perfil. Y el fondo pide 5 años, pero ella se jubila en 3.» |
 | 0:55–1:10 | Pulsar el **▶** de la bandera de horizonte | Suena solo «me jubilo en tres años» y se para al acabar la frase | «Cada afirmación lleva al segundo exacto del audio en que se dijo. Nada inventado: si no hay cita, se marca en ámbar.» |
 | 1:10–1:30 | Pestaña **Conducta** | Señalar los dos incumplimientos | «Y además, ¿fue correcta la llamada? El asesor dijo "con este no va a perder dinero" en un fondo de renta variable: promesa de rentabilidad. Y la clienta dijo "no entiendo mucho de esto" y nadie le explicó los riesgos.» |
 | 1:30–1:45 | Pestaña **Informe de idoneidad** → botón **PDF** | Abrir el PDF | «El borrador del informe de idoneidad MiFID II, listo para revisar, con cada frase enlazada a su cita.» |
@@ -60,7 +60,7 @@ con la demo dentro.
   conversaciones con clientes, además, se graban (MiFID II art. 16.7).
 - El asesor tiene que redactar ese informe después de la llamada, y comprobar a mano que la
   recomendación cuadra con lo que el cliente dijo en la grabación.
-- `[PENDIENTE: cuánto tiempo dedica un asesor a cada informe; pedírselo a GPTadvisor. Si no hay dato, no dar cifra.]`
+- No damos cifra del tiempo que dedica un asesor a cada informe: no tenemos un dato medido.
 
 ### 4.2 Demo (2 min)
 Sección 2.
@@ -98,12 +98,13 @@ Decirlo así, con la advertencia: **«Son 5 reuniones sintéticas: es una prueba
 validación estadística.»** Cifras medidas con los prompts limpios (B-5); con la transcripción del guion salen iguales.
 
 ### 4.5 Negocio (40 s)
-- **Cliente**: GPTadvisor, que lo integra en su producto y lo ofrece a sus asesores. Por eso el
-  motor es una librería independiente de la interfaz, con API REST prevista.
+- **Clientes**: entidades financieras y asesores independientes que tienen que documentar la
+  idoneidad de sus recomendaciones. Pueden usar la interfaz tal cual o integrar el motor en su
+  plataforma: es una librería independiente de la interfaz, con API REST prevista.
 - **Coste variable por análisis** (medido): Claude ≈ 0,06 USD por llamada de demo, más ≈ 0,05 USD
   si se usa la base normativa en la conducta; la transcripción cuesta ≈ 330 créditos de ElevenLabs
   por minuto de audio.
-- `[PENDIENTE: precio de venta / modelo de ingresos con GPTadvisor. No inventar.]`
+- `[PENDIENTE: precio de venta / modelo de ingresos. No inventar.]`
 
 ### 4.6 Competencia (20 s)
 - Las herramientas de notas de reuniones resumen la llamada, pero no comprueban la recomendación
@@ -114,8 +115,8 @@ validación estadística.»** Cifras medidas con los prompts limpios (B-5); con 
 - Prueba de concepto: reuniones de 1–2 minutos, perfiles y conversaciones sintéticos, español.
 - Es una ayuda para el asesor y para cumplimiento; **no es asesoramiento jurídico** y el informe
   requiere la revisión del asesor.
-- Siguiente paso: API completa para GPTadvisor, reuniones de 30 minutos y evaluación con llamadas
-  reales anonimizadas.
+- Siguiente paso: API completa para integrarlo en plataformas de asesoramiento, reuniones de
+  30 minutos y evaluación con llamadas reales anonimizadas.
 
 ## 5. Preguntas difíciles
 
@@ -124,7 +125,7 @@ validación estadística.»** Cifras medidas con los prompts limpios (B-5); con 
 | ¿Y si Claude se inventa algo? | Toda afirmación sobre el cliente necesita una cita que el código encuentra literalmente en la transcripción. Si no la encuentra, la frase sale marcada «sin evidencia» y el asesor tiene que confirmarla. |
 | ¿Quién calcula las banderas? | Código determinista, sin IA: KID reales, límites del perfil y covarianza de 3 años de precios. |
 | ¿100 % no es demasiado bueno? | Sí, por eso lo decimos con la advertencia: 5 reuniones sintéticas escritas por nosotros. Además quitamos de los prompts frases que coincidían con las reuniones de evaluación, y una métrica bajó (citas clave, de 34/35 a 33/35): preferimos la cifra limpia. Lo honesto es medirlo con llamadas reales; es el siguiente paso. |
-| ¿Datos personales? | En la demo todo es sintético. En producción, el audio y el resultado se quedarían en la infraestructura de GPTadvisor. `[PENDIENTE: confirmar con GPTadvisor.]` |
+| ¿Datos personales? | En la demo todo es sintético. En producción, el audio y el resultado se guardarían en la infraestructura de la entidad; la transcripción y el análisis pasan por ElevenLabs y Claude como proveedores, así que haría falta el contrato de encargado del tratamiento con cada uno. |
 | ¿Y el aviso de grabación? | Es una de las comprobaciones de conducta: si no se avisa, sale «sin evidencia». |
 
 ## 6. Fuente de cada cifra

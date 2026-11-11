@@ -1,4 +1,4 @@
-# EVAL.md — Evaluación de Acta (D-4)
+# EVAL.md — Evaluación de Verbatim (D-4)
 
 Regenerar: `python tests/eval/run_eval.py --source audio --write-doc` (o `--source script`). Cada sección usa el último resultado guardado de esa fuente.
 
