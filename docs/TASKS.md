@@ -61,7 +61,7 @@ Ruta crítica de la demo: C-1 → C-2 → B-1 → B-2 → A-2 → D-5.
 ### Revisiones (las añade D)
 
 ### Peticiones (de otros roles)
-- ⬜ (de B, B-6) Interruptor «Redactar el informe con IA» en la UI que llame a `analyze(..., polish_report=True)`; si falla se queda la plantilla sin aviso. Mostrar `report.model` («plantilla» o «plantilla+claude-…») junto al informe
+- ✅ (de B, B-6) Interruptor «Redactar el informe con IA» en la UI que llame a `analyze(..., polish_report=True)`; si falla se queda la plantilla sin aviso. Mostrar `report.model` («plantilla» o «plantilla+claude-…») junto al informe
 
 ---
 
@@ -72,14 +72,15 @@ Ruta crítica de la demo: C-1 → C-2 → B-1 → B-2 → A-2 → D-5.
 - ✅ **B-1** · ① (2 h) · Extracción real sobre el fixture (`ACTA_FAKE_STAGES=stt`): afinar `prompts/extraction.md` hasta cobertura 100 % y r1, n1, n2, n3, cc1, c1 correctos — `app/engine/extraction.py`, `app/engine/prompts/**` · — · test `live` en `tests/unit/test_extraction_live.py`
 - ✅ **B-2** · ① (1,5 h) · Conducta y resumen reales sobre el fixture: `return_promise` y `risks_explained` = breach; todas las citas verificadas; revisar las referencias normativas de `CHECKLIST` — `app/engine/conduct.py`, `app/engine/summary.py`, `app/engine/prompts/**` · B-1 · igual que `fixtures/demo/conduct.json` en lo esencial
 - ✅ **B-3** · H3 (0,5 h) · Hito 1 con C: clip demo real de extremo a extremo; arreglar lo que falle — `app/pipeline.py` · C-2, B-2 · `python -m app.pipeline app/data/audio/demo_clip.mp3` sin warnings
-- ⬜ **B-4** · ② (1,5 h) · Emparejar `product_name` con el catálogo KID real de C (`isin`) y decidir de dónde sale el dinero en un `switch` (anotarlo en `rationale`) — `app/engine/extraction.py`, `app/engine/prompts/**` · C-3 · la recomendación del clip trae el ISIN real
+- ✅ **B-4** · ② (1,5 h) · Emparejar `product_name` con el catálogo KID real de C (`isin`) y decidir de dónde sale el dinero en un `switch` (anotarlo en `rationale`) — `app/engine/extraction.py`, `app/engine/prompts/**` · C-3 · la recomendación del clip trae el ISIN real
 - ⬜ **B-5** · ② (2 h) · Ajuste de prompts con los fallos de la evaluación de D — `app/engine/prompts/**` · D-4 · mejora o mantiene precisión y exhaustividad
 - ✅ **B-6** · F (opcional, 1,5 h) · Redacción del informe con Claude encima de la plantilla (solo ids de la extracción y banderas; si falla, plantilla) — `app/engine/report.py`, `app/engine/prompts/report.md` · B-1 · cobertura 100 % en el fixture
-- ⬜ **B-7** · F (1 h) · Colchón + ensayos
+- ✅ **B-7** · F (1 h) · Colchón + ensayos
 
 ### Revisiones (las añade D)
 
 ### Peticiones (de otros roles)
+- C → B: base normativa local lista en `app/data/regulation.py` (sin internet). Para usarla en `llm.complete_json`: `system=[*system_blocks(), {"type": "text", "text": full_system}]` en vez de `system=full_system` (el bloque de normativa, ~10 800 tokens, lleva `cache_control` y es idéntico en extracción, conducta, resumen e informe: solo la primera llamada lo paga entero, las demás en 5 min lo leen de caché a ~10 % del precio; mirar `usage.cache_read_input_tokens`). En los prompts, pedir que cada frase del informe y cada ítem de conducta cite el id del checklist (IDO-xx, KYC-xx, AJU-xx, COS-xx, REG-xx) y validar con `invalid_references(texto)`. Ids por bandera del comprobador: `FLAG_REQUIREMENTS`
 
 ---
 
@@ -94,12 +95,15 @@ Ruta crítica de la demo: C-1 → C-2 → B-1 → B-2 → A-2 → D-5.
 - ✅ **C-5** · ② (1,5 h) · Precios: `scripts/fetch_prices.py` (yfinance, 3 años diarios) → `app/data/prices/<ticker>.csv` versionados; volatilidad por covarianza real — `scripts/**`, `app/data/prices/**` · C-3 · test con 2 activos de covarianza conocida
 - ✅ **C-6** · ② (0,5 h) · Números reales del caso demo (horizonte, volatilidad, concentración) → avisar a D para el pitch — `docs/DECISIONS.md` · C-5 · línea en DECISIONS
 - ✅ **C-7** · ② (1 h) · Audios de las 5 reuniones sintéticas de D con `synthesize_dialogue` (Flash, ≤ 4 min cada una) — `app/data/meetings/**` · D-3 · 5 `audio.mp3`, ≤ 20 000 créditos en total
-- ⬜ **C-8** · F (2 h) · Colchón + ensayos
+- 🟡 **C-8** · F (2 h) · Colchón + ensayos
+- ✅ **C-9** · ② (1 h) · Base normativa local: 4 resúmenes MiFID II con fuente + `checklist_mifid.json` (35 requisitos) y `app/data/regulation.py` (`system_blocks()` con caché de prompt) — `app/data/normativa/**`, `app/data/regulation.py` · — · `python -m app.data.regulation` carga 4 documentos y 35 requisitos; petición a B para usarla
 
 ### Revisiones (las añade D)
 
 ### Peticiones (de otros roles)
 - ✅ **PET-1** · de D · C-7 desbloqueada: guiones en `tests/eval/meetings/<id>/script.json` (`turns` = lista `[quién, texto]` para `synthesize_dialogue`, Flash) → `app/data/meetings/<id>/audio.mp3`. Son ~1,5–2 min: ≈ 6 000 créditos en total. Cuando tengas el catálogo real (C-3), dime la ISIN equivalente a `equity_global`, `equity_em` y `bond_short_eur` para el mapeo de `run_eval.py`.
+- ⬜ (de A, 11-nov) `checker.check`: cuando una recomendación no tiene ISIN del catálogo KID, hoy solo se registra en el log y no sale ninguna bandera de SRI/horizonte/concentración → con liquidez y volatilidad en verde el análisis parecía «Idóneo». En la UI y las exportaciones ya sale «Comprobación incompleta» (A-8), pero el JSON para GPTadvisor no lo dice: proponed una bandera ámbar «Producto fuera del catálogo KID» o un warning en el resultado. Relacionado con B-4 (emparejar `product_name` con el ISIN).
+- ⬜ (de B, B-4) Para cuando D apruebe el contrato 1.2: usar `Recommendation.funding_isins` en `resulting_portfolio` si viene relleno (ver petición en D). Hasta entonces, nada que hacer
 - ⬜ **PET-2** · de D · `tests/unit/test_risk.py` fija los ISIN `DEMO0000000x` del fixture y se rompe con el fixture de ISIN reales (PR de D «fixture con ISIN reales»). Cambiad los 2 tests para que busquen el ISIN por `asset_class` (`_isin("equity_em")`, etc.) y comprueben `bond = antes − 30 000`, `equity = antes`, `em = 30 000`: código exacto en el PR de D; pasa con el fixture antiguo y con el nuevo, así que podéis fusionarlo antes.
 
 ---
@@ -124,3 +128,4 @@ Ruta crítica de la demo: C-1 → C-2 → B-1 → B-2 → A-2 → D-5.
 - C → D: con el catálogo real (`app/data/kids.json`), los ISIN `DEMO0000000x` del fixture ya no existen. Regenerad `fixtures/demo/` con ISIN reales: recomendación r1 → `IE0031786696` (Vanguard Emerging Markets Stock Index EUR Acc) y cliente = `app/data/clients/CLI-DEMO-001.json` (60 000 € `IE00B03HD191` + 40 000 € `LU0290356871`). Mientras tanto, con `check` real y `extract` simulado salen 2 banderas en vez de 5
 - C → D (pitch, C-6): cifras reales del caso demo en DECISIONS 2026-11-11 16:45: volatilidad 7,9 % → 12,8 % con límite 12 %; horizonte 5 > 3 años; concentración 30 % > 25 %. Dependen de que el fixture use los ISIN reales (petición anterior)
 - C → D (respuesta a PET-1): mapeo para `run_eval.py` con el catálogo real de #20: `equity_global` → `IE00B03HD191` (Vanguard Global Stock Index EUR Acc), `equity_em` → `IE0031786696` (Vanguard Emerging Markets Stock Index EUR Acc), `bond_short_eur` → `LU0290356871` (Xtrackers II Eurozone Government Bond 1-3, alternativa `LU1650487413` Amundi), `money_market` → `LU0290358497`. Audios de C-7 en `app/data/meetings/<id>/audio.mp3`
+- ⬜ (de B, B-4) Propuesta de contrato 1.2 (PR `contrato`, afecta a B y C): campo opcional `Recommendation.funding_isins: list[str]` (ISIN de la cartera de donde sale el dinero de una compra o traspaso). B lo rellenaría desde la transcripción y C lo usaría en `resulting_portfolio` antes de su regla por defecto (fondo de menor SRI). Hoy el origen solo va en texto en `rationale`; en la demo coinciden, pero si el asesor dijera «vendiendo renta variable» el cálculo sería incorrecto. No bloquea la demo

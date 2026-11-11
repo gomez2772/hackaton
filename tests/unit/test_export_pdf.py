@@ -69,7 +69,7 @@ def test_pdf_degraded_result(degraded):
 
 def test_pdf_without_flags(demo_result):
     r = demo_result.model_copy(deep=True)
-    r.flags = []
+    r.flags, r.extraction.recommendations = [], []  # nothing to evaluate
     text, _ = pdf_text(export(r, "pdf"))
     assert "Sin evaluar" in text and "No se han generado banderas" in text
 
@@ -81,6 +81,7 @@ def test_pdf_without_flags(demo_result):
 def test_verdict(demo_result, sevs, expected):
     r = demo_result.model_copy(deep=True)
     r.flags = [f.model_copy(update={"severity": type(f.severity)(s)}) for f, s in zip(r.flags, sevs, strict=False)]
+    r.extraction.recommendations = []  # severity rules only; unchecked recommendations: test_ui_real_data.py
     assert verdict(r) == expected
 
 
