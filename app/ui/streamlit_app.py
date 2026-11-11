@@ -29,8 +29,36 @@ STAGE_LABEL = {"stt": "Transcribiendo", "extract": "Extrayendo con Claude", "val
                "report": "Redactando el informe"}
 STAGE_SHORT = {"stt": "Transcripción", "extract": "Extracción", "validate": "Citas", "check": "Idoneidad",
                "conduct": "Conducta", "summary": "Resumen", "report": "Informe"}
+DEMO_CLIENT_ID = "CLI-DEMO-001"
+TAGLINE = ("Del audio de la reunión al informe de idoneidad MiFID II, con cada frase enlazada "
+           "al segundo exacto del audio en que se dijo.")
 settings = get_settings()
 st.session_state.setdefault("t", 0)
+
+
+def eur(x: float) -> str:
+    """100000.0 -> '100 000 €'."""
+    return f"{x:,.0f} €".replace(",", " ")
+
+
+def sync_demo_param() -> None:
+    """Keep ?demo=1 in the URL in sync with the toggle, so a refresh or a bookmark keeps demo mode."""
+    if st.session_state.get("demo_toggle"):
+        st.query_params["demo"] = "1"
+    else:
+        st.query_params.pop("demo", None)
+
+
+def request_run() -> None:
+    """Main-area «Analizar» button: run on the next rerun (keeps the landing out of the results page)."""
+    st.session_state.run_requested = True
+
+
+def reset_analysis() -> None:
+    """Back to the landing page (between rehearsals)."""
+    for k in ("result", "audio", "exports", "edits"):
+        st.session_state.pop(k, None)
+    st.session_state.t = 0
 
 
 def mmss(t: float | None) -> str:
@@ -76,10 +104,16 @@ def evidence_buttons(evs: list[Evidence], key: str) -> None:
 with st.sidebar:
     st.title("📝 Acta")
     st.caption("Del audio de la reunión al informe de idoneidad MiFID II · para GPTadvisor")
-    if settings.fake_stages:
+    demo = st.toggle("Modo demo", value=st.query_params.get("demo") == "1", key="demo_toggle",
+                     on_change=sync_demo_param,
+                     help="Cliente y clip de la demo precargados y sin datos técnicos en pantalla. "
+                          "También se activa abriendo la página con ?demo=1.")
+    if settings.fake_stages and not demo:
         st.info(f"Etapas simuladas: {', '.join(sorted(settings.fake_stages))}")
     clients = list_clients()
-    client = st.selectbox("Cliente", clients, format_func=lambda c: f"{c.name} · perfil {c.risk_profile}")
+    demo_index = next((i for i, c in enumerate(clients) if c.client_id == DEMO_CLIENT_ID), 0)
+    client = st.selectbox("Cliente", clients, index=demo_index,
+                          format_func=lambda c: f"{c.name} · perfil {c.risk_profile}")
     source = st.radio("Audio", ["Clip de la demo", "Grabar ahora", "Subir archivo"], horizontal=False)
     audio_bytes, audio_name = None, None
     if source == "Grabar ahora":
@@ -97,6 +131,9 @@ with st.sidebar:
     go = st.button("Analizar", type="primary", use_container_width=True, disabled=needs_audio and not audio_bytes)
     if needs_audio and not audio_bytes:
         st.caption("Graba o sube un audio para poder analizarlo.")
+
+go = go or st.session_state.pop("run_requested", False)
+st.markdown("#### 📝 Acta :gray[· para GPTadvisor]")
 
 if go:
     if audio_bytes:
@@ -133,10 +170,29 @@ if go:
     st.session_state.exports = {}
 
 res: AnalysisResult | None = st.session_state.get("result")
-if res is None:
-    st.header("Acta")
-    st.write("Elige el cliente y el audio en la barra lateral y pulsa **Analizar**.")
+if res is None:  # landing page: never an empty screen (A-7)
+    st.markdown("## De la reunión al informe de idoneidad, en minutos")
+    st.write(TAGLINE)
+    s1, s2, s3 = st.columns(3)
+    s1.markdown("**1 · Graba o sube la llamada**  \nCon el consentimiento del cliente.")
+    s2.markdown("**2 · Analiza**  \nTranscripción, extracción con citas, idoneidad y conducta.")
+    s3.markdown("**3 · Revisa y exporta**  \nInforme MiFID II enlazado al audio y resumen para el cliente.")
+    with st.container(border=True):
+        total = sum(h.amount_eur for h in client.portfolio)
+        st.markdown(f"**{client.name}** · perfil de riesgo {client.risk_profile} de 5"
+                    + (f" · cartera {eur(total)}" if total else ""))
+        if client.portfolio:
+            st.caption(" · ".join(f"{h.name}: {eur(h.amount_eur)}" for h in client.portfolio))
+        label = "▶ Analizar la reunión de demostración" if not needs_audio else "▶ Analizar"
+        st.button(label, type="primary", on_click=request_run, disabled=needs_audio and not audio_bytes,
+                  key="run-main")
+        if not demo:
+            st.caption("También puedes elegir otro cliente, grabar o subir un audio en la barra lateral.")
+    st.caption("Clientes, carteras y reuniones de esta demostración son sintéticos.")
     st.stop()
+
+# drawn after the analysis block so it appears right after the first «Analizar», not one rerun later
+st.sidebar.button("↺ Nuevo análisis", on_click=reset_analysis, use_container_width=True, key="reset")
 
 for w in res.warnings:
     st.warning(w)
@@ -146,6 +202,8 @@ audio_path = st.session_state.get("audio")
 if audio_path and Path(audio_path).exists():
     st.audio(str(audio_path), start_time=st.session_state.t)
     st.caption(f"Reproduciendo desde {mmss(st.session_state.t)} · pulsa ▶ en cualquier frase para saltar a ese momento")
+elif demo:
+    st.caption("Audio no disponible en esta demostración: cada ▶ indica el minuto exacto de la cita.")
 else:
     st.caption(f"(Sin audio en esta demostración simulada · salto pedido a {mmss(st.session_state.t)})")
 
@@ -158,9 +216,10 @@ c2.metric("Alertas rojas", reds)
 c3.metric("Incumplimientos de conducta", breaches if res.conduct else "—",
           help=None if res.conduct else "El chequeo de conducta no está disponible para este análisis")
 c4.metric("Cobertura de evidencia", "—" if res.report.template_mode else f"{res.report.coverage_pct:.0f} %")
-st.caption(f"⏱ Total {secs(sum(t.seconds for t in res.timings))} — "
-           + " · ".join(f"{STAGE_SHORT.get(t.stage, t.stage)} {secs(t.seconds)}" + (" (sim.)" if t.fake else "")
-                        for t in res.timings))
+if not (demo and all(t.fake for t in res.timings)):  # in demo mode, simulated 0,0 s timings are just noise
+    st.caption(f"⏱ Total {secs(sum(t.seconds for t in res.timings))} — "
+               + " · ".join(f"{STAGE_SHORT.get(t.stage, t.stage)} {secs(t.seconds)}" + (" (sim.)" if t.fake else "")
+                            for t in res.timings))
 
 t_rep, t_flags, t_cond, t_tr, t_sum = st.tabs(
     ["Informe de idoneidad", "Banderas", "Conducta", "Transcripción", "Resumen para el cliente"])
