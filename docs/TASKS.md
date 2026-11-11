@@ -90,8 +90,8 @@ Ruta crítica de la demo: C-1 → C-2 → B-1 → B-2 → A-2 → D-5.
 - ✅ **C-2** · ① (1,5 h) · **Clip de la demo**: `scripts/make_demo_clip.py` con los turnos de `tools/make_fixtures.py` → `app/data/audio/demo_clip.mp3` (TTS con 2 voces) **y** una versión grabada por dos del equipo — `scripts/**`, `app/data/audio/**` · C-1 · el clip transcrito contiene literalmente «me jubilo en tres años»
 - 🔵 **C-3** · ② (2 h) · Catálogo KID real: 8 fondos indexados (Vanguard, Amundi, iShares…) con SRI, horizonte, costes, liquidez, ETF proxy y `source_url`; al menos 1 RV emergente, 1 RV global, 2 RF corto plazo, 1 monetario — `app/data/kids.json` · — · valida contra `FundKID`
 - 🔵 **C-4** · ② (0,5 h) · `app/data/risk_limits.json` y 4 clientes sintéticos en `app/data/clients/` (incluido `CLI-DEMO-001` con ISIN reales) — `app/data/**` · C-3 · `list_clients()` los devuelve
-- 🟡 **C-5** · ② (1,5 h) · Precios: `scripts/fetch_prices.py` (yfinance, 3 años diarios) → `app/data/prices/<ticker>.csv` versionados; volatilidad por covarianza real — `scripts/**`, `app/data/prices/**` · C-3 · test con 2 activos de covarianza conocida
-- ⬜ **C-6** · ② (0,5 h) · Números reales del caso demo (horizonte, volatilidad, concentración) → avisar a D para el pitch — `docs/DECISIONS.md` · C-5 · línea en DECISIONS
+- 🔵 **C-5** · ② (1,5 h) · Precios: `scripts/fetch_prices.py` (yfinance, 3 años diarios) → `app/data/prices/<ticker>.csv` versionados; volatilidad por covarianza real — `scripts/**`, `app/data/prices/**` · C-3 · test con 2 activos de covarianza conocida
+- 🔵 **C-6** · ② (0,5 h) · Números reales del caso demo (horizonte, volatilidad, concentración) → avisar a D para el pitch — `docs/DECISIONS.md` · C-5 · línea en DECISIONS
 - ⬜ **C-7** · ② (1 h) · Audios de las 5 reuniones sintéticas de D con `synthesize_dialogue` (Flash, ≤ 4 min cada una) — `app/data/meetings/**` · D-3 · 5 `audio.mp3`, ≤ 20 000 créditos en total
 - ⬜ **C-8** · F (2 h) · Colchón + ensayos
 
@@ -118,3 +118,4 @@ Ruta crítica de la demo: C-1 → C-2 → B-1 → B-2 → A-2 → D-5.
 ### Peticiones (de otros roles)
 - C → D: el clip real `app/data/audio/demo_clip.mp3` dura 77 s y los tiempos de `fixtures/demo/transcript.json` son de 146 s. Su transcripción real (Scribe, 12/12 turnos correctos) está en `app/data/audio/demo_clip.transcript.json`: promuévela a `fixtures/demo/transcript.json` (y si quieres a `.cache/stt/dfdf840d54fbc7fb.json` en las instrucciones de arranque) para que los saltos al audio cuadren y nadie vuelva a gastar STT en el clip
 - C → D: con el catálogo real (`app/data/kids.json`), los ISIN `DEMO0000000x` del fixture ya no existen. Regenerad `fixtures/demo/` con ISIN reales: recomendación r1 → `IE0031786696` (Vanguard Emerging Markets Stock Index EUR Acc) y cliente = `app/data/clients/CLI-DEMO-001.json` (60 000 € `IE00B03HD191` + 40 000 € `LU0290356871`). Mientras tanto, con `check` real y `extract` simulado salen 2 banderas en vez de 5
+- C → D (pitch, C-6): cifras reales del caso demo en DECISIONS 2026-11-11 16:45: volatilidad 7,9 % → 12,8 % con límite 12 %; horizonte 5 > 3 años; concentración 30 % > 25 %. Dependen de que el fixture use los ISIN reales (petición anterior)
