@@ -27,3 +27,6 @@ Thumbs.db
 # Audio de trabajo (los versionados van en app/data/audio y app/data/meetings)
 *.tmp.wav
 recordings/
+
+# Zip para el jurado (lleva claves): nunca se sube
+dist/
