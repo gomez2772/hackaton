@@ -26,6 +26,8 @@ from app.export import (  # noqa: E402
     is_confirmed,
     sentence_text,
     summary_text,
+    unchecked_note,
+    verdict,
 )
 from app.pipeline import analyze  # noqa: E402
 from app.schemas import AnalysisResult, Evidence  # noqa: E402
@@ -153,6 +155,11 @@ with st.sidebar:
     if needs_audio and audio_bytes and settings.is_fake("stt"):
         st.caption(":orange[Transcripción simulada: se analizará la reunión de ejemplo, no tu audio.]")
     advisor = st.text_input("Asesor", settings.advisor_name)
+    # B-6 (petición de B): Claude reescribe la plantilla; si falla, se queda la plantilla
+    polish = st.toggle("Redactar el informe con IA", value=False, disabled=settings.is_fake("report"),
+                       help="Claude reescribe el informe de plantilla con mejor redacción, sin añadir hechos. "
+                            "Gasta tokens; si falla, se mantiene la plantilla."
+                       + (" No disponible: la etapa del informe está simulada." if settings.is_fake("report") else ""))
     go = st.button("Analizar", type="primary", use_container_width=True, disabled=needs_audio and not audio_bytes)
     if needs_audio and not audio_bytes:
         st.caption("Graba o sube un audio para poder analizarlo.")
@@ -177,7 +184,8 @@ if go:
             board.markdown(prog.markdown(STAGE_LABEL))
 
         try:
-            result = analyze(audio_path, client, settings=settings, advisor_name=advisor, on_stage=on_stage)
+            result = analyze(audio_path, client, settings=settings, advisor_name=advisor, on_stage=on_stage,
+                             polish_report=polish)
         except Exception as e:  # STT (or another stage without fallback) failed: say so, don't show a traceback
             prog.fail()
             board.markdown(prog.markdown(STAGE_LABEL))
@@ -192,6 +200,7 @@ if go:
         total = sum(t.seconds for t in result.timings)
         status.update(label=f"Análisis completado en {secs(total)}", state="complete", expanded=False)
     st.session_state.result, st.session_state.audio, st.session_state.t = result, audio_path, 0
+    st.session_state.polish_requested = polish
     st.session_state.exports = {}
 
 res: AnalysisResult | None = st.session_state.get("result")
@@ -219,6 +228,8 @@ if res is None:  # landing page: never an empty screen (A-7)
 # drawn after the analysis block so it appears right after the first «Analizar», not one rerun later
 st.sidebar.button("↺ Nuevo análisis", on_click=reset_analysis, use_container_width=True, key="reset")
 
+if note := unchecked_note(res):
+    st.warning(note, icon="⚠️")
 for w in res.warnings:
     st.warning(w)
 
@@ -233,10 +244,9 @@ else:
     st.caption(f"(Sin audio en esta demostración simulada · salto pedido a {mmss(st.session_state.t)})")
 
 reds = sum(f.severity.value == "red" for f in res.flags)
-ambers = sum(f.severity.value == "amber" for f in res.flags)
 breaches = sum(it.status.value == "breach" for it in res.conduct.items) if res.conduct else 0
 c1, c2, c3, c4 = st.columns(4)
-c1.metric("Idoneidad", "Sin evaluar" if not res.flags else "No idóneo" if reds else "Con advertencias" if ambers else "Idóneo")
+c1.metric("Idoneidad", verdict(res))
 c2.metric("Alertas rojas", reds)
 c3.metric("Incumplimientos de conducta", breaches if res.conduct else "—",
           help=None if res.conduct else "El chequeo de conducta no está disponible para este análisis")
@@ -252,6 +262,13 @@ t_rep, t_flags, t_cond, t_tr, t_sum = st.tabs(
 with t_rep:
     if res.report.template_mode:
         st.warning("Modo plantilla: la extracción con IA falló; completa el informe a mano.")
+    model = res.report.model or ""
+    if "claude" in model:
+        st.caption(f"✍️ Redacción: plantilla mejorada por IA ({model.split('+')[-1]}) · sin hechos añadidos")
+    elif st.session_state.get("polish_requested") and model == "plantilla":
+        st.caption("✍️ Redacción: plantilla (la redacción con IA no estuvo disponible)")
+    else:
+        st.caption("✍️ Redacción: plantilla" + (" (reunión de ejemplo)" if model == "fixture" else ""))
     # A-6: the advisor can edit and confirm sentences without evidence; exports use the confirmed text
     view = apply_edits(res, st.session_state.get("edits", {}).get(res.analysis_id, {}))
     pending = 0

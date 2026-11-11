@@ -25,7 +25,18 @@ from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.pdfgen import canvas as rl_canvas
 from reportlab.platypus import KeepTogether, Paragraph, SimpleDocTemplate, Spacer, Table, TableStyle
 
-from app.export import CONDUCT, CONFIRMED_LABEL, FOOTER, SEV_TXT, is_confirmed, mmss, sentence_text, verdict
+from app.export import (
+    CONDUCT,
+    CONFIRMED_LABEL,
+    FOOTER,
+    INCOMPLETE,
+    SEV_TXT,
+    is_confirmed,
+    mmss,
+    sentence_text,
+    unchecked_note,
+    verdict,
+)
 from app.schemas import AnalysisResult, Evidence
 
 # ------------------------------------------------------------------ palette and fonts
@@ -37,7 +48,7 @@ SOFT = colors.HexColor("#F3F4F6")
 SEV_COLOR = {"red": colors.HexColor("#B42318"), "amber": colors.HexColor("#B54708"), "green": colors.HexColor("#067647")}
 SEV_SOFT = {"red": colors.HexColor("#FEE4E2"), "amber": colors.HexColor("#FEF0C7"), "green": colors.HexColor("#DCFAE6")}
 CONDUCT_SEV = {"ok": "green", "breach": "red", "no_evidence": None}
-VERDICT_SEV = {"No idóneo": "red", "Con advertencias": "amber", "Idóneo": "green"}
+VERDICT_SEV = {"No idóneo": "red", INCOMPLETE: "amber", "Con advertencias": "amber", "Idóneo": "green"}
 
 PAGE_W, PAGE_H = A4
 MARGIN = 18 * mm
@@ -170,6 +181,8 @@ def _kpis(result: AnalysisResult, s: dict[str, ParagraphStyle]) -> Table:
     vsev = VERDICT_SEV.get(v)
     value_style = [ParagraphStyle(f"kv{i}", s["kpi_value"],
                                   textColor=colors.white if i == 0 and vsev else INK) for i in range(4)]
+    if len(v) > 12:  # «Comprobación incompleta» must wrap between words, not inside one
+        value_style[0] = ParagraphStyle("kv0s", value_style[0], fontSize=11.5, leading=14)
     t = Table([[Paragraph(_esc(val), value_style[i]) for i, (val, _) in enumerate(items)],
                [Paragraph(_esc(lab), s["kpi_label"] if i or not vsev else
                           ParagraphStyle("kl0", s["kpi_label"], textColor=colors.white))
@@ -299,6 +312,9 @@ def render(result: AnalysisResult) -> bytes:
         story += [Spacer(1, 8), Paragraph(
             f"<font color='#{_hex(SEV_COLOR['amber'])}'><b>MODO PLANTILLA.</b></font> La extracción con IA falló; "
             "el asesor debe completar el informe a mano.", s["missing"])]
+    if note := unchecked_note(result):
+        story += [Spacer(1, 8), Paragraph(f"<font color='#{_hex(SEV_COLOR['amber'])}'><b>COMPROBACIÓN INCOMPLETA."
+                                          f"</b></font> {_esc(note)}", s["missing"])]
     story += _sections(result, s) + _flags(result, s) + _conduct(result, s)
     story.append(KeepTogether(_summary(result, s) + [Spacer(1, 14), _closing(result, s)]))
 
