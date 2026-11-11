@@ -33,6 +33,11 @@ def audio_id(audio_path: Path) -> str:
     return h.hexdigest()[:16]
 
 
+def sidecar(audio_path: Path) -> Path:
+    """Versioned transcript next to the audio: demo_clip.mp3 -> demo_clip.transcript.json."""
+    return audio_path.with_name(f"{audio_path.stem}.transcript.json")
+
+
 def transcribe(audio_path: Path, *, language: str = "es", num_speakers: int = 2,
                settings: Settings | None = None) -> Transcript:
     """Diarized transcript of `audio_path`, cached by audio_id in ACTA_CACHE_DIR/stt/."""
@@ -42,6 +47,13 @@ def transcribe(audio_path: Path, *, language: str = "es", num_speakers: int = 2,
     if cache.exists():
         log.info("STT desde caché (%s): 0 créditos", aid)
         return Transcript.model_validate_json(cache.read_text(encoding="utf-8"))
+    shared = sidecar(audio_path)
+    if shared.exists():  # versioned transcript next to the audio: the whole team reuses it for free
+        tr = Transcript.model_validate_json(shared.read_text(encoding="utf-8"))
+        if tr.audio_id == aid:
+            log.info("STT desde %s: 0 créditos", shared.name)
+            return tr
+        log.warning("%s no corresponde a este audio (%s ≠ %s): se ignora", shared.name, tr.audio_id, aid)
     if not s.elevenlabs_api_key:
         raise STTError("Falta ELEVENLABS_API_KEY en .env")
 
