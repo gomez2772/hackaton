@@ -1,0 +1,1328 @@
+{
+ "audio_id": "1503e9bd5d63802c",
+ "language": "es",
+ "duration_s": 72.177375,
+ "segments": [
+  {
+   "id": "s0000",
+   "speaker_id": "speaker_0",
+   "role": "unknown",
+   "start": 0.04,
+   "end": 4.1,
+   "text": "Hola, Carmen, ¿qué tal? Le llamo para comentarle una idea sobre su cartera.",
+   "words": [
+    {
+     "text": "Hola,",
+     "start": 0.04,
+     "end": 0.24,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "Carmen,",
+     "start": 0.34,
+     "end": 0.62,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "¿qué",
+     "start": 0.7,
+     "end": 0.78,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "tal?",
+     "start": 0.86,
+     "end": 1.1,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "Le",
+     "start": 1.44,
+     "end": 1.52,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "llamo",
+     "start": 1.56,
+     "end": 1.84,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "para",
+     "start": 1.88,
+     "end": 2.0,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "comentarle",
+     "start": 2.08,
+     "end": 2.64,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "una",
+     "start": 2.7,
+     "end": 2.82,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "idea",
+     "start": 2.86,
+     "end": 3.08,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "sobre",
+     "start": 3.18,
+     "end": 3.38,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "su",
+     "start": 3.48,
+     "end": 3.54,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "cartera.",
+     "start": 3.64,
+     "end": 4.1,
+     "speaker_id": "speaker_0"
+    }
+   ]
+  },
+  {
+   "id": "s0001",
+   "speaker_id": "speaker_1",
+   "role": "unknown",
+   "start": 5.02,
+   "end": 5.96,
+   "text": "Hola. Muy bien. Dígame.",
+   "words": [
+    {
+     "text": "Hola.",
+     "start": 5.02,
+     "end": 5.2,
+     "speaker_id": "speaker_1"
+    },
+    {
+     "text": "Muy",
+     "start": 5.36,
+     "end": 5.44,
+     "speaker_id": "speaker_1"
+    },
+    {
+     "text": "bien.",
+     "start": 5.48,
+     "end": 5.62,
+     "speaker_id": "speaker_1"
+    },
+    {
+     "text": "Dígame.",
+     "start": 5.66,
+     "end": 5.96,
+     "speaker_id": "speaker_1"
+    }
+   ]
+  },
+  {
+   "id": "s0002",
+   "speaker_id": "speaker_0",
+   "role": "unknown",
+   "start": 6.84,
+   "end": 15.76,
+   "text": "Tiene ciento sesenta mil euros, casi todo en renta fija a corto plazo, ciento cuarenta mil y veinte mil en renta variable global.",
+   "words": [
+    {
+     "text": "Tiene",
+     "start": 6.84,
+     "end": 7.08,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "ciento",
+     "start": 7.2,
+     "end": 7.54,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "sesenta",
+     "start": 7.62,
+     "end": 8.0,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "mil",
+     "start": 8.06,
+     "end": 8.2,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "euros,",
+     "start": 8.28,
+     "end": 8.6,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "casi",
+     "start": 8.96,
+     "end": 9.14,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "todo",
+     "start": 9.22,
+     "end": 9.46,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "en",
+     "start": 9.52,
+     "end": 9.62,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "renta",
+     "start": 9.7,
+     "end": 9.94,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "fija",
+     "start": 10.04,
+     "end": 10.36,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "a",
+     "start": 10.44,
+     "end": 10.5,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "corto",
+     "start": 10.6,
+     "end": 10.86,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "plazo,",
+     "start": 10.94,
+     "end": 11.26,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "ciento",
+     "start": 11.88,
+     "end": 12.26,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "cuarenta",
+     "start": 12.34,
+     "end": 12.72,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "mil",
+     "start": 12.8,
+     "end": 13.02,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "y",
+     "start": 13.6,
+     "end": 13.64,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "veinte",
+     "start": 13.72,
+     "end": 14.04,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "mil",
+     "start": 14.12,
+     "end": 14.32,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "en",
+     "start": 14.36,
+     "end": 14.48,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "renta",
+     "start": 14.56,
+     "end": 14.84,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "variable",
+     "start": 14.86,
+     "end": 15.28,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "global.",
+     "start": 15.34,
+     "end": 15.76,
+     "speaker_id": "speaker_0"
+    }
+   ]
+  },
+  {
+   "id": "s0003",
+   "speaker_id": "speaker_1",
+   "role": "unknown",
+   "start": 16.64,
+   "end": 17.44,
+   "text": "Sí, más o menos.",
+   "words": [
+    {
+     "text": "Sí,",
+     "start": 16.64,
+     "end": 16.74,
+     "speaker_id": "speaker_1"
+    },
+    {
+     "text": "más",
+     "start": 16.82,
+     "end": 16.94,
+     "speaker_id": "speaker_1"
+    },
+    {
+     "text": "o",
+     "start": 16.98,
+     "end": 17.0,
+     "speaker_id": "speaker_1"
+    },
+    {
+     "text": "menos.",
+     "start": 17.08,
+     "end": 17.44,
+     "speaker_id": "speaker_1"
+    }
+   ]
+  },
+  {
+   "id": "s0004",
+   "speaker_id": "speaker_0",
+   "role": "unknown",
+   "start": 18.24,
+   "end": 23.68,
+   "text": "Le propongo mover quince mil euros de la renta fija al fondo indexado de renta variable global.",
+   "words": [
+    {
+     "text": "Le",
+     "start": 18.24,
+     "end": 18.3,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "propongo",
+     "start": 18.38,
+     "end": 18.74,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "mover",
+     "start": 18.8,
+     "end": 19.14,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "quince",
+     "start": 19.18,
+     "end": 19.46,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "mil",
+     "start": 19.52,
+     "end": 19.66,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "euros",
+     "start": 19.72,
+     "end": 20.0,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "de",
+     "start": 20.04,
+     "end": 20.1,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "la",
+     "start": 20.14,
+     "end": 20.2,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "renta",
+     "start": 20.28,
+     "end": 20.52,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "fija",
+     "start": 20.62,
+     "end": 20.92,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "al",
+     "start": 21.28,
+     "end": 21.42,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "fondo",
+     "start": 21.46,
+     "end": 21.68,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "indexado",
+     "start": 21.7,
+     "end": 22.26,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "de",
+     "start": 22.34,
+     "end": 22.4,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "renta",
+     "start": 22.5,
+     "end": 22.78,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "variable",
+     "start": 22.8,
+     "end": 23.18,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "global.",
+     "start": 23.24,
+     "end": 23.68,
+     "speaker_id": "speaker_0"
+    }
+   ]
+  },
+  {
+   "id": "s0005",
+   "speaker_id": "speaker_1",
+   "role": "unknown",
+   "start": 24.48,
+   "end": 27.6,
+   "text": "Mire, le soy sincera: no entiendo bien qué es eso de la renta variable.",
+   "words": [
+    {
+     "text": "Mire,",
+     "start": 24.48,
+     "end": 24.64,
+     "speaker_id": "speaker_1"
+    },
+    {
+     "text": "le",
+     "start": 24.72,
+     "end": 24.8,
+     "speaker_id": "speaker_1"
+    },
+    {
+     "text": "soy",
+     "start": 24.84,
+     "end": 24.96,
+     "speaker_id": "speaker_1"
+    },
+    {
+     "text": "sincera:",
+     "start": 24.98,
+     "end": 25.26,
+     "speaker_id": "speaker_1"
+    },
+    {
+     "text": "no",
+     "start": 25.34,
+     "end": 25.4,
+     "speaker_id": "speaker_1"
+    },
+    {
+     "text": "entiendo",
+     "start": 25.42,
+     "end": 25.86,
+     "speaker_id": "speaker_1"
+    },
+    {
+     "text": "bien",
+     "start": 25.88,
+     "end": 26.08,
+     "speaker_id": "speaker_1"
+    },
+    {
+     "text": "qué",
+     "start": 26.18,
+     "end": 26.22,
+     "speaker_id": "speaker_1"
+    },
+    {
+     "text": "es",
+     "start": 26.26,
+     "end": 26.32,
+     "speaker_id": "speaker_1"
+    },
+    {
+     "text": "eso",
+     "start": 26.36,
+     "end": 26.52,
+     "speaker_id": "speaker_1"
+    },
+    {
+     "text": "de",
+     "start": 26.54,
+     "end": 26.6,
+     "speaker_id": "speaker_1"
+    },
+    {
+     "text": "la",
+     "start": 26.64,
+     "end": 26.68,
+     "speaker_id": "speaker_1"
+    },
+    {
+     "text": "renta",
+     "start": 26.78,
+     "end": 27.04,
+     "speaker_id": "speaker_1"
+    },
+    {
+     "text": "variable.",
+     "start": 27.08,
+     "end": 27.6,
+     "speaker_id": "speaker_1"
+    }
+   ]
+  },
+  {
+   "id": "s0006",
+   "speaker_id": "speaker_0",
+   "role": "unknown",
+   "start": 28.46,
+   "end": 33.7,
+   "text": "No se preocupe, es un fondo muy conocido, lo tiene muchísima gente. Es lo normal hoy en día.",
+   "words": [
+    {
+     "text": "No",
+     "start": 28.46,
+     "end": 28.58,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "se",
+     "start": 28.66,
+     "end": 28.78,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "preocupe,",
+     "start": 28.8,
+     "end": 29.28,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "es",
+     "start": 29.66,
+     "end": 29.74,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "un",
+     "start": 29.8,
+     "end": 29.92,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "fondo",
+     "start": 29.96,
+     "end": 30.2,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "muy",
+     "start": 30.24,
+     "end": 30.4,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "conocido,",
+     "start": 30.42,
+     "end": 30.88,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "lo",
+     "start": 30.98,
+     "end": 31.06,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "tiene",
+     "start": 31.14,
+     "end": 31.36,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "muchísima",
+     "start": 31.4,
+     "end": 31.92,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "gente.",
+     "start": 32.0,
+     "end": 32.28,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "Es",
+     "start": 32.4,
+     "end": 32.54,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "lo",
+     "start": 32.58,
+     "end": 32.64,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "normal",
+     "start": 32.72,
+     "end": 33.1,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "hoy",
+     "start": 33.12,
+     "end": 33.3,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "en",
+     "start": 33.32,
+     "end": 33.4,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "día.",
+     "start": 33.46,
+     "end": 33.7,
+     "speaker_id": "speaker_0"
+    }
+   ]
+  },
+  {
+   "id": "s0007",
+   "speaker_id": "speaker_1",
+   "role": "unknown",
+   "start": 34.6,
+   "end": 36.42,
+   "text": "Ya, ¿pero qué puede pasar con mi dinero?",
+   "words": [
+    {
+     "text": "Ya,",
+     "start": 34.6,
+     "end": 34.76,
+     "speaker_id": "speaker_1"
+    },
+    {
+     "text": "¿pero",
+     "start": 34.86,
+     "end": 35.02,
+     "speaker_id": "speaker_1"
+    },
+    {
+     "text": "qué",
+     "start": 35.08,
+     "end": 35.2,
+     "speaker_id": "speaker_1"
+    },
+    {
+     "text": "puede",
+     "start": 35.22,
+     "end": 35.42,
+     "speaker_id": "speaker_1"
+    },
+    {
+     "text": "pasar",
+     "start": 35.46,
+     "end": 35.66,
+     "speaker_id": "speaker_1"
+    },
+    {
+     "text": "con",
+     "start": 35.74,
+     "end": 35.84,
+     "speaker_id": "speaker_1"
+    },
+    {
+     "text": "mi",
+     "start": 35.86,
+     "end": 35.94,
+     "speaker_id": "speaker_1"
+    },
+    {
+     "text": "dinero?",
+     "start": 35.98,
+     "end": 36.42,
+     "speaker_id": "speaker_1"
+    }
+   ]
+  },
+  {
+   "id": "s0008",
+   "speaker_id": "speaker_0",
+   "role": "unknown",
+   "start": 37.28,
+   "end": 40.84,
+   "text": "Nada raro, de verdad. Es un producto de una gestora muy grande.",
+   "words": [
+    {
+     "text": "Nada",
+     "start": 37.28,
+     "end": 37.46,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "raro,",
+     "start": 37.56,
+     "end": 37.78,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "de",
+     "start": 37.88,
+     "end": 37.96,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "verdad.",
+     "start": 37.98,
+     "end": 38.3,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "Es",
+     "start": 38.66,
+     "end": 38.76,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "un",
+     "start": 38.82,
+     "end": 38.9,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "producto",
+     "start": 38.92,
+     "end": 39.32,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "de",
+     "start": 39.38,
+     "end": 39.5,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "una",
+     "start": 39.54,
+     "end": 39.66,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "gestora",
+     "start": 39.72,
+     "end": 40.1,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "muy",
+     "start": 40.2,
+     "end": 40.34,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "grande.",
+     "start": 40.42,
+     "end": 40.84,
+     "speaker_id": "speaker_0"
+    }
+   ]
+  },
+  {
+   "id": "s0009",
+   "speaker_id": "speaker_1",
+   "role": "unknown",
+   "start": 41.7,
+   "end": 42.9,
+   "text": "Bueno, ¿y cuánto cuesta?",
+   "words": [
+    {
+     "text": "Bueno,",
+     "start": 41.7,
+     "end": 41.92,
+     "speaker_id": "speaker_1"
+    },
+    {
+     "text": "¿y",
+     "start": 42.16,
+     "end": 42.26,
+     "speaker_id": "speaker_1"
+    },
+    {
+     "text": "cuánto",
+     "start": 42.28,
+     "end": 42.5,
+     "speaker_id": "speaker_1"
+    },
+    {
+     "text": "cuesta?",
+     "start": 42.56,
+     "end": 42.9,
+     "speaker_id": "speaker_1"
+    }
+   ]
+  },
+  {
+   "id": "s0010",
+   "speaker_id": "speaker_0",
+   "role": "unknown",
+   "start": 43.78,
+   "end": 48.54,
+   "text": "Tiene una comisión de 0,2 % al año, muy barata comparada con otros fondos.",
+   "words": [
+    {
+     "text": "Tiene",
+     "start": 43.78,
+     "end": 43.96,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "una",
+     "start": 43.98,
+     "end": 44.12,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "comisión",
+     "start": 44.14,
+     "end": 44.54,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "de",
+     "start": 44.58,
+     "end": 44.64,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "0,2",
+     "start": 44.88,
+     "end": 45.38,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "%",
+     "start": 45.4,
+     "end": 45.84,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "al",
+     "start": 45.86,
+     "end": 45.94,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "año,",
+     "start": 46.0,
+     "end": 46.2,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "muy",
+     "start": 46.6,
+     "end": 46.74,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "barata",
+     "start": 46.82,
+     "end": 47.14,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "comparada",
+     "start": 47.22,
+     "end": 47.68,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "con",
+     "start": 47.7,
+     "end": 47.8,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "otros",
+     "start": 47.86,
+     "end": 48.12,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "fondos.",
+     "start": 48.16,
+     "end": 48.54,
+     "speaker_id": "speaker_0"
+    }
+   ]
+  },
+  {
+   "id": "s0011",
+   "speaker_id": "speaker_1",
+   "role": "unknown",
+   "start": 49.4,
+   "end": 50.42,
+   "text": "Ah, ¿eso está bien?",
+   "words": [
+    {
+     "text": "Ah,",
+     "start": 49.4,
+     "end": 49.6,
+     "speaker_id": "speaker_1"
+    },
+    {
+     "text": "¿eso",
+     "start": 49.68,
+     "end": 49.86,
+     "speaker_id": "speaker_1"
+    },
+    {
+     "text": "está",
+     "start": 49.9,
+     "end": 50.12,
+     "speaker_id": "speaker_1"
+    },
+    {
+     "text": "bien?",
+     "start": 50.14,
+     "end": 50.42,
+     "speaker_id": "speaker_1"
+    }
+   ]
+  },
+  {
+   "id": "s0012",
+   "speaker_id": "speaker_0",
+   "role": "unknown",
+   "start": 51.26,
+   "end": 55.02,
+   "text": "Y no le estoy prometiendo nada. Puede subir o bajar como cualquier fondo.",
+   "words": [
+    {
+     "text": "Y",
+     "start": 51.26,
+     "end": 51.3,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "no",
+     "start": 51.36,
+     "end": 51.44,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "le",
+     "start": 51.5,
+     "end": 51.58,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "estoy",
+     "start": 51.62,
+     "end": 51.86,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "prometiendo",
+     "start": 51.9,
+     "end": 52.38,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "nada.",
+     "start": 52.44,
+     "end": 52.66,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "Puede",
+     "start": 52.84,
+     "end": 53.04,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "subir",
+     "start": 53.12,
+     "end": 53.38,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "o",
+     "start": 53.42,
+     "end": 53.46,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "bajar",
+     "start": 53.5,
+     "end": 53.78,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "como",
+     "start": 53.92,
+     "end": 54.26,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "cualquier",
+     "start": 54.3,
+     "end": 54.66,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "fondo.",
+     "start": 54.76,
+     "end": 55.02,
+     "speaker_id": "speaker_0"
+    }
+   ]
+  },
+  {
+   "id": "s0013",
+   "speaker_id": "speaker_1",
+   "role": "unknown",
+   "start": 55.94,
+   "end": 57.28,
+   "text": "Vale, déjeme que lo piense.",
+   "words": [
+    {
+     "text": "Vale,",
+     "start": 55.94,
+     "end": 56.12,
+     "speaker_id": "speaker_1"
+    },
+    {
+     "text": "déjeme",
+     "start": 56.4,
+     "end": 56.64,
+     "speaker_id": "speaker_1"
+    },
+    {
+     "text": "que",
+     "start": 56.7,
+     "end": 56.76,
+     "speaker_id": "speaker_1"
+    },
+    {
+     "text": "lo",
+     "start": 56.8,
+     "end": 56.84,
+     "speaker_id": "speaker_1"
+    },
+    {
+     "text": "piense.",
+     "start": 56.92,
+     "end": 57.28,
+     "speaker_id": "speaker_1"
+    }
+   ]
+  },
+  {
+   "id": "s0014",
+   "speaker_id": "speaker_0",
+   "role": "unknown",
+   "start": 58.14,
+   "end": 62.82,
+   "text": "Claro. Decídalo cuando quiera. No hay ninguna prisa. Si le parece, la llamo el jueves.",
+   "words": [
+    {
+     "text": "Claro.",
+     "start": 58.14,
+     "end": 58.44,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "Decídalo",
+     "start": 58.52,
+     "end": 59.06,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "cuando",
+     "start": 59.1,
+     "end": 59.34,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "quiera.",
+     "start": 59.44,
+     "end": 59.7,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "No",
+     "start": 59.76,
+     "end": 59.86,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "hay",
+     "start": 59.88,
+     "end": 60.02,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "ninguna",
+     "start": 60.06,
+     "end": 60.42,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "prisa.",
+     "start": 60.5,
+     "end": 60.8,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "Si",
+     "start": 61.38,
+     "end": 61.46,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "le",
+     "start": 61.5,
+     "end": 61.6,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "parece,",
+     "start": 61.62,
+     "end": 61.9,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "la",
+     "start": 61.96,
+     "end": 62.02,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "llamo",
+     "start": 62.08,
+     "end": 62.3,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "el",
+     "start": 62.32,
+     "end": 62.4,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "jueves.",
+     "start": 62.48,
+     "end": 62.82,
+     "speaker_id": "speaker_0"
+    }
+   ]
+  },
+  {
+   "id": "s0015",
+   "speaker_id": "speaker_1",
+   "role": "unknown",
+   "start": 63.7,
+   "end": 65.56,
+   "text": "El jueves me va bien, por la tarde.",
+   "words": [
+    {
+     "text": "El",
+     "start": 63.7,
+     "end": 63.78,
+     "speaker_id": "speaker_1"
+    },
+    {
+     "text": "jueves",
+     "start": 63.9,
+     "end": 64.239,
+     "speaker_id": "speaker_1"
+    },
+    {
+     "text": "me",
+     "start": 64.319,
+     "end": 64.42,
+     "speaker_id": "speaker_1"
+    },
+    {
+     "text": "va",
+     "start": 64.44,
+     "end": 64.5,
+     "speaker_id": "speaker_1"
+    },
+    {
+     "text": "bien,",
+     "start": 64.58,
+     "end": 64.819,
+     "speaker_id": "speaker_1"
+    },
+    {
+     "text": "por",
+     "start": 64.92,
+     "end": 65.04,
+     "speaker_id": "speaker_1"
+    },
+    {
+     "text": "la",
+     "start": 65.08,
+     "end": 65.14,
+     "speaker_id": "speaker_1"
+    },
+    {
+     "text": "tarde.",
+     "start": 65.22,
+     "end": 65.56,
+     "speaker_id": "speaker_1"
+    }
+   ]
+  },
+  {
+   "id": "s0016",
+   "speaker_id": "speaker_0",
+   "role": "unknown",
+   "start": 66.42,
+   "end": 69.98,
+   "text": "Perfecto. El jueves por la tarde la llamo. Que tenga buen día.",
+   "words": [
+    {
+     "text": "Perfecto.",
+     "start": 66.42,
+     "end": 66.9,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "El",
+     "start": 67.02,
+     "end": 67.08,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "jueves",
+     "start": 67.18,
+     "end": 67.54,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "por",
+     "start": 67.56,
+     "end": 67.68,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "la",
+     "start": 67.7,
+     "end": 67.76,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "tarde",
+     "start": 67.84,
+     "end": 68.1,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "la",
+     "start": 68.14,
+     "end": 68.2,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "llamo.",
+     "start": 68.26,
+     "end": 68.52,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "Que",
+     "start": 68.92,
+     "end": 69.0,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "tenga",
+     "start": 69.1,
+     "end": 69.38,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "buen",
+     "start": 69.46,
+     "end": 69.64,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "día.",
+     "start": 69.7,
+     "end": 69.98,
+     "speaker_id": "speaker_0"
+    }
+   ]
+  },
+  {
+   "id": "s0017",
+   "speaker_id": "speaker_1",
+   "role": "unknown",
+   "start": 70.86,
+   "end": 71.98,
+   "text": "Igualmente. Gracias.",
+   "words": [
+    {
+     "text": "Igualmente.",
+     "start": 70.86,
+     "end": 71.38,
+     "speaker_id": "speaker_1"
+    },
+    {
+     "text": "Gracias.",
+     "start": 71.48,
+     "end": 71.98,
+     "speaker_id": "speaker_1"
+    }
+   ]
+  }
+ ],
+ "stt_provider": "elevenlabs"
+}

@@ -45,8 +45,14 @@
     "esta conversación se graba",
     "Queremos hacerlo dentro de dos años",
     "pasar cincuenta mil euros de la renta fija al fondo de renta variable global",
-    "puede caer un treinta por ciento o más",
-    "gastos corrientes de cero coma dos por ciento al año",
+    [
+      "puede caer un treinta por ciento o más",
+      "puede caer un 30 % o más"
+    ],
+    [
+      "gastos corrientes de cero coma dos por ciento al año",
+      "gastos corrientes de 0,2 % al año"
+    ],
     "no recibimos incentivos de la gestora del fondo",
     "le enviaré el documento de datos fundamentales"
   ],

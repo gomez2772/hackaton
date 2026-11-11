@@ -35,7 +35,7 @@ REAL_ISIN = {"equity_global": "IE00B03HD191", "equity_em": "IE0031786696", "bond
 def perfect(m: ev.Meeting) -> AnalysisResult:
     """What a flawless pipeline would return for meeting `m`."""
     tr = ev.script_transcript(m)
-    quotes = [locate(q, tr) for q in m.truth["key_quotes"]]
+    quotes = [locate(ev.quote_forms(q)[0], tr) for q in m.truth["key_quotes"]]
     t = m.truth
     recs = [Recommendation(id=r["id"], product_name=r["asset_class"], isin=REAL_ISIN[r["asset_class"]],
                            action=r["action"], amount_eur=r["amount_eur"], rationale="", evidence=quotes[:1])
@@ -60,7 +60,7 @@ def test_script_transcript_contains_every_key_quote():
         assert tr.segments[0].speaker_id == "speaker_0" and m.turns[0][0] == "advisor"
         assert all(a.end <= b.start for a, b in zip(tr.segments, tr.segments[1:], strict=False))
         for q in m.truth["key_quotes"]:
-            assert locate(q, tr).verified, f"{m.id}: {q!r}"
+            assert locate(ev.quote_forms(q)[0], tr).verified, f"{m.id}: {q!r}"
 
 
 @pytest.mark.parametrize("mid", sorted(MEETINGS))
@@ -125,3 +125,17 @@ def test_markdown_report_renders():
     assert "# EVAL.md" in doc and "| m05_correcta |" in doc and "Ninguno." in doc and "sintéticas" in doc
     assert "## Advertencias" in doc and "contaminación" in doc
     assert "## Revisiones de la verdad de referencia" in doc  # m05 truth was revised
+
+
+def test_key_quote_accepts_any_form():
+    q = ["puede caer un treinta por ciento", "puede caer un 30 %"]
+    audio = [Evidence(quote="En un mal año puede caer un 30 % o más", verified=True)]
+    assert ev.score_quotes([q], audio)["key_found"] == 1
+    assert ev.score_quotes([q], [])["missing"] == ["puede caer un treinta por ciento"]
+
+
+def test_combined_doc_has_a_section_per_saved_source():
+    doc = ev.combined_doc()
+    assert doc.startswith("# EVAL.md")
+    assert ("## Con audio" in doc) == bool(ev.latest_result("audio"))
+    assert "### Resumen" in doc and "# EVAL.md" not in doc.split("\n", 1)[1]

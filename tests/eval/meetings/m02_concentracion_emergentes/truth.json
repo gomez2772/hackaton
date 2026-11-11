@@ -41,7 +41,10 @@
     "esta llamada queda grabada",
     "no voy a necesitar este dinero en al menos diez años",
     "invertir noventa mil euros en un fondo indexado de renta variable de mercados emergentes",
-    "Pueden caer un cuarenta por ciento en un mal año",
+    [
+      "Pueden caer un cuarenta por ciento en un mal año",
+      "Pueden caer un 40 % en un mal año"
+    ],
     "gastos corrientes del fondo son de cero coma veinticinco por ciento al año",
     "nuestra entidad no cobra retrocesiones de esta gestora",
     "No le puedo asegurar ninguna rentabilidad"

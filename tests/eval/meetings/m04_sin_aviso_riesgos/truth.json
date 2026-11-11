@@ -3,7 +3,13 @@
   "scenario": "conduct_failure",
   "description": "Perfil 3 con horizonte de 8 años (del perfil). Recomendación idónea (15 000 € a RV global), pero no avisa de la grabación, no pregunta por la situación y esquiva explicar riesgos cuando la clienta dice no entender.",
   "recommendations": [
-    {"id": "r1", "action": "buy", "asset_class": "equity_global", "amount_eur": 15000, "funded_from": "bond_short_eur"}
+    {
+      "id": "r1",
+      "action": "buy",
+      "asset_class": "equity_global",
+      "amount_eur": 15000,
+      "funded_from": "bond_short_eur"
+    }
   ],
   "stated_needs": [],
   "flags": {
@@ -28,7 +34,10 @@
     "no entiendo bien qué es eso de la renta variable",
     "No se preocupe, es un fondo muy conocido",
     "Nada raro, de verdad",
-    "comisión de cero coma dos por ciento al año",
+    [
+      "comisión de cero coma dos por ciento al año",
+      "comisión de 0,2 % al año"
+    ],
     "decídalo cuando quiera, no hay ninguna prisa",
     "el jueves por la tarde la llamo"
   ]

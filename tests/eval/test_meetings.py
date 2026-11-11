@@ -14,6 +14,7 @@ from app.engine.conduct import CHECKLIST
 from app.schemas import ClientProfile, Evidence, Extraction, Recommendation, StatedNeed
 
 MEETINGS = Path(__file__).resolve().parent / "meetings"
+ROOT = Path(__file__).resolve().parents[2]
 DIRS = sorted(p for p in MEETINGS.iterdir() if p.is_dir())
 KIDS = load_kids()
 # asset class -> real fund used in the meetings (mapping given by C in PET-1)
@@ -52,7 +53,20 @@ def test_client_is_valid_and_matches(d):
 def test_key_quotes_are_literal(d):
     turns = [normalize(t) for _, t in load(d, "script")["turns"]]
     for q in load(d, "truth")["key_quotes"]:
-        assert any(normalize(q) in t for t in turns), f"cita no literal: {q!r}"
+        first = q if isinstance(q, str) else q[0]  # first form = script wording
+        assert any(normalize(first) in t for t in turns), f"cita no literal: {first!r}"
+
+
+@pytest.mark.parametrize("d", DIRS, ids=lambda d: d.name)
+def test_key_quotes_match_the_real_transcript(d):
+    """Some accepted form of every key quote appears in C's real transcript (C-10)."""
+    tr = ROOT / "app" / "data" / "meetings" / d.name / "audio.transcript.json"
+    if not tr.exists():
+        pytest.skip("sin transcripción real")
+    segs = [normalize(s["text"]) for s in json.loads(tr.read_text(encoding="utf-8"))["segments"]]
+    for q in load(d, "truth")["key_quotes"]:
+        forms = [q] if isinstance(q, str) else q
+        assert any(normalize(f) in t for f in forms for t in segs), f"ninguna forma en el audio: {forms}"
 
 
 @pytest.mark.parametrize("d", DIRS, ids=lambda d: d.name)

@@ -197,12 +197,22 @@ def all_evidence(r: AnalysisResult) -> list[Evidence]:
     return evs
 
 
-def score_quotes(key_quotes: list[str], evs: list[Evidence]) -> dict:
-    """Key-quote recall (a verified quote overlaps it) and share of verified quotes overall."""
+def quote_forms(q: str | list[str]) -> list[str]:
+    """A key quote is a string or a list of accepted forms (script wording, real-transcript wording)."""
+    return [q] if isinstance(q, str) else list(q)
+
+
+def score_quotes(key_quotes: list[str | list[str]], evs: list[Evidence]) -> dict:
+    """Key-quote recall (a verified quote overlaps any accepted form) and share of verified quotes."""
     ver = [normalize(e.quote) for e in evs if e.verified]
-    found = [q for q in key_quotes if any(normalize(q) in v or (len(v.split()) >= 3 and v in normalize(q)) for v in ver)]
+
+    def hit(form: str) -> bool:
+        f = normalize(form)
+        return any(f in v or (len(v.split()) >= 3 and v in f) for v in ver)
+
+    found = [q for q in key_quotes if any(hit(f) for f in quote_forms(q))]
     return {"key_found": len(found), "key_total": len(key_quotes),
-            "missing": [q for q in key_quotes if q not in found],
+            "missing": [quote_forms(q)[0] for q in key_quotes if q not in found],
             "verified": len(ver), "evidence_total": len(evs)}
 
 
@@ -357,6 +367,34 @@ def markdown(scores: list[dict], agg: dict, source: str, model: str) -> str:
     return "\n".join(lines)
 
 
+SOURCE_TITLE = {
+    "audio": "Con audio: audios sintéticos (TTS) → transcripción real de ElevenLabs Scribe → pipeline",
+    "script": "Con guion: transcripción construida a partir del guion (aísla las etapas con LLM)",
+}
+
+
+def latest_result(source: str) -> dict | None:
+    """Most recent saved result of `source` (tests/eval/results/<source>-*.json)."""
+    files = sorted(RESULTS.glob(f"{source}-*.json"))
+    return json.loads(files[-1].read_text(encoding="utf-8")) if files else None
+
+
+def combined_doc() -> str:
+    """docs/EVAL.md with every source that has results: audio first (end to end), then script."""
+    parts = []
+    for source in ("audio", "script"):
+        r = latest_result(source)
+        if r is None:
+            continue
+        body = markdown(r["meetings"], r["aggregate"], source, r["model"]).split("\n")
+        body = [("#" + line if line.startswith("## ") else line) for line in body[1:]]  # drop title, demote
+        parts.append("\n".join([f"## {SOURCE_TITLE[source]}", *body]))
+    head = ["# EVAL.md — Evaluación de Acta (D-4)", "",
+            "Regenerar: `python tests/eval/run_eval.py --source audio --write-doc` (o `--source script`). "
+            "Cada sección usa el último resultado guardado de esa fuente.", ""]
+    return "\n".join(head) + "\n" + "\n\n".join(parts) + "\n"
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(description="Evalúa Acta sobre las reuniones sintéticas")
     ap.add_argument("--source", choices=["script", "audio"], default="script")
@@ -384,7 +422,7 @@ def main() -> None:
     sys.stdout.write(doc + "\n")
     log.info("resultados en %s", out.relative_to(ROOT))
     if args.write_doc:
-        EVAL_DOC.write_text(doc, encoding="utf-8")
+        EVAL_DOC.write_text(combined_doc(), encoding="utf-8")
         log.info("escrito %s", EVAL_DOC.relative_to(ROOT))
 
 
