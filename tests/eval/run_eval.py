@@ -1,4 +1,4 @@
-"""Evaluation of Acta on the 5 synthetic meetings (D-4). Owner: D.
+"""Evaluation of Verbatim on the 5 synthetic meetings (D-4). Owner: D.
 
 Runs the real pipeline (`app.pipeline.analyze`) on each meeting in tests/eval/meetings/ and scores it
 against truth.json: recommendations, stated needs, flags, conduct, literal quotes, coverage and latency.
@@ -307,7 +307,7 @@ def markdown(scores: list[dict], agg: dict, source: str, model: str) -> str:
     src = ("transcripción del guion (sin STT)" if source == "script"
            else "audio sintético (TTS) → ElevenLabs Scribe")
     lines = [
-        "# EVAL.md — Evaluación de Acta (D-4)",
+        "# EVAL.md — Evaluación de Verbatim (D-4)",
         "",
         f"Generado por `tests/eval/run_eval.py --source {source}` el {datetime.now():%Y-%m-%d %H:%M}. "
         f"Modelo: `{model}`. Entrada: {src}.",
@@ -389,14 +389,14 @@ def combined_doc() -> str:
         body = markdown(r["meetings"], r["aggregate"], source, r["model"]).split("\n")
         body = [("#" + line if line.startswith("## ") else line) for line in body[1:]]  # drop title, demote
         parts.append("\n".join([f"## {SOURCE_TITLE[source]}", *body]))
-    head = ["# EVAL.md — Evaluación de Acta (D-4)", "",
+    head = ["# EVAL.md — Evaluación de Verbatim (D-4)", "",
             "Regenerar: `python tests/eval/run_eval.py --source audio --write-doc` (o `--source script`). "
             "Cada sección usa el último resultado guardado de esa fuente.", ""]
     return "\n".join(head) + "\n" + "\n\n".join(parts) + "\n"
 
 
 def main() -> None:
-    ap = argparse.ArgumentParser(description="Evalúa Acta sobre las reuniones sintéticas")
+    ap = argparse.ArgumentParser(description="Evalúa Verbatim sobre las reuniones sintéticas")
     ap.add_argument("--source", choices=["script", "audio"], default="script")
     ap.add_argument("--only", help="id de una reunión (carpeta)")
     ap.add_argument("--write-doc", action="store_true", help="escribe docs/EVAL.md")

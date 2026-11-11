@@ -1,8 +1,8 @@
-# Acta
+# Verbatim
 
 **De la grabación de una reunión asesor–cliente al borrador del informe de idoneidad MiFID II, con
-cada frase enlazada al segundo exacto del audio en que se dijo.** Pensado para integrarse en
-**GPTadvisor** como herramienta para sus asesores.
+cada frase enlazada al segundo exacto del audio en que se dijo.** Pensado para entidades y asesores
+financieros.
 
 ```
 audio → ElevenLabs Scribe (quién habla y cuándo) → Claude (extracción con citas literales)
@@ -25,14 +25,30 @@ audio → ElevenLabs Scribe (quién habla y cuándo) → Claude (extracción con
 
 Caso de la demo, con datos reales del catálogo: Lucía (perfil 3, 100 000 €) se jubila en 3 años y
 el asesor le propone 30 000 € en un fondo de emergentes asegurando que «no va a perder dinero».
-Acta marca en rojo el horizonte (5 años del KID frente a 3) y la volatilidad (de 7,9 % a 12,8 %,
+Verbatim marca en rojo el horizonte (5 años del KID frente a 3) y la volatilidad (de 7,9 % a 12,8 %,
 con un límite del 12 %), en ámbar la concentración (30 %) y el SRI, y señala dos incumplimientos
 de conducta: la promesa de rentabilidad y los riesgos sin explicar.
+
+## Abrir con doble clic
+
+Solo hace falta Python 3.11 o superior (python.org; en Windows, marca «Add Python to PATH»).
+
+- **Windows**: doble clic en `Verbatim.bat`.
+- **Mac**: la primera vez, clic derecho en `Verbatim.command` → «Abrir» → «Abrir»; después, doble clic.
+  Si llegó sin permiso de ejecución: `chmod +x Verbatim.command`.
+
+La primera vez crea `.venv` e instala las dependencias (unos minutos); después arranca en segundos.
+Si faltan las claves de Anthropic o ElevenLabs, las pide y las guarda solo en tu `.env`.
+Arranca siempre en **modo real** y abre http://localhost:8501; el clip de la demo no gasta ElevenLabs.
+Para cerrarla, cierra la ventana de la terminal. `Verbatim.bat --check` comprueba el entorno sin arrancar nada.
+
+Zip para el jurado (con claves de demo con límite de gasto): `python launcher/make_zip.py` → `dist/Verbatim.zip`.
+Detalles en [launcher/README.md](launcher/README.md).
 
 ## Probarlo
 
 ```bash
-git clone <url> acta && cd acta
+git clone <url> verbatim && cd verbatim
 python -m venv .venv
 # Windows: .venv\Scripts\activate   ·   macOS/Linux: source .venv/bin/activate
 pip install -r requirements.txt
@@ -80,8 +96,8 @@ Para grabar o subir audios nuevos hace falta además `ELEVENLABS_API_KEY`.
 | `app/data/` | Catálogo de KID, límites por perfil, clientes sintéticos, precios y base normativa |
 | `app/ui/`, `app/export/` | Interfaz Streamlit y exportación en 5 formatos |
 
-El motor es una **librería sin dependencia de la interfaz**, para que GPTadvisor pueda integrarlo
-directamente. Los datos que viajan entre módulos están definidos en `app/schemas.py`, y las firmas
+El motor es una **librería sin dependencia de la interfaz**, para que una plataforma de asesoramiento
+pueda integrarlo directamente. Los datos que viajan entre módulos están definidos en `app/schemas.py`, y las firmas
 públicas en [docs/CONTRACT.md](docs/CONTRACT.md).
 
 ## Garantías de diseño
@@ -134,7 +150,7 @@ frases de las reuniones de evaluación (ver DECISIONS).
 - Prueba de concepto: reuniones de 1–2 minutos y en español. Las reuniones largas y su troceo quedan fuera.
 - El origen del dinero de una compra va en texto. El cálculo de la cartera resultante supone que sale
   del fondo de menor SRI. El campo estructurado (`funding_isins`, contrato 1.2) queda para después.
-- La API REST para GPTadvisor solo expone `/v1/health`.
+- La API REST solo expone `/v1/health`; la API completa para integrarlo en otras plataformas queda para después.
 - Es una ayuda para el asesor y para cumplimiento, **no asesoramiento jurídico**. El informe es un
   borrador que el asesor debe revisar.
 

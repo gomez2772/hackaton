@@ -1,9 +1,9 @@
 # Reuniones de evaluación (D-3)
 
-Cinco reuniones **sintéticas** de ~1,5–2 minutos entre asesor y cliente, escritas para medir Acta (D-4).
+Cinco reuniones **sintéticas** de ~1,5–2 minutos entre asesor y cliente, escritas para medir Verbatim (D-4).
 Clientes, carteras, importes y conversaciones son ficticios; los fondos son KID reales del catálogo (`app/data/kids.json`).
 
-| Carpeta | Escenario | Qué debe detectar Acta |
+| Carpeta | Escenario | Qué debe detectar Verbatim |
 |---------|-----------|------------------------|
 | `m01_horizonte_sri` | Conflicto de idoneidad | SRI, horizonte y concentración en rojo; conducta correcta |
 | `m02_concentracion_emergentes` | Conflicto de idoneidad | Concentración en rojo; horizonte en verde; conducta correcta |
