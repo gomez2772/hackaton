@@ -1,0 +1,668 @@
+{
+  "source": "script",
+  "model": "claude-sonnet-5-5",
+  "aggregate": {
+    "meetings": 5,
+    "recommendations": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "tp": 5,
+      "fp": 0,
+      "fn": 0
+    },
+    "amount_ok": 5,
+    "needs": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "tp": 8,
+      "fp": 0,
+      "fn": 0
+    },
+    "flags_correct": 18,
+    "flags_total": 18,
+    "red_flags": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "tp": 4,
+      "fp": 0,
+      "fn": 0
+    },
+    "conduct_correct": 35,
+    "conduct_total": 35,
+    "breaches": {
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "tp": 3,
+      "fp": 0,
+      "fn": 0
+    },
+    "key_quotes_found": 33,
+    "key_quotes_total": 35,
+    "quotes_verified": 99,
+    "quotes_total": 99,
+    "coverage_mean": 100.0,
+    "latency_mean": {
+      "check": 0.007,
+      "conduct": 7.8288,
+      "extract": 0.0034000000000000002,
+      "report": 0.0,
+      "stt": 0.0,
+      "summary": 0.0,
+      "validate": 0.0008
+    },
+    "latency_total_mean": 7.84
+  },
+  "meetings": [
+    {
+      "meeting": "m01_horizonte_sri",
+      "scenario": "suitability_conflict",
+      "recommendations": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "tp": 1,
+        "fp": 0,
+        "fn": 0,
+        "amount_ok": 1
+      },
+      "needs": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "tp": 3,
+        "fp": 0,
+        "fn": 0
+      },
+      "flags": {
+        "correct": 3,
+        "total": 3,
+        "detail": {
+          "sri": [
+            "red",
+            "red"
+          ],
+          "horizon": [
+            "red",
+            "red"
+          ],
+          "concentration": [
+            "red",
+            "red"
+          ]
+        },
+        "red": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 3,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "conduct": {
+        "correct": 7,
+        "total": 7,
+        "missing": false,
+        "detail": {
+          "recording_notice": [
+            "ok",
+            "ok",
+            true
+          ],
+          "circumstances_updated": [
+            "ok",
+            "ok",
+            true
+          ],
+          "return_promise": [
+            "ok",
+            "ok",
+            true
+          ],
+          "risks_explained": [
+            "ok",
+            "ok",
+            true
+          ],
+          "costs_disclosed": [
+            "ok",
+            "ok",
+            true
+          ],
+          "commercial_pressure": [
+            "ok",
+            "ok",
+            true
+          ],
+          "conflicts_of_interest": [
+            "ok",
+            "ok",
+            true
+          ]
+        },
+        "breach": {
+          "precision": null,
+          "recall": null,
+          "f1": null,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "quotes": {
+        "key_found": 6,
+        "key_total": 7,
+        "missing": [
+          "no recibimos incentivos de la gestora del fondo"
+        ],
+        "verified": 21,
+        "evidence_total": 21
+      },
+      "coverage_pct": 100.0,
+      "template_mode": false,
+      "truth_revisions": [
+        "2026-11-11 · D · añadida tras revisar a mano la evaluación por guion: el cliente lo dice en el guion y faltaba en la verdad — liquidity: «necesitaré el dinero para entonces» (compra de casa en 2 años)"
+      ],
+      "timings": {
+        "stt": 0.0,
+        "extract": 0.005,
+        "validate": 0.001,
+        "check": 0.01,
+        "conduct": 10.169,
+        "summary": 0.0,
+        "report": 0.0
+      },
+      "warnings": []
+    },
+    {
+      "meeting": "m02_concentracion_emergentes",
+      "scenario": "suitability_conflict",
+      "recommendations": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "tp": 1,
+        "fp": 0,
+        "fn": 0,
+        "amount_ok": 1
+      },
+      "needs": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "tp": 2,
+        "fp": 0,
+        "fn": 0
+      },
+      "flags": {
+        "correct": 2,
+        "total": 2,
+        "detail": {
+          "horizon": [
+            "green",
+            "green"
+          ],
+          "concentration": [
+            "red",
+            "red"
+          ]
+        },
+        "red": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "conduct": {
+        "correct": 7,
+        "total": 7,
+        "missing": false,
+        "detail": {
+          "recording_notice": [
+            "ok",
+            "ok",
+            true
+          ],
+          "circumstances_updated": [
+            "ok",
+            "ok",
+            true
+          ],
+          "return_promise": [
+            "ok",
+            "ok",
+            true
+          ],
+          "risks_explained": [
+            "ok",
+            "ok",
+            true
+          ],
+          "costs_disclosed": [
+            "ok",
+            "ok",
+            true
+          ],
+          "commercial_pressure": [
+            "ok",
+            "ok",
+            true
+          ],
+          "conflicts_of_interest": [
+            "ok",
+            "ok",
+            true
+          ]
+        },
+        "breach": {
+          "precision": null,
+          "recall": null,
+          "f1": null,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "quotes": {
+        "key_found": 7,
+        "key_total": 7,
+        "missing": [],
+        "verified": 21,
+        "evidence_total": 21
+      },
+      "coverage_pct": 100.0,
+      "template_mode": false,
+      "truth_revisions": [
+        "2026-11-11 · D · añadida tras revisar a mano la evaluación por guion: el cliente lo dice en el guion y faltaba en la verdad — growth: «Me gustaría que trabajara un poco más»"
+      ],
+      "timings": {
+        "stt": 0.0,
+        "extract": 0.003,
+        "validate": 0.001,
+        "check": 0.008,
+        "conduct": 7.662,
+        "summary": 0.0,
+        "report": 0.0
+      },
+      "warnings": []
+    },
+    {
+      "meeting": "m03_promesa_presion",
+      "scenario": "conduct_failure",
+      "recommendations": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "tp": 1,
+        "fp": 0,
+        "fn": 0,
+        "amount_ok": 1
+      },
+      "needs": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "tp": 1,
+        "fp": 0,
+        "fn": 0
+      },
+      "flags": {
+        "correct": 4,
+        "total": 4,
+        "detail": {
+          "sri": [
+            "green",
+            "green"
+          ],
+          "horizon": [
+            "green",
+            "green"
+          ],
+          "concentration": [
+            "green",
+            "green"
+          ],
+          "volatility": [
+            "green",
+            "green"
+          ]
+        },
+        "red": {
+          "precision": null,
+          "recall": null,
+          "f1": null,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "conduct": {
+        "correct": 7,
+        "total": 7,
+        "missing": false,
+        "detail": {
+          "recording_notice": [
+            "ok",
+            "ok",
+            true
+          ],
+          "circumstances_updated": [
+            "ok",
+            "ok",
+            true
+          ],
+          "return_promise": [
+            "breach",
+            "breach",
+            true
+          ],
+          "risks_explained": [
+            "no_evidence",
+            "no_evidence",
+            true
+          ],
+          "costs_disclosed": [
+            "no_evidence",
+            "no_evidence",
+            true
+          ],
+          "commercial_pressure": [
+            "breach",
+            "breach",
+            true
+          ],
+          "conflicts_of_interest": [
+            "no_evidence",
+            "no_evidence",
+            true
+          ]
+        },
+        "breach": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 2,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "quotes": {
+        "key_found": 6,
+        "key_total": 7,
+        "missing": [
+          "Si no firma ahora, la perdemos"
+        ],
+        "verified": 21,
+        "evidence_total": 21
+      },
+      "coverage_pct": 100.0,
+      "template_mode": false,
+      "truth_revisions": [],
+      "timings": {
+        "stt": 0.0,
+        "extract": 0.003,
+        "validate": 0.001,
+        "check": 0.007,
+        "conduct": 8.277,
+        "summary": 0.0,
+        "report": 0.0
+      },
+      "warnings": []
+    },
+    {
+      "meeting": "m04_sin_aviso_riesgos",
+      "scenario": "conduct_failure",
+      "recommendations": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "tp": 1,
+        "fp": 0,
+        "fn": 0,
+        "amount_ok": 1
+      },
+      "needs": {
+        "precision": null,
+        "recall": null,
+        "f1": null,
+        "tp": 0,
+        "fp": 0,
+        "fn": 0
+      },
+      "flags": {
+        "correct": 4,
+        "total": 4,
+        "detail": {
+          "sri": [
+            "green",
+            "green"
+          ],
+          "horizon": [
+            "green",
+            "green"
+          ],
+          "concentration": [
+            "green",
+            "green"
+          ],
+          "volatility": [
+            "green",
+            "green"
+          ]
+        },
+        "red": {
+          "precision": null,
+          "recall": null,
+          "f1": null,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "conduct": {
+        "correct": 7,
+        "total": 7,
+        "missing": false,
+        "detail": {
+          "recording_notice": [
+            "no_evidence",
+            "no_evidence",
+            true
+          ],
+          "circumstances_updated": [
+            "no_evidence",
+            "no_evidence",
+            true
+          ],
+          "return_promise": [
+            "ok",
+            "ok",
+            true
+          ],
+          "risks_explained": [
+            "breach",
+            "breach",
+            true
+          ],
+          "costs_disclosed": [
+            "ok",
+            "ok",
+            true
+          ],
+          "commercial_pressure": [
+            "ok",
+            "ok",
+            true
+          ],
+          "conflicts_of_interest": [
+            "no_evidence",
+            "no_evidence",
+            true
+          ]
+        },
+        "breach": {
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "tp": 1,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "quotes": {
+        "key_found": 7,
+        "key_total": 7,
+        "missing": [],
+        "verified": 16,
+        "evidence_total": 16
+      },
+      "coverage_pct": 100.0,
+      "template_mode": false,
+      "truth_revisions": [],
+      "timings": {
+        "stt": 0.0,
+        "extract": 0.003,
+        "validate": 0.0,
+        "check": 0.005,
+        "conduct": 6.291,
+        "summary": 0.0,
+        "report": 0.0
+      },
+      "warnings": []
+    },
+    {
+      "meeting": "m05_correcta",
+      "scenario": "correct",
+      "recommendations": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "tp": 1,
+        "fp": 0,
+        "fn": 0,
+        "amount_ok": 1
+      },
+      "needs": {
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "tp": 2,
+        "fp": 0,
+        "fn": 0
+      },
+      "flags": {
+        "correct": 5,
+        "total": 5,
+        "detail": {
+          "sri": [
+            "green",
+            "green"
+          ],
+          "horizon": [
+            "green",
+            "green"
+          ],
+          "concentration": [
+            "green",
+            "green"
+          ],
+          "liquidity": [
+            "green",
+            "green"
+          ],
+          "volatility": [
+            "green",
+            "green"
+          ]
+        },
+        "red": {
+          "precision": null,
+          "recall": null,
+          "f1": null,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "conduct": {
+        "correct": 7,
+        "total": 7,
+        "missing": false,
+        "detail": {
+          "recording_notice": [
+            "ok",
+            "ok",
+            true
+          ],
+          "circumstances_updated": [
+            "ok",
+            "ok",
+            true
+          ],
+          "return_promise": [
+            "ok",
+            "ok",
+            true
+          ],
+          "risks_explained": [
+            "ok",
+            "ok",
+            true
+          ],
+          "costs_disclosed": [
+            "ok",
+            "ok",
+            true
+          ],
+          "commercial_pressure": [
+            "ok",
+            "ok",
+            true
+          ],
+          "conflicts_of_interest": [
+            "ok",
+            "ok",
+            true
+          ]
+        },
+        "breach": {
+          "precision": null,
+          "recall": null,
+          "f1": null,
+          "tp": 0,
+          "fp": 0,
+          "fn": 0
+        }
+      },
+      "quotes": {
+        "key_found": 7,
+        "key_total": 7,
+        "missing": [],
+        "verified": 20,
+        "evidence_total": 20
+      },
+      "coverage_pct": 100.0,
+      "template_mode": false,
+      "truth_revisions": [
+        "2026-11-11 · D · añadida tras revisar a mano la evaluación por guion: el cliente lo dice en el guion y faltaba en la verdad — horizon: «el resto es a largo plazo» en respuesta a «¿antes de siete años?»"
+      ],
+      "timings": {
+        "stt": 0.0,
+        "extract": 0.003,
+        "validate": 0.001,
+        "check": 0.005,
+        "conduct": 6.745,
+        "summary": 0.0,
+        "report": 0.0
+      },
+      "warnings": []
+    }
+  ]
+}

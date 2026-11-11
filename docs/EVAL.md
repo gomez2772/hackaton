@@ -1,6 +1,6 @@
 # EVAL.md — Evaluación de Acta (D-4)
 
-Generado por `tests/eval/run_eval.py --source script` el 2026-11-11 18:00. Modelo: `claude-sonnet-5-5`. Entrada: transcripción del guion (sin STT).
+Generado por `tests/eval/run_eval.py --source script` el 2026-11-11 18:26. Modelo: `claude-sonnet-5-5`. Entrada: transcripción del guion (sin STT).
 Datos: 5 reuniones **sintéticas** de ~1,5–2 min (`tests/eval/meetings/`): 2 con conflicto de idoneidad, 2 con fallos de conducta y 1 correcta. Muestra pequeña: las cifras son orientativas.
 
 ## Resumen
@@ -14,18 +14,18 @@ Datos: 5 reuniones **sintéticas** de ~1,5–2 min (`tests/eval/meetings/`): 2 c
 | Banderas rojas: precisión · exhaustividad | 100,0 % · 100,0 % |
 | Conducta: estado correcto por comprobación | 35/35 (100,0 %) |
 | Incumplimientos de conducta: precisión · exhaustividad | 100,0 % · 100,0 % |
-| Citas clave encontradas | 34/35 (97,1 %) |
-| Citas del LLM verificadas literalmente | 97/97 (100,0 %) |
+| Citas clave encontradas | 33/35 (94,3 %) |
+| Citas del LLM verificadas literalmente | 99/99 (100,0 %) |
 | Cobertura media del informe | 100,0 % |
-| Latencia media total | 11,5 s (respuestas en caché; latencia de la ejecución real `script-20261111-1756.json`) |
+| Latencia media total | 13,2 s (etapas en caché: latencia de su última ejecución real, conduct: `script-20261111-1825.json`; extract: `script-20261111-1756.json`) |
 
-Latencia media por etapa: conduct 6,1 s · extract 5,4 s (el resumen va en paralelo con la conducta).
+Latencia media por etapa: conduct 7,8 s · extract 5,4 s (el resumen va en paralelo con la conducta).
 
 ## Por reunión
 
 | Reunión | Escenario | Recos | Banderas | Conducta | Citas clave | Cobertura | Avisos |
 |---------|-----------|-------|----------|----------|-------------|-----------|--------|
-| m01_horizonte_sri | suitability_conflict | 1/1 (+0 FP) | 3/3 | 7/7 | 7/7 | 100,0 % | 0 |
+| m01_horizonte_sri | suitability_conflict | 1/1 (+0 FP) | 3/3 | 7/7 | 6/7 | 100,0 % | 0 |
 | m02_concentracion_emergentes | suitability_conflict | 1/1 (+0 FP) | 2/2 | 7/7 | 7/7 | 100,0 % | 0 |
 | m03_promesa_presion | conduct_failure | 1/1 (+0 FP) | 4/4 | 7/7 | 6/7 | 100,0 % | 0 |
 | m04_sin_aviso_riesgos | conduct_failure | 1/1 (+0 FP) | 4/4 | 7/7 | 7/7 | 100,0 % | 0 |
@@ -33,6 +33,7 @@ Latencia media por etapa: conduct 6,1 s · extract 5,4 s (el resumen va en paral
 
 ## Fallos (para B-5)
 
+- m01_horizonte_sri · cita clave no encontrada: «no recibimos incentivos de la gestora del fondo»
 - m03_promesa_presion · cita clave no encontrada: «Si no firma ahora, la perdemos»
 
 ## Revisiones de la verdad de referencia
