@@ -54,6 +54,13 @@ def _s(text: str) -> str:
     return text.strip().rstrip(".;: ")
 
 
+def _lower_first(text: str) -> str:
+    """'El asesor…' -> 'el asesor…' after a colon; leaves acronyms ('ETF…', 'RV…') alone."""
+    if len(text) > 1 and text[0].isupper() and text[1].islower():
+        return text[0].lower() + text[1:]
+    return text
+
+
 class _Builder:
     def __init__(self) -> None:
         self.n = 0
@@ -96,7 +103,7 @@ def draft(extraction: Extraction, flags: list[Flag], client: ClientProfile, tran
     recs = []
     for r in ext.recommendations:
         amount = f"{eur(r.amount_eur)} " if r.amount_eur else ""
-        why = f" Motivo expuesto: {_s(r.rationale)}." if r.rationale else ""
+        why = f" Motivo expuesto: {_lower_first(_s(r.rationale))}." if r.rationale else ""
         recs.append(b.claim(f"El asesor recomienda {ACTIONS[r.action]} {amount}en {_s(r.product_name)}.{why}", r.evidence))
     if not recs:
         recs = [b.boilerplate("No se formuló ninguna recomendación en la reunión.")]
@@ -177,7 +184,7 @@ def _polish(report: SuitabilityReport, s: Settings) -> SuitabilityReport:
     try:
         out = complete_json(PROMPT.read_text(encoding="utf-8"),
                             "FRASES:\n" + json.dumps(todo, ensure_ascii=False, indent=1),
-                            _Rewrites, max_tokens=4000, settings=s)
+                            _Rewrites, effort="low", settings=s)
     except Exception as e:  # never break the report because of the LLM
         log.warning("redacción con Claude no disponible, se usa la plantilla: %s", e)
         return report
