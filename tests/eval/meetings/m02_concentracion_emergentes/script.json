@@ -1,0 +1,25 @@
+{
+  "meeting_id": "m02_concentracion_emergentes",
+  "client_id": "CLI-EVAL-002",
+  "synthetic": true,
+  "turns": [
+    ["advisor", "Hola, Marta. Le recuerdo que esta llamada queda grabada, como en las anteriores. ¿Está de acuerdo?"],
+    ["client", "Sí, adelante."],
+    ["advisor", "Antes de proponerle nada, ¿ha habido algún cambio en su situación? Trabajo, gastos previstos, objetivos…"],
+    ["client", "Nada importante. Sigo en la misma empresa y no voy a necesitar este dinero en al menos diez años. Es para la jubilación."],
+    ["advisor", "Muy bien. ¿Algún gasto grande a la vista?"],
+    ["client", "No, ninguno. Tengo un fondo de emergencia aparte, en la cuenta."],
+    ["advisor", "Perfecto. Su cartera son doscientos mil euros: ochenta mil en renta variable global y ciento veinte mil en renta fija a corto plazo."],
+    ["client", "Sí. Me gustaría que trabajara un poco más, la verdad."],
+    ["advisor", "Le propongo invertir noventa mil euros en un fondo indexado de renta variable de mercados emergentes, vendiendo esa cantidad de la renta fija."],
+    ["client", "¿Emergentes? He oído que son muy volátiles."],
+    ["advisor", "Lo son. Pueden caer un cuarenta por ciento en un mal año, y además hay riesgo de divisa y riesgo político. A cambio, a largo plazo pueden crecer más."],
+    ["client", "¿Y las comisiones?"],
+    ["advisor", "Los gastos corrientes del fondo son de cero coma veinticinco por ciento al año. Le aclaro también que nuestra entidad no cobra retrocesiones de esta gestora."],
+    ["client", "Vale. ¿Hay garantía de algo?"],
+    ["advisor", "No, ninguna. Es un fondo de renta variable y puede perder valor. No le puedo asegurar ninguna rentabilidad."],
+    ["client", "Entendido. Lo voy a pensar este fin de semana."],
+    ["advisor", "Claro, sin ninguna prisa. Le mando el documento de datos fundamentales hoy mismo por correo."],
+    ["client", "Gracias, Luis. Hablamos."]
+  ]
+}
