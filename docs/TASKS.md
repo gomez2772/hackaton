@@ -49,7 +49,7 @@ Ruta crítica de la demo: C-1 → C-2 → B-1 → B-2 → A-2 → D-5.
 
 ### Tareas
 - ✅ **A-0** · Base: UI con 5 pestañas (transcripción, banderas, conducta, informe, resumen), salto al audio, exportación en 5 formatos — `app/ui/**`, `app/export/**` · — · ya en `main`
-- ⬜ **A-1** · ① (1 h) · Repasar la UI con `ACTA_FAKE_STAGES=all` y con el clip real; arreglar lo que se vea mal — `app/ui/**` · — · demo completa sin errores en pantalla
+- 🟡 **A-1** · ① (1 h) · Repasar la UI con `ACTA_FAKE_STAGES=all` y con el clip real; arreglar lo que se vea mal — `app/ui/**` · — · demo completa sin errores en pantalla
 - ⬜ **A-2** · ① (1,5 h) · Grabar en el navegador (`st.audio_input`) además de subir; progreso por etapa con `on_stage`; tiempos por etapa visibles — `app/ui/**` · A-1 · grabar 10 s y ver pasar las 7 etapas
 - ⬜ **A-3** · ② (1 h) · Transcripción: resaltar fragmentos citados por tipo (circunstancia, necesidad, recomendación, compromiso, conducta) con leyenda — `app/ui/**` · A-1 · se ven resaltadas las citas del fixture
 - ⬜ **A-4** · ② (1,5 h) · PDF del informe con aspecto profesional (cabecera, banderas en color, citas con `[mm:ss]`, pie de datos sintéticos) — `app/export/**`, `tests/unit/test_export*.py` · A-0 · PDF del fixture revisado por el equipo
