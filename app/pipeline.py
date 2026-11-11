@@ -64,7 +64,7 @@ def analyze(audio_path: Path | None, client: ClientProfile, *,
         stage("validate", True, lambda: None)
     else:
         from app.engine.extraction import extract
-        raw = stage("extract", False, lambda: extract(transcript, client), fallback=Extraction)
+        raw = stage("extract", False, lambda: extract(transcript, client, settings=s), fallback=Extraction)
         extraction = stage("validate", False, lambda: validate(raw, transcript))
     transcript = _apply_roles(transcript, extraction)
     template_mode = not s.is_fake("extract") and any("«extract»" in w for w in warnings)
@@ -81,7 +81,7 @@ def analyze(audio_path: Path | None, client: ClientProfile, *,
         conduct = stage("conduct", True, fakes.conduct)
     else:
         from app.engine.conduct import check_conduct
-        conduct = stage("conduct", False, lambda: validate(check_conduct(transcript, extraction), transcript),
+        conduct = stage("conduct", False, lambda: validate(check_conduct(transcript, extraction, settings=s), transcript),
                         fallback=lambda: None)
 
     # 6. Plain-language summary for the client
@@ -89,7 +89,7 @@ def analyze(audio_path: Path | None, client: ClientProfile, *,
         summary = stage("summary", True, fakes.client_summary)
     else:
         from app.engine.summary import summarize
-        summary = stage("summary", False, lambda: validate(summarize(transcript, extraction), transcript),
+        summary = stage("summary", False, lambda: validate(summarize(transcript, extraction, settings=s), transcript),
                         fallback=lambda: None)
 
     # 7. Report
