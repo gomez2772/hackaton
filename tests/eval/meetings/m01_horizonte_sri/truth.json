@@ -3,11 +3,26 @@
   "scenario": "suitability_conflict",
   "description": "Perfil 2 con horizonte de 2 años (compra de casa). El asesor propone pasar 50 000 € de RF corto a RV global. Conducta correcta.",
   "recommendations": [
-    {"id": "r1", "action": "buy", "asset_class": "equity_global", "amount_eur": 50000, "funded_from": "bond_short_eur"}
+    {
+      "id": "r1",
+      "action": "buy",
+      "asset_class": "equity_global",
+      "amount_eur": 50000,
+      "funded_from": "bond_short_eur"
+    }
   ],
   "stated_needs": [
-    {"kind": "horizon", "horizon_years": 2},
-    {"kind": "capital_preservation"}
+    {
+      "kind": "horizon",
+      "horizon_years": 2
+    },
+    {
+      "kind": "capital_preservation"
+    },
+    {
+      "kind": "liquidity",
+      "horizon_years": 2
+    }
   ],
   "flags": {
     "sri": "red",
@@ -34,5 +49,8 @@
     "gastos corrientes de cero coma dos por ciento al año",
     "no recibimos incentivos de la gestora del fondo",
     "le enviaré el documento de datos fundamentales"
+  ],
+  "truth_revisions": [
+    "2026-11-11 · D · añadida tras revisar a mano la evaluación por guion: el cliente lo dice en el guion y faltaba en la verdad — liquidity: «necesitaré el dinero para entonces» (compra de casa en 2 años)"
   ]
 }

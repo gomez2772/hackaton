@@ -123,3 +123,5 @@ def test_markdown_report_renders():
     scores = [ev.score(m, perfect(m), KIDS)]
     doc = ev.markdown(scores, ev.aggregate(scores), "script", "modelo-x")
     assert "# EVAL.md" in doc and "| m05_correcta |" in doc and "Ninguno." in doc and "sintéticas" in doc
+    assert "## Advertencias" in doc and "contaminación" in doc
+    assert "## Revisiones de la verdad de referencia" in doc  # m05 truth was revised

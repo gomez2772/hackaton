@@ -49,6 +49,13 @@ RESULTS = ROOT / "tests" / "eval" / "results"
 EVAL_DOC = ROOT / "docs" / "EVAL.md"
 WORDS_PER_SECOND = 2.5  # Spanish speech, only to give script segments plausible timestamps
 SEV_RANK = {"green": 0, "amber": 1, "red": 2}
+CAVEATS = [
+    "- **Muestra pequeña y sintética**: 5 reuniones de 1,5–2 min escritas por D con Claude y evaluadas con Claude.",
+    "- **Posible contaminación**: los guiones están en el repositorio; si un prompt se ajusta viéndolos, las cifras se "
+    "inflan. Comprobar que los prompts no copian frases de `tests/eval/meetings/`.",
+    "- **`--source script` no incluye la transcripción real**: mide solo las etapas con LLM. La cifra de extremo a extremo "
+    "es la de `--source audio`.",
+]
 KEYWORDS = [("emergente", "equity_em"), ("renta variable", "equity_global"), ("global", "equity_global"),
             ("monetari", "money_market"), ("renta fija", "bond_short_eur")]
 
@@ -211,6 +218,7 @@ def score(m: Meeting, r: AnalysisResult, kids: dict[str, FundKID]) -> dict:
         "quotes": score_quotes(t["key_quotes"], all_evidence(r)),
         "coverage_pct": r.report.coverage_pct,
         "template_mode": r.report.template_mode,
+        "truth_revisions": t.get("truth_revisions", []),
         "timings": {tm.stage: tm.seconds for tm in r.timings},
         "warnings": r.warnings,
     }
@@ -245,6 +253,18 @@ def aggregate(scores: list[dict]) -> dict:
     }
 
 
+def real_latency(agg: dict, source: str) -> tuple[dict, float | None, str]:
+    """Latencies to report. A run served entirely from the LLM cache measures ~0 s, so reuse the
+    latest saved run of the same source that actually called the APIs (and say which one)."""
+    if (agg["latency_total_mean"] or 0) >= 1.0:
+        return agg["latency_mean"], agg["latency_total_mean"], ""
+    for f in sorted(RESULTS.glob(f"{source}-*.json"), reverse=True):
+        prev = json.loads(f.read_text(encoding="utf-8"))["aggregate"]
+        if (prev.get("latency_total_mean") or 0) >= 1.0:
+            return prev["latency_mean"], prev["latency_total_mean"], f.name
+    return agg["latency_mean"], None, ""
+
+
 def pct(x: float | None) -> str:
     """0.873 -> '87,3 %' ; None -> '—'."""
     return "—" if x is None else f"{100 * x:.1f} %".replace(".", ",")
@@ -262,6 +282,8 @@ def secs(x: float | None) -> str:
 def markdown(scores: list[dict], agg: dict, source: str, model: str) -> str:
     """docs/EVAL.md body."""
     rec, needs, red, br = agg["recommendations"], agg["needs"], agg["red_flags"], agg["breaches"]
+    lat_stage, lat_total, lat_src = real_latency(agg, source)
+    lat_note = f" (respuestas en caché; latencia de la ejecución real `{lat_src}`)" if lat_src else ""
     src = ("transcripción del guion (sin STT)" if source == "script"
            else "audio sintético (TTS) → ElevenLabs Scribe")
     lines = [
@@ -286,9 +308,10 @@ def markdown(scores: list[dict], agg: dict, source: str, model: str) -> str:
         f"| Citas clave encontradas | {frac(agg['key_quotes_found'], agg['key_quotes_total'])} |",
         f"| Citas del LLM verificadas literalmente | {frac(agg['quotes_verified'], agg['quotes_total'])} |",
         f"| Cobertura media del informe | {pct(agg['coverage_mean'] / 100 if agg['coverage_mean'] is not None else None)} |",
-        f"| Latencia media total | {secs(agg['latency_total_mean'])} |",
+        f"| Latencia media total | {secs(lat_total)}{lat_note} |",
         "",
-        "Latencia media por etapa: " + " · ".join(f"{k} {secs(v)}" for k, v in agg["latency_mean"].items()) + ".",
+        "Latencia media por etapa: " + " · ".join(f"{k} {secs(v)}" for k, v in lat_stage.items()
+                                                    if v >= 0.05) + " (el resumen va en paralelo con la conducta).",
         "",
         "## Por reunión",
         "",
@@ -314,6 +337,12 @@ def markdown(scores: list[dict], agg: dict, source: str, model: str) -> str:
         fails += [f"- {s['meeting']} · cita clave no encontrada: «{q}»" for q in s["quotes"]["missing"]]
         fails += [f"- {s['meeting']} · aviso: {w}" for w in s["warnings"]]
     lines += fails or ["Ninguno."]
+    revisions = [f"- {s['meeting']} · {rev}" for s in scores for rev in s.get("truth_revisions", [])]
+    if revisions:
+        lines += ["", "## Revisiones de la verdad de referencia", "",
+                  "Cambios hechos en `truth.json` después de ver resultados; se declaran para no maquillar cifras.", ""]
+        lines += revisions
+    lines += ["", "## Advertencias", "", *CAVEATS]
     lines += ["", "Detalle completo en `tests/eval/results/`.", ""]
     return "\n".join(lines)
 
