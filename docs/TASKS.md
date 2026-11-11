@@ -115,7 +115,7 @@ Ruta crítica de la demo: C-1 → C-2 → B-1 → B-2 → A-2 → D-5.
 - ⬜ **D-1** · H0 (1 h) · Que los 4 arranquen: `.env` con `ACTA_ROL`, `gh auth status`, `pytest`, Streamlit en simulado; probar que el hook de propiedad funciona en Windows — · — · los 4 con la app abierta
 - ⬜ **D-2** · continuo (1,5 h) · Revisar y fusionar PRs (máx. 30 min abiertos con CI verde; si D no está, el dueño fusiona) — · — · ningún PR bloqueado
 - ✅ **D-3** · ① (1,5 h) · 5 reuniones sintéticas de 3–4 min: guiones con Claude a partir de los clientes de C (2 con conflicto de idoneidad, 2 con fallo de conducta, 1 correcta) + `truth.json` (recomendaciones, banderas y conducta esperadas) — `tests/eval/meetings/**` · C-4 · 5 carpetas con `script.json` y `truth.json`
-- ⬜ **D-4** · ② (2 h) · Evaluación: `tests/eval/run_eval.py` → precisión y exhaustividad de recomendaciones, banderas y conducta, cobertura media y latencias → `docs/EVAL.md` — `tests/eval/**`, `docs/EVAL.md` · D-3, C-7 · tabla con números reales
+- 🔵 **D-4** · ② (2 h) · Evaluación: `tests/eval/run_eval.py` → precisión y exhaustividad de recomendaciones, banderas y conducta, cobertura media y latencias → `docs/EVAL.md` — `tests/eval/**`, `docs/EVAL.md` · D-3, C-7 · tabla con números reales
 - ⬜ **D-5** · F (2 h) · Guion de la demo (2 min) y pitch: problema, demo, cómo funciona, métricas, negocio, competencia — `docs/DEMO.md` · D-4 · presentación lista
 - ⬜ **D-6** · F (0,5 h) · README final: qué es, cómo ejecutarlo, datos sintéticos declarados, límites — `README.md` · todo · revisado por el equipo
 - ⬜ **D-7** · F (1,5 h) · Vídeo de respaldo de la demo + 3 ensayos cronometrados — · todo · 3 ensayos < 2 min sin fallos

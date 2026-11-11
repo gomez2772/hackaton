@@ -3,10 +3,22 @@
   "scenario": "suitability_conflict",
   "description": "Perfil 3 con horizonte de 10 años. El asesor propone 90 000 € en RV emergente financiados con RF. La concentración se dispara. Conducta correcta.",
   "recommendations": [
-    {"id": "r1", "action": "buy", "asset_class": "equity_em", "amount_eur": 90000, "funded_from": "bond_short_eur"}
+    {
+      "id": "r1",
+      "action": "buy",
+      "asset_class": "equity_em",
+      "amount_eur": 90000,
+      "funded_from": "bond_short_eur"
+    }
   ],
   "stated_needs": [
-    {"kind": "horizon", "horizon_years": 10}
+    {
+      "kind": "horizon",
+      "horizon_years": 10
+    },
+    {
+      "kind": "growth"
+    }
   ],
   "flags": {
     "sri": null,
@@ -33,5 +45,8 @@
     "gastos corrientes del fondo son de cero coma veinticinco por ciento al año",
     "nuestra entidad no cobra retrocesiones de esta gestora",
     "No le puedo asegurar ninguna rentabilidad"
+  ],
+  "truth_revisions": [
+    "2026-11-11 · D · añadida tras revisar a mano la evaluación por guion: el cliente lo dice en el guion y faltaba en la verdad — growth: «Me gustaría que trabajara un poco más»"
   ]
 }
