@@ -19,6 +19,7 @@ from app.data.loaders import list_clients  # noqa: E402
 from app.export import FORMATS, SUMMARY_FORMATS, export, export_summary, summary_text  # noqa: E402
 from app.pipeline import analyze  # noqa: E402
 from app.schemas import AnalysisResult, Evidence  # noqa: E402
+from app.ui.highlight import by_segment, legend, render_segment  # noqa: E402
 from app.ui.progress import STAGE_ORDER, StageProgress, save_audio, secs  # noqa: E402
 
 st.set_page_config(page_title="Acta", page_icon="📝", layout="wide")
@@ -201,14 +202,18 @@ with t_cond:
                 evidence_buttons(it.evidence, f"cond-{i}")
 
 with t_tr:
-    cited = {e.segment_id for group in (res.extraction.circumstance_changes, res.extraction.stated_needs,
-                                        res.extraction.recommendations, res.extraction.commitments)
-             for item in group for e in item.evidence if e.verified}
+    # A-3: cited fragments highlighted by type (circumstance, need, recommendation, commitment, conduct)
+    key = legend(res)
+    if key:
+        st.markdown("**Citas usadas en el análisis:** " + key)
+    else:
+        st.caption("No hay citas verificadas que resaltar en esta transcripción.")
+    cited = by_segment(res)
     for seg in res.transcript.segments:
         who = speaker_label(seg.role.value, seg.speaker_id)
         a, b = st.columns([1, 9])
         a.button(mmss(seg.start), key=f"seg-{seg.id}", on_click=jump, args=(seg.start,))
-        b.markdown(f"{who}: " + (f"**{seg.text}**" if seg.id in cited else seg.text))
+        b.markdown(f"{who}: " + render_segment(seg.text, cited.get(seg.id, [])))
 
 with t_sum:
     if not res.client_summary:
