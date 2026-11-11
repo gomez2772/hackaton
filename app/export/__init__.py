@@ -136,6 +136,74 @@ def to_pdf(result: AnalysisResult) -> bytes:
     return render(result)
 
 
+# ------------------------------------------------------------------ client summary (A-5)
+SummaryFormat = Literal["pdf", "md", "txt"]
+SUMMARY_FORMATS: dict[str, str] = {
+    "pdf": "application/pdf",
+    "md": "text/markdown; charset=utf-8",
+    "txt": "text/plain; charset=utf-8",
+}
+SUMMARY_NOTE = ("Resumen preparado a partir de la grabación de nuestra reunión. "
+                "Si algo no es correcto, por favor, dínoslo antes de dar ningún paso.")
+SUMMARY_SYNTHETIC = "Demostración con datos sintéticos."
+
+
+def first_name(full_name: str) -> str:
+    """'Lucía Martín (sintético)' -> 'Lucía'."""
+    return full_name.split("(")[0].split()[0] if full_name.strip() else ""
+
+
+def human_date(iso: str) -> str:
+    """'2026-11-10' -> '10/11/2026'; anything else is returned unchanged."""
+    parts = iso.split("-")
+    return f"{parts[2]}/{parts[1]}/{parts[0]}" if len(parts) == 3 and all(p.isdigit() for p in parts) else iso
+
+
+def summary_text(result: AnalysisResult) -> str:
+    """Plain text of the client summary, ready to paste into an email or a message."""
+    cs = result.client_summary
+    if cs is None:
+        raise ValueError("este análisis no tiene resumen para el cliente")
+    r = result.report
+    name = first_name(r.client_name)
+    lines = [f"Hola, {name}:" if name else "Hola:", "",
+             f"{cs.title} ({human_date(r.meeting_date)})", ""]
+    lines += [f"- {p.text}" for p in cs.points]
+    if cs.next_steps:
+        lines += ["", "Próximos pasos:"] + [f"- {p.text}" for p in cs.next_steps]
+    lines += ["", SUMMARY_NOTE, "", "Un saludo,", r.advisor_name, "", f"({SUMMARY_SYNTHETIC})"]
+    return "\n".join(lines) + "\n"
+
+
+def summary_markdown(result: AnalysisResult) -> str:
+    """Markdown version of `summary_text`."""
+    cs = result.client_summary
+    if cs is None:
+        raise ValueError("este análisis no tiene resumen para el cliente")
+    r = result.report
+    name = first_name(r.client_name)
+    out = [f"# {cs.title}", "", f"_Reunión del {human_date(r.meeting_date)} · tu asesor: {r.advisor_name}_", "",
+           f"Hola, {name}:" if name else "Hola:", ""]
+    out += [f"- {p.text}" for p in cs.points]
+    if cs.next_steps:
+        out += ["", "## Próximos pasos", ""] + [f"- {p.text}" for p in cs.next_steps]
+    out += ["", SUMMARY_NOTE, "", "Un saludo,  ", r.advisor_name, "", "---", f"_{SUMMARY_SYNTHETIC}_"]
+    return "\n".join(out) + "\n"
+
+
+def export_summary(result: AnalysisResult, fmt: SummaryFormat) -> bytes:
+    """Serialize only the client summary in `fmt` (to send it to the client)."""
+    if fmt == "txt":
+        return summary_text(result).encode("utf-8")
+    if fmt == "md":
+        return summary_markdown(result).encode("utf-8")
+    if fmt == "pdf":
+        from app.export.pdf import render_summary
+
+        return render_summary(result)
+    raise ValueError(f"formato desconocido: {fmt}")
+
+
 def export(result: AnalysisResult, fmt: Format) -> bytes:
     """Serialize `result` in `fmt`."""
     if fmt == "json":

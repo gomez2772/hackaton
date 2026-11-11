@@ -16,7 +16,7 @@ import streamlit as st  # noqa: E402
 from app import fakes  # noqa: E402
 from app.config import get_settings  # noqa: E402
 from app.data.loaders import list_clients  # noqa: E402
-from app.export import FORMATS, export  # noqa: E402
+from app.export import FORMATS, SUMMARY_FORMATS, export, export_summary, summary_text  # noqa: E402
 from app.pipeline import analyze  # noqa: E402
 from app.schemas import AnalysisResult, Evidence  # noqa: E402
 from app.ui.progress import STAGE_ORDER, StageProgress, save_audio, secs  # noqa: E402
@@ -48,12 +48,12 @@ def speaker_label(role: str, speaker_id: str) -> str:
     return f"🗣️ Hablante {int(digits) + 1}" if digits else f"🗣️ {speaker_id}"
 
 
-def exported(res: AnalysisResult, fmt: str) -> bytes:
+def exported(res: AnalysisResult, fmt: str, kind: str = "report") -> bytes:
     """Export once per analysis: every ▶ click reruns the script and PDF/DOCX take ~0.4 s."""
     cache = st.session_state.setdefault("exports", {})
-    key = (res.analysis_id, fmt)
+    key = (res.analysis_id, kind, fmt)
     if key not in cache:
-        cache[key] = export(res, fmt)
+        cache[key] = export(res, fmt) if kind == "report" else export_summary(res, fmt)
     return cache[key]
 
 
@@ -224,7 +224,14 @@ with t_sum:
             for i, p in enumerate(cs.next_steps):
                 st.markdown(f"- {p.text}")
                 evidence_buttons(p.evidence, f"next-{i}")
-        text = cs.title + "\n\n" + "\n".join(f"- {p.text}" for p in cs.points)
-        if cs.next_steps:
-            text += "\n\nPróximos pasos:\n" + "\n".join(f"- {p.text}" for p in cs.next_steps)
-        st.download_button("Descargar resumen (texto)", text, file_name="resumen_cliente.txt")
+        st.divider()
+        st.markdown("**Enviar al cliente**")
+        st.caption("Copia el texto con el icono 📋 de la esquina del recuadro y pégalo en un correo o mensaje, "
+                   "o descárgalo como carta.")
+        st.code(summary_text(res), language=None, wrap_lines=True)
+        stem = f"resumen_{res.analysis_id}"
+        labels = {"pdf": "📄 Carta PDF", "md": "Markdown"}
+        cols = st.columns(len(labels) + 2)
+        for col, (fmt, label) in zip(cols, labels.items(), strict=False):
+            col.download_button(label, exported(res, fmt, kind="summary"), file_name=f"{stem}.{fmt}",
+                                mime=SUMMARY_FORMATS[fmt], use_container_width=True, key=f"sum-dl-{fmt}")
