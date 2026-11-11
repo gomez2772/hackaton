@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import json
 
+from app.config import Settings, get_settings
 from app.engine.llm import complete_json, render_transcript
 from app.schemas import ConductCheck, ConductItem, ConductStatus, Extraction, Transcript
 
@@ -39,18 +40,18 @@ transcripción (4–15 palabras, sin cambiar nada); vacía si no hay. Deja segme
 null y verified a false. Mantén code, title y rule exactamente como se dan y no añadas otros ítems."""
 
 
-def check_conduct(transcript: Transcript, extraction: Extraction) -> ConductCheck:
+def check_conduct(transcript: Transcript, extraction: Extraction, *,
+                  settings: Settings | None = None) -> ConductCheck:
     """One ConductItem per CHECKLIST code, with literal quotes (validated later by the pipeline)."""
-    from app.config import get_settings
-
+    s = settings or get_settings()
     checklist = [{"code": c, "title": t, "rule": r, "what_to_check": q} for c, t, r, q in CHECKLIST]
     user = (
         f"COMPROBACIONES:\n{json.dumps(checklist, ensure_ascii=False, indent=1)}\n\n"
         f"RECOMENDACIONES DETECTADAS:\n{extraction.model_dump_json(include={'recommendations'})}\n\n"
         f"TRANSCRIPCIÓN:\n{render_transcript(transcript)}"
     )
-    result = complete_json(SYSTEM, user, ConductCheck)
-    return _complete(result, get_settings().anthropic_model)
+    result = complete_json(SYSTEM, user, ConductCheck, settings=s)
+    return _complete(result, s.anthropic_model)
 
 
 def _complete(result: ConductCheck, model: str) -> ConductCheck:

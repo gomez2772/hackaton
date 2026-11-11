@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from app.config import Settings, get_settings
 from app.engine.llm import complete_json, render_transcript
 from app.schemas import ClientSummary, Extraction, Transcript
 
@@ -12,14 +13,14 @@ con el asesor: qué contó, qué le propusieron y los próximos pasos. Máximo 5
 (4–15 palabras); deja segment_id, start y end a null y verified a false. `title`: «Resumen de tu reunión»."""
 
 
-def summarize(transcript: Transcript, extraction: Extraction) -> ClientSummary:
+def summarize(transcript: Transcript, extraction: Extraction, *,
+              settings: Settings | None = None) -> ClientSummary:
     """≤ 5 points and ≤ 3 next steps, each with a literal quote (validated later by the pipeline)."""
-    from app.config import get_settings
-
+    s = settings or get_settings()
     user = (
         f"DATOS EXTRAÍDOS:\n{extraction.model_dump_json(exclude={'speaker_roles'})}\n\n"
         f"TRANSCRIPCIÓN:\n{render_transcript(transcript)}"
     )
-    out = complete_json(SYSTEM, user, ClientSummary, max_tokens=2000)
-    return out.model_copy(update={"model": get_settings().anthropic_model,
+    out = complete_json(SYSTEM, user, ClientSummary, max_tokens=2000, settings=s)
+    return out.model_copy(update={"model": s.anthropic_model,
                                   "points": out.points[:5], "next_steps": out.next_steps[:3]})

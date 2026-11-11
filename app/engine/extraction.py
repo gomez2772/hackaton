@@ -8,13 +8,14 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+from app.config import Settings
 from app.engine.llm import complete_json, render_transcript
 from app.schemas import ClientProfile, Extraction, Transcript
 
 PROMPT = Path(__file__).resolve().parent / "prompts" / "extraction.md"
 
 
-def extract(transcript: Transcript, client: ClientProfile) -> Extraction:
+def extract(transcript: Transcript, client: ClientProfile, *, settings: Settings | None = None) -> Extraction:
     """Circumstance changes, stated needs, recommendations and commitments, each with quotes."""
     from app.data.loaders import load_kids
 
@@ -24,4 +25,4 @@ def extract(transcript: Transcript, client: ClientProfile) -> Extraction:
         f"CATÁLOGO DE FONDOS (para el ISIN):\n{json.dumps(catalogue, ensure_ascii=False)}\n\n"
         f"TRANSCRIPCIÓN (una línea por turno: [id mm:ss hablante] texto):\n{render_transcript(transcript)}"
     )
-    return complete_json(PROMPT.read_text(encoding="utf-8"), user, Extraction)
+    return complete_json(PROMPT.read_text(encoding="utf-8"), user, Extraction, settings=settings)
