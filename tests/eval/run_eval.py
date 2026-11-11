@@ -254,15 +254,25 @@ def aggregate(scores: list[dict]) -> dict:
 
 
 def real_latency(agg: dict, source: str) -> tuple[dict, float | None, str]:
-    """Latencies to report. A run served entirely from the LLM cache measures ~0 s, so reuse the
-    latest saved run of the same source that actually called the APIs (and say which one)."""
-    if (agg["latency_total_mean"] or 0) >= 1.0:
-        return agg["latency_mean"], agg["latency_total_mean"], ""
+    """Latencies to report. A stage served from the LLM cache measures ~0 s, so for each such stage
+    reuse the latest saved run of the same source where that stage really called the API."""
+    LLM = ("extract", "conduct")  # summary runs in parallel with conduct; report/check are local
+    current = dict(agg["latency_mean"])
+    cached = [st for st in LLM if current.get(st, 0.0) < 0.5]
+    if not cached:
+        return current, agg["latency_total_mean"], ""
+    sources = []
     for f in sorted(RESULTS.glob(f"{source}-*.json"), reverse=True):
-        prev = json.loads(f.read_text(encoding="utf-8"))["aggregate"]
-        if (prev.get("latency_total_mean") or 0) >= 1.0:
-            return prev["latency_mean"], prev["latency_total_mean"], f.name
-    return agg["latency_mean"], None, ""
+        prev = json.loads(f.read_text(encoding="utf-8"))["aggregate"]["latency_mean"]
+        for st in list(cached):
+            if prev.get(st, 0.0) >= 0.5:
+                current[st] = prev[st]
+                cached.remove(st)
+                sources.append(f"{st}: `{f.name}`")
+        if not cached:
+            break
+    total = sum(current.values()) if not cached else None
+    return current, total, "; ".join(sources)
 
 
 def pct(x: float | None) -> str:
@@ -283,7 +293,7 @@ def markdown(scores: list[dict], agg: dict, source: str, model: str) -> str:
     """docs/EVAL.md body."""
     rec, needs, red, br = agg["recommendations"], agg["needs"], agg["red_flags"], agg["breaches"]
     lat_stage, lat_total, lat_src = real_latency(agg, source)
-    lat_note = f" (respuestas en caché; latencia de la ejecución real `{lat_src}`)" if lat_src else ""
+    lat_note = f" (etapas en caché: latencia de su última ejecución real, {lat_src})" if lat_src else ""
     src = ("transcripción del guion (sin STT)" if source == "script"
            else "audio sintético (TTS) → ElevenLabs Scribe")
     lines = [

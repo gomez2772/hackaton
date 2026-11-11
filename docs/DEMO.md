@@ -87,13 +87,13 @@ Evaluación sobre 5 reuniones sintéticas (2 con conflicto de idoneidad, 2 con f
 - Recomendaciones detectadas: **100 %**, con importes correctos 5/5.
 - Banderas de idoneidad con la severidad correcta: **18/18**.
 - Comprobaciones de conducta correctas: **35/35**; incumplimientos detectados sin falsos positivos.
-- Citas verificadas literalmente en la transcripción: **97/97**.
-- Unos **11,5 s** de procesamiento por reunión (sin contar la transcripción).
+- Citas verificadas literalmente en la transcripción: **99/99**; citas clave encontradas 33/35.
+- Unos **13 s** de procesamiento por reunión (sin contar la transcripción).
 - Con voces reales del equipo (no TTS): grabación de 28 s con una interrupción a propósito,
   **8/8 turnos** bien atribuidos.
 
 Decirlo así, con la advertencia: **«Son 5 reuniones sintéticas: es una prueba de concepto, no una
-validación estadística.»** `[PENDIENTE: sustituir por las cifras de --source audio cuando C suba las transcripciones, y por las de después de B-5.]`
+validación estadística.»** Cifras ya medidas con los prompts limpios (B-5). `[PENDIENTE: añadir las de --source audio si C sube las transcripciones.]`
 
 ### 4.5 Negocio (40 s)
 - **Cliente**: GPTadvisor, que lo integra en su producto y lo ofrece a sus asesores. Por eso el
@@ -121,7 +121,7 @@ validación estadística.»** `[PENDIENTE: sustituir por las cifras de --source 
 |---|---|
 | ¿Y si Claude se inventa algo? | Toda afirmación sobre el cliente necesita una cita que el código encuentra literalmente en la transcripción. Si no la encuentra, la frase sale marcada «sin evidencia» y el asesor tiene que confirmarla. |
 | ¿Quién calcula las banderas? | Código determinista, sin IA: KID reales, límites del perfil y covarianza de 3 años de precios. |
-| ¿100 % no es demasiado bueno? | Sí, por eso lo decimos con la advertencia: 5 reuniones sintéticas escritas por nosotros. Lo honesto es medirlo con llamadas reales; es el siguiente paso. |
+| ¿100 % no es demasiado bueno? | Sí, por eso lo decimos con la advertencia: 5 reuniones sintéticas escritas por nosotros. Además quitamos de los prompts frases que coincidían con las reuniones de evaluación, y una métrica bajó (citas clave, de 34/35 a 33/35): preferimos la cifra limpia. Lo honesto es medirlo con llamadas reales; es el siguiente paso. |
 | ¿Datos personales? | En la demo todo es sintético. En producción, el audio y el resultado se quedarían en la infraestructura de GPTadvisor. `[PENDIENTE: confirmar con GPTadvisor.]` |
 | ¿Y el aviso de grabación? | Es una de las comprobaciones de conducta: si no se avisa, sale «sin evidencia». |
 
@@ -134,7 +134,28 @@ validación estadística.»** `[PENDIENTE: sustituir por las cifras de --source 
 | 8 fondos con KID real (5 Vanguard, 2 Xtrackers, 1 Amundi) | DECISIONS 2026-11-11 16:30 · C |
 | 3 años de precios diarios, covarianza | DECISIONS 2026-11-11 16:45 · C (C-5) |
 | Voces reales: 28 s, 8/8 turnos | DECISIONS 2026-11-11 16:45 · C (C-1) |
-| 100 % recomendaciones, 18/18 banderas, 35/35 conducta, 97/97 citas, 11,5 s | `docs/EVAL.md` (D-4, modo guion) |
+| 100 % recomendaciones, 18/18 banderas, 35/35 conducta, 99/99 citas, 33/35 citas clave, 13,2 s | `docs/EVAL.md` (D-4, modo guion, prompts de B-5) |
 | ≈ 0,06 USD por análisis del clip | DECISIONS 2026-11-11 17:17 · D (Hito 1) |
 | ≈ 0,05 USD extra con la base normativa | DECISIONS 2026-11-11 20:15 · B |
 | ≈ 330 créditos por minuto de transcripción | CLAUDE.md §7 |
+
+## 7. Vídeo de respaldo y ensayos (D-7)
+
+### Vídeo de respaldo (≈ 2 min)
+1. Preparar el portátil como en la sección 1 (caché caliente, `?demo=1`).
+2. Grabar la pantalla con sonido: en Windows, `Win + Alt + R` (Xbox Game Bar) graba la ventana activa
+   con el audio del sistema. Encender el micrófono si se narra encima.
+3. Seguir el guion de la sección 2 tal cual, incluido el ▶ de «me jubilo en tres años» para que se oiga.
+4. Guardar como `acta_demo_respaldo.mp4` **fuera del repositorio** (pesa demasiado) y copiarlo al
+   portátil que proyecta y a una memoria USB.
+5. Comprobar que se reproduce entero y que el audio del clip se oye.
+
+### Ensayos cronometrados (objetivo: demo < 2:00 sin fallos; pitch dentro del tiempo del jurado)
+
+| Ensayo | Demo | Pitch total | Fallos o dudas | Cambio para el siguiente |
+|---|---|---|---|---|
+| 1 | | | | |
+| 2 | | | | |
+| 3 | | | | |
+
+Después del tercer ensayo: congelar el guion y no tocar `main` salvo para arreglar algo que rompa la demo.
