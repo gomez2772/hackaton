@@ -30,3 +30,18 @@ def test_years_formatting():
 
     assert years(5) == "5 años" and years(1) == "1 año" and years(1.5) == "1,5 años"
     assert years(0.08) == "1 mes" and years(0.5) == "6 meses"
+
+
+def test_flags_ordered_by_severity_then_type():
+    from app.engine.checker import order_flags
+    from app.schemas import Flag, FlagType, Severity
+
+    def f(i, t, s):
+        return Flag(id=i, type=t, severity=s, title="x", explanation="x")
+
+    out = order_flags([f("f1", FlagType.SRI, Severity.AMBER), f("f2", FlagType.HORIZON, Severity.RED),
+                       f("f3", FlagType.LIQUIDITY, Severity.GREEN), f("f4", FlagType.VOLATILITY, Severity.RED),
+                       f("f5", FlagType.CONCENTRATION, Severity.AMBER)])
+    assert [(x.id, x.type) for x in out] == [("f1", FlagType.HORIZON), ("f2", FlagType.VOLATILITY),
+                                              ("f3", FlagType.CONCENTRATION), ("f4", FlagType.SRI),
+                                              ("f5", FlagType.LIQUIDITY)]
