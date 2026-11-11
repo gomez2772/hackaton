@@ -93,13 +93,13 @@ Ruta crítica de la demo: C-1 → C-2 → B-1 → B-2 → A-2 → D-5.
 - ⬜ **C-4** · ② (0,5 h) · `app/data/risk_limits.json` y 4 clientes sintéticos en `app/data/clients/` (incluido `CLI-DEMO-001` con ISIN reales) — `app/data/**` · C-3 · `list_clients()` los devuelve
 - ⬜ **C-5** · ② (1,5 h) · Precios: `scripts/fetch_prices.py` (yfinance, 3 años diarios) → `app/data/prices/<ticker>.csv` versionados; volatilidad por covarianza real — `scripts/**`, `app/data/prices/**` · C-3 · test con 2 activos de covarianza conocida
 - ⬜ **C-6** · ② (0,5 h) · Números reales del caso demo (horizonte, volatilidad, concentración) → avisar a D para el pitch — `docs/DECISIONS.md` · C-5 · línea en DECISIONS
-- 🟡 **C-7** · ② (1 h) · Audios de las 5 reuniones sintéticas de D con `synthesize_dialogue` (Flash, ≤ 4 min cada una) — `app/data/meetings/**` · D-3 · 5 `audio.mp3`, ≤ 20 000 créditos en total
+- 🔵 **C-7** · ② (1 h) · Audios de las 5 reuniones sintéticas de D con `synthesize_dialogue` (Flash, ≤ 4 min cada una) — `app/data/meetings/**` · D-3 · 5 `audio.mp3`, ≤ 20 000 créditos en total
 - ⬜ **C-8** · F (2 h) · Colchón + ensayos
 
 ### Revisiones (las añade D)
 
 ### Peticiones (de otros roles)
-- ⬜ **PET-1** · de D · C-7 desbloqueada: guiones en `tests/eval/meetings/<id>/script.json` (`turns` = lista `[quién, texto]` para `synthesize_dialogue`, Flash) → `app/data/meetings/<id>/audio.mp3`. Son ~1,5–2 min: ≈ 6 000 créditos en total. Cuando tengas el catálogo real (C-3), dime la ISIN equivalente a `equity_global`, `equity_em` y `bond_short_eur` para el mapeo de `run_eval.py`.
+- ✅ **PET-1** · de D · C-7 desbloqueada: guiones en `tests/eval/meetings/<id>/script.json` (`turns` = lista `[quién, texto]` para `synthesize_dialogue`, Flash) → `app/data/meetings/<id>/audio.mp3`. Son ~1,5–2 min: ≈ 6 000 créditos en total. Cuando tengas el catálogo real (C-3), dime la ISIN equivalente a `equity_global`, `equity_em` y `bond_short_eur` para el mapeo de `run_eval.py`.
 
 ---
 
@@ -120,3 +120,4 @@ Ruta crítica de la demo: C-1 → C-2 → B-1 → B-2 → A-2 → D-5.
 ### Peticiones (de otros roles)
 - ✅ C → D: el clip real `app/data/audio/demo_clip.mp3` dura 77 s y los tiempos de `fixtures/demo/transcript.json` son de 146 s. Su transcripción real (Scribe, 12/12 turnos correctos) está en `app/data/audio/demo_clip.transcript.json`: promuévela a `fixtures/demo/transcript.json` (y si quieres a `.cache/stt/dfdf840d54fbc7fb.json` en las instrucciones de arranque) para que los saltos al audio cuadren y nadie vuelva a gastar STT en el clip
 - ✅ (de A, 11-nov) **Alinear los tiempos del fixture con el clip de C-2 (#18)** — el clip dura 76 s y el fixture 146 s: en modo simulado los ▶ saltan a otro momento y 4 citas apuntan más allá del final del clip (84, 92, 108 y 121 s). Los 12 turnos coinciden en texto con `app/data/audio/demo_clip.transcript.json`: basta copiar sus start/end en `TURNS` de `tools/make_fixtures.py` y regenerar `fixtures/demo/` (tabla con los 12 tiempos en el PR de A-8). **Bloquea la demo con clip.**
+- C → D (respuesta a PET-1): mapeo para `run_eval.py` con el catálogo real de #20: `equity_global` → `IE00B03HD191` (Vanguard Global Stock Index EUR Acc), `equity_em` → `IE0031786696` (Vanguard Emerging Markets Stock Index EUR Acc), `bond_short_eur` → `LU0290356871` (Xtrackers II Eurozone Government Bond 1-3, alternativa `LU1650487413` Amundi), `money_market` → `LU0290358497`. Audios de C-7 en `app/data/meetings/<id>/audio.mp3`
