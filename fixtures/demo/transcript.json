@@ -1,14 +1,14 @@
 {
-  "audio_id": "demo0000clip0001",
+  "audio_id": "dfdf840d54fbc7fb",
   "language": "es",
-  "duration_s": 146.0,
+  "duration_s": 76.62,
   "segments": [
     {
       "id": "s0000",
       "speaker_id": "speaker_0",
       "role": "advisor",
-      "start": 0.0,
-      "end": 9.5,
+      "start": 0.1,
+      "end": 6.18,
       "text": "Buenos días, Lucía. Antes de empezar, le recuerdo que esta reunión se graba con su consentimiento.",
       "words": []
     },
@@ -16,8 +16,8 @@
       "id": "s0001",
       "speaker_id": "speaker_1",
       "role": "client",
-      "start": 9.5,
-      "end": 13.0,
+      "start": 7.24,
+      "end": 8.14,
       "text": "Sí, sin problema.",
       "words": []
     },
@@ -25,8 +25,8 @@
       "id": "s0002",
       "speaker_id": "speaker_0",
       "role": "advisor",
-      "start": 13.0,
-      "end": 24.0,
+      "start": 9.18,
+      "end": 17.56,
       "text": "Perfecto. Revisando su cartera, tiene unos cien mil euros, la mayor parte en renta variable global y una parte en renta fija.",
       "words": []
     },
@@ -34,8 +34,8 @@
       "id": "s0003",
       "speaker_id": "speaker_1",
       "role": "client",
-      "start": 24.0,
-      "end": 38.5,
+      "start": 18.6,
+      "end": 26.66,
       "text": "Eso es. Le cuento una novedad: me jubilo en tres años, así que quiero ir pensando en tener el dinero disponible para entonces.",
       "words": []
     },
@@ -43,8 +43,8 @@
       "id": "s0004",
       "speaker_id": "speaker_0",
       "role": "advisor",
-      "start": 38.5,
-      "end": 46.0,
+      "start": 27.7,
+      "end": 31.66,
       "text": "Entendido, tres años. ¿Hay algún gasto importante antes de esa fecha?",
       "words": []
     },
@@ -52,8 +52,8 @@
       "id": "s0005",
       "speaker_id": "speaker_1",
       "role": "client",
-      "start": 46.0,
-      "end": 61.0,
+      "start": 32.78,
+      "end": 38.36,
       "text": "Sí, lo de la entrada del piso de mi hija. Necesitaré unos veinte mil euros el año que viene.",
       "words": []
     },
@@ -61,8 +61,8 @@
       "id": "s0006",
       "speaker_id": "speaker_0",
       "role": "advisor",
-      "start": 61.0,
-      "end": 84.0,
+      "start": 39.38,
+      "end": 49.22,
       "text": "Tomo nota. Ahora mismo los mercados emergentes están baratos. Le propongo invertir treinta mil euros en un fondo indexado de renta variable emergente.",
       "words": []
     },
@@ -70,8 +70,8 @@
       "id": "s0007",
       "speaker_id": "speaker_1",
       "role": "client",
-      "start": 84.0,
-      "end": 92.0,
+      "start": 50.22,
+      "end": 53.46,
       "text": "Bueno, si usted lo ve bien... no entiendo mucho de esto.",
       "words": []
     },
@@ -79,8 +79,8 @@
       "id": "s0008",
       "speaker_id": "speaker_0",
       "role": "advisor",
-      "start": 92.0,
-      "end": 108.0,
+      "start": 54.48,
+      "end": 62.92,
       "text": "Es un fondo con buen potencial a largo plazo y con este no va a perder dinero. Lo financiaríamos vendiendo parte de la renta fija.",
       "words": []
     },
@@ -88,8 +88,8 @@
       "id": "s0009",
       "speaker_id": "speaker_1",
       "role": "client",
-      "start": 108.0,
-      "end": 121.0,
+      "start": 63.94,
+      "end": 68.02,
       "text": "Lo que no quiero es llevarme sustos, que con la jubilación tan cerca me pone nerviosa.",
       "words": []
     },
@@ -97,8 +97,8 @@
       "id": "s0010",
       "speaker_id": "speaker_0",
       "role": "advisor",
-      "start": 121.0,
-      "end": 140.0,
+      "start": 69.02,
+      "end": 74.04,
       "text": "Lo entiendo. Le enviaré por correo la documentación del fondo y el informe antes del viernes.",
       "words": []
     },
@@ -106,8 +106,8 @@
       "id": "s0011",
       "speaker_id": "speaker_1",
       "role": "client",
-      "start": 140.0,
-      "end": 146.0,
+      "start": 75.02,
+      "end": 76.22,
       "text": "De acuerdo, muchas gracias.",
       "words": []
     }

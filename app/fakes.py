@@ -33,7 +33,7 @@ def _raw(name: str) -> object:
 
 
 def transcript() -> Transcript:
-    """Demo transcript (12 turns, 146 s)."""
+    """Demo transcript (12 turns, 76,6 s; times of the real clip app/data/audio/demo_clip.mp3)."""
     return Transcript.model_validate(_raw("transcript"))
 
 
@@ -58,7 +58,7 @@ def extraction() -> Extraction:
 
 
 def flags() -> list[Flag]:
-    """Expected flags: horizon RED, volatility RED, concentration AMBER, SRI and liquidity GREEN."""
+    """Expected flags (same as the real checker): horizon and volatility RED, concentration and SRI AMBER, liquidity GREEN."""
     return [Flag.model_validate(f) for f in _raw("flags")]  # type: ignore[union-attr]
 
 
