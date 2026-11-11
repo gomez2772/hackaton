@@ -1,7 +1,7 @@
 # Reuniones de evaluación (D-3)
 
 Cinco reuniones **sintéticas** de ~1,5–2 minutos entre asesor y cliente, escritas para medir Acta (D-4).
-Todo es ficticio: clientes, carteras, importes y conversaciones.
+Clientes, carteras, importes y conversaciones son ficticios; los fondos son KID reales del catálogo (`app/data/kids.json`).
 
 | Carpeta | Escenario | Qué debe detectar Acta |
 |---------|-----------|------------------------|
@@ -15,9 +15,8 @@ Todo es ficticio: clientes, carteras, importes y conversaciones.
 
 - **`script.json`** sirve de entrada para C-7. `turns` es una lista de `[quién, texto]`, con quién = `advisor` o `client`,
   y se pasa tal cual a `app.audio.tts.synthesize_dialogue`. El audio se genera en `app/data/meetings/<carpeta>/audio.mp3`.
-- **`client.json`** contiene el `ClientProfile` de la reunión. Los ISIN son de momento los fondos demo
-  (`DEMO00000001` RV global, `DEMO00000002` RF corto euro y `DEMO00000003` RV emergente). Cuando exista el catálogo real (C-3),
-  `run_eval.py` los cambiará por su equivalente según `asset_class`.
+- **`client.json`** contiene el `ClientProfile` de la reunión, con fondos reales del catálogo: `IE00B03HD191` (RV global),
+  `LU0290356871` (RF euro 1-3 años) y `IE0031786696` (RV emergente).
 - **`truth.json`** es la verdad de referencia:
   - `recommendations`: la acción, la clase de activo, el importe y de dónde sale el dinero. Se compara por clase de activo, no por ISIN.
   - `stated_needs`: las necesidades que el cliente dice expresamente.

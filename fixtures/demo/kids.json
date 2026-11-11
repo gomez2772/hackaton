@@ -1,41 +1,41 @@
 [
   {
-    "isin": "DEMO00000001",
-    "name": "Fondo índice RV global (demo)",
-    "manager": "Gestora Demo",
+    "isin": "IE00B03HD191",
+    "name": "Vanguard Global Stock Index Fund - EUR Accumulation Shares",
+    "manager": "Vanguard Group (Ireland) Limited",
     "asset_class": "equity_global",
     "sri": 4,
     "recommended_holding_years": 5.0,
-    "ongoing_costs_pct": 0.2,
-    "liquidity_days": 3,
-    "proxy_ticker": "URTH",
-    "source_url": "fixture",
-    "kid_date": "2026-01-01"
+    "ongoing_costs_pct": 0.18,
+    "liquidity_days": 2,
+    "proxy_ticker": "IWDA.AS",
+    "source_url": "https://fund-docs.vanguard.com/ie00b03hd191_priipskid_es.pdf",
+    "kid_date": "2026-09-29"
   },
   {
-    "isin": "DEMO00000002",
-    "name": "Fondo RF corto plazo euro (demo)",
-    "manager": "Gestora Demo",
+    "isin": "LU0290356871",
+    "name": "Xtrackers II Eurozone Government Bond 1-3 UCITS ETF 1C",
+    "manager": "DWS Investment S.A.",
     "asset_class": "bond_short_eur",
     "sri": 2,
-    "recommended_holding_years": 1.0,
-    "ongoing_costs_pct": 0.15,
+    "recommended_holding_years": 3.0,
+    "ongoing_costs_pct": 0.1,
     "liquidity_days": 2,
-    "proxy_ticker": "IBGS.AS",
-    "source_url": "fixture",
-    "kid_date": "2026-01-01"
+    "proxy_ticker": "DBXP.DE",
+    "source_url": "https://etf.dws.com/Download/KID/LU0290356871/ES/ES",
+    "kid_date": "2026-04-14"
   },
   {
-    "isin": "DEMO00000003",
-    "name": "Fondo índice RV emergente (demo)",
-    "manager": "Gestora Demo",
+    "isin": "IE0031786696",
+    "name": "Vanguard Emerging Markets Stock Index Fund - EUR Accumulation Shares",
+    "manager": "Vanguard Group (Ireland) Limited",
     "asset_class": "equity_em",
     "sri": 4,
     "recommended_holding_years": 5.0,
-    "ongoing_costs_pct": 0.25,
-    "liquidity_days": 3,
-    "proxy_ticker": "EEM",
-    "source_url": "fixture",
-    "kid_date": "2026-01-01"
+    "ongoing_costs_pct": 0.23,
+    "liquidity_days": 2,
+    "proxy_ticker": "XMME.DE",
+    "source_url": "https://fund-docs.vanguard.com/ie0031786696_priipskid_es.pdf",
+    "kid_date": "2026-09-29"
   }
 ]

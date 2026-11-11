@@ -69,8 +69,8 @@
   "recommendations": [
     {
       "id": "r1",
-      "product_name": "Fondo índice RV emergente (demo)",
-      "isin": "DEMO00000003",
+      "product_name": "Vanguard Emerging Markets Stock Index Fund - EUR Accumulation Shares",
+      "isin": "IE0031786696",
       "action": "buy",
       "amount_eur": 30000.0,
       "rationale": "Mercados emergentes baratos, potencial a largo plazo; se financia vendiendo renta fija",

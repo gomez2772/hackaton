@@ -6,14 +6,14 @@
   "liquidity_need_eur": null,
   "portfolio": [
     {
-      "isin": "DEMO00000001",
-      "name": "Fondo índice RV global (demo)",
-      "amount_eur": 50000.0
+      "isin": "IE00B03HD191",
+      "name": "Vanguard Global Stock Index Fund EUR Acc",
+      "amount_eur": 60000.0
     },
     {
-      "isin": "DEMO00000002",
-      "name": "Fondo RF corto plazo euro (demo)",
-      "amount_eur": 50000.0
+      "isin": "LU0290356871",
+      "name": "Xtrackers II Eurozone Government Bond 1-3 UCITS ETF 1C",
+      "amount_eur": 40000.0
     }
   ],
   "synthetic": true

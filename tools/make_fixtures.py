@@ -29,7 +29,6 @@ from app.schemas import (  # noqa: E402
     ConductStatus,
     Evidence,
     Extraction,
-    Flag,
     FlagType,
     FundKID,
     Holding,
@@ -39,7 +38,6 @@ from app.schemas import (  # noqa: E402
     RiskProfileLimits,
     Role,
     Segment,
-    Severity,
     StageTiming,
     StatedNeed,
     SuitabilityReport,
@@ -48,6 +46,13 @@ from app.schemas import (  # noqa: E402
 )
 
 OUT = ROOT / "fixtures" / "demo"
+EM_ISIN = "IE0031786696"  # Vanguard Emerging Markets Stock Index Fund (r1)
+DEMO_ISINS = ("IE00B03HD191", "LU0290356871", EM_ISIN)  # client's two holdings + the recommended fund
+
+
+def num(x: float) -> str:
+    """12.84 -> '12,8'."""
+    return f"{x:.1f}".replace(".", ",")
 
 TURNS = [  # (speaker, start, end, text) — times from the real demo clip (C-2, Scribe)
     ("speaker_0", 0.1, 6.18, "Buenos días, Lucía. Antes de empezar, le recuerdo que esta reunión se graba con su consentimiento."),
@@ -83,22 +88,14 @@ def build() -> dict[str, object]:
         client_id="CLI-DEMO-001", name="Lucía Martín (sintético)", risk_profile=3,
         horizon_years=None, liquidity_need_eur=None,
         portfolio=[
-            Holding(isin="DEMO00000001", name="Fondo índice RV global (demo)", amount_eur=50_000),
-            Holding(isin="DEMO00000002", name="Fondo RF corto plazo euro (demo)", amount_eur=50_000),
+            Holding(isin="IE00B03HD191", name="Vanguard Global Stock Index Fund EUR Acc", amount_eur=60_000),
+            Holding(isin="LU0290356871", name="Xtrackers II Eurozone Government Bond 1-3 UCITS ETF 1C",
+                    amount_eur=40_000),
         ],
     )
 
-    kids = [
-        FundKID(isin="DEMO00000001", name="Fondo índice RV global (demo)", manager="Gestora Demo",
-                asset_class="equity_global", sri=4, recommended_holding_years=5, ongoing_costs_pct=0.20,
-                liquidity_days=3, proxy_ticker="URTH", source_url="fixture", kid_date="2026-01-01"),
-        FundKID(isin="DEMO00000002", name="Fondo RF corto plazo euro (demo)", manager="Gestora Demo",
-                asset_class="bond_short_eur", sri=2, recommended_holding_years=1, ongoing_costs_pct=0.15,
-                liquidity_days=2, proxy_ticker="IBGS.AS", source_url="fixture", kid_date="2026-01-01"),
-        FundKID(isin="DEMO00000003", name="Fondo índice RV emergente (demo)", manager="Gestora Demo",
-                asset_class="equity_em", sri=4, recommended_holding_years=5, ongoing_costs_pct=0.25,
-                liquidity_days=3, proxy_ticker="EEM", source_url="fixture", kid_date="2026-01-01"),
-    ]
+    catalogue = {k["isin"]: k for k in json.loads((ROOT / "app" / "data" / "kids.json").read_text(encoding="utf-8"))}
+    kids = [FundKID.model_validate(catalogue[i]) for i in DEMO_ISINS]  # snapshot of the real KIDs (C-3)
 
     limits = [
         RiskProfileLimits(risk_profile=1, label="Conservador", max_sri=2, max_volatility_pct=4),
@@ -124,7 +121,8 @@ def build() -> dict[str, object]:
                        evidence=[ev("Lo que no quiero es llevarme sustos", 9)]),
         ],
         recommendations=[
-            Recommendation(id="r1", product_name="Fondo índice RV emergente (demo)", isin="DEMO00000003",
+            Recommendation(id="r1", product_name="Vanguard Emerging Markets Stock Index Fund - EUR Accumulation Shares",
+                           isin=EM_ISIN,
                            action="buy", amount_eur=30_000,
                            rationale="Mercados emergentes baratos, potencial a largo plazo; se financia vendiendo renta fija",
                            evidence=[ev("invertir treinta mil euros en un fondo indexado de renta variable emergente", 6),
@@ -137,29 +135,15 @@ def build() -> dict[str, object]:
         ],
     )
 
-    flags = [
-        Flag(id="f1", type=FlagType.HORIZON, severity=Severity.RED, recommendation_id="r1",
-             title="Horizonte insuficiente",
-             explanation="Horizonte recomendado KID 5 años > 3 años declarados por la clienta",
-             value=3, limit=5, unit="años", evidence=[ev("me jubilo en tres años", 3)]),
-        Flag(id="f2", type=FlagType.VOLATILITY, severity=Severity.RED, recommendation_id="r1",
-             title="Volatilidad por encima del perfil",
-             explanation="Volatilidad anual de la cartera resultante 12,2 % > 12,0 % límite del perfil 3 (Moderado) · estimación por SRI",
-             value=12.2, limit=12.0, unit="%"),
-        Flag(id="f3", type=FlagType.CONCENTRATION, severity=Severity.AMBER, recommendation_id="r1",
-             title="Concentración elevada",
-             explanation="RV emergente pasaría a 30,0 % de la cartera > 25,0 % máximo por producto",
-             value=30.0, limit=25.0, unit="%"),
-        Flag(id="f4", type=FlagType.SRI, severity=Severity.AMBER, recommendation_id="r1",
-             title="Riesgo en el límite con preferencia por preservar capital",
-             explanation="SRI del producto 4 ≤ 4 máximo del perfil 3 (Moderado)",
-             value=4, limit=4, unit="SRI"),
-        Flag(id="f5", type=FlagType.LIQUIDITY, severity=Severity.GREEN, recommendation_id="r1",
-             title="Liquidez suficiente",
-             explanation="Activos con liquidez ≤ T+3 tras la operación 100 000 € ≥ 20 000 € necesarios",
-             value=100_000, limit=20_000, unit="€",
-             evidence=[ev("Necesitaré unos veinte mil euros el año que viene", 5)]),
-    ]
+    # Flags are what the real checker computes (C-5 covariance with the versioned prices), so demo mode
+    # never shows a number the code would not produce (CLAUDE.md §9). Ids are fixed for the report.
+    from app.engine.checker import check
+
+    by_type = {f.type: f for f in check(extraction, client, kids={k.isin: k for k in kids},
+                                        limits={lim.risk_profile: lim for lim in limits})}
+    order = [FlagType.HORIZON, FlagType.VOLATILITY, FlagType.CONCENTRATION, FlagType.SRI, FlagType.LIQUIDITY]
+    flags = [by_type[t].model_copy(update={"id": f"f{i}"}) for i, t in enumerate(order, start=1)]
+    vol = by_type[FlagType.VOLATILITY]
 
     def s(i: str, text: str, evs: list[Evidence], flags_: list[str] | None = None, kind: str = "claim") -> ReportSentence:
         return ReportSentence(id=i, text=text, kind=kind, evidence=evs, flag_ids=flags_ or [],
@@ -186,7 +170,8 @@ def build() -> dict[str, object]:
             ReportSection(key="suitability_assessment", title="Evaluación de idoneidad", sentences=[
                 s("p5", "El horizonte mínimo recomendado del producto (5 años) supera el horizonte declarado (3 años).",
                   [ev("me jubilo en tres años", 3)], ["f1"]),
-                s("p6", "La volatilidad estimada de la cartera resultante (12,2 %) excede el límite del perfil Moderado (12,0 %).",
+                s("p6", f"La volatilidad estimada de la cartera resultante ({num(vol.value)} %) excede el límite "
+                          f"del perfil Moderado ({num(vol.limit)} %).",
                   [], ["f2"], kind="computed"),
             ]),
             ReportSection(key="risks_and_warnings", title="Riesgos y advertencias", sentences=[

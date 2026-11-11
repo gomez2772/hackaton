@@ -43,7 +43,7 @@ def client() -> ClientProfile:
 
 
 def kids() -> dict[str, FundKID]:
-    """Three fictional demo funds keyed by ISIN."""
+    """The 3 real KIDs of the demo case (snapshot of app/data/kids.json), keyed by ISIN."""
     return {k["isin"]: FundKID.model_validate(k) for k in _raw("kids")}  # type: ignore[union-attr]
 
 

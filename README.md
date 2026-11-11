@@ -57,4 +57,4 @@ etapas por el fixture de `fixtures/demo/`, para trabajar sin esperar a los demá
 
 Perfiles de cliente, carteras y reuniones son **sintéticos**. Los datos de fondos (SRI,
 horizonte recomendado, costes) proceden de KIDs públicos enlazados en `app/data/kids.json`.
-Los fondos de `fixtures/demo/` son ficticios y solo sirven para tests.
+`fixtures/demo/` es una copia del caso demo con los 3 KID reales que usa (Vanguard Global Stock, Xtrackers Eurozone Government Bond 1-3 y Vanguard Emerging Markets) y las banderas que calcula el comprobador real; se regenera con `python tools/make_fixtures.py`.
