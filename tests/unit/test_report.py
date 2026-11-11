@@ -14,3 +14,12 @@ def test_report_from_fixture_has_full_coverage(demo_extraction, demo_flags, demo
     assert "NO es idónea" in text and "30 000 €" in text
     computed = [s for sec in rep.sections for s in sec.sentences if s.kind == "computed"]
     assert computed and all(s.flag_ids for s in computed)
+
+
+def test_computed_sentences_cite_valid_checklist_ids(demo_extraction, demo_flags, demo_client, demo_transcript):
+    from app.data.regulation import ID_PATTERN, invalid_references
+
+    rep = draft(demo_extraction, demo_flags, demo_client, demo_transcript, advisor_name="A", meeting_date="x")
+    flagged = [s for sec in rep.sections if sec.key == "suitability_assessment" for s in sec.sentences]
+    assert flagged and all(ID_PATTERN.search(s.text) for s in flagged)
+    assert not invalid_references(" ".join(s.text for s in flagged))

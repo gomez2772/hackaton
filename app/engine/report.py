@@ -54,6 +54,14 @@ def _s(text: str) -> str:
     return text.strip().rstrip(".;: ")
 
 
+def _refs(flag: Flag) -> str:
+    """' (ref. AJU-02, IDO-03)': ids of C's local MiFID checklist behind this flag type."""
+    from app.data.regulation import FLAG_REQUIREMENTS
+
+    ids = FLAG_REQUIREMENTS.get(flag.type.value, [])
+    return f" (ref. {', '.join(ids)})" if ids else ""
+
+
 def _lower_first(text: str) -> str:
     """'El asesor…' -> 'el asesor…' after a colon; leaves acronyms ('ETF…', 'RV…') alone."""
     if len(text) > 1 and text[0].isupper() and text[1].islower():
@@ -109,7 +117,8 @@ def draft(extraction: Extraction, flags: list[Flag], client: ClientProfile, tran
         recs = [b.boilerplate("No se formuló ninguna recomendación en la reunión.")]
 
     order = {Severity.RED: 0, Severity.AMBER: 1, Severity.GREEN: 2}
-    assessment = [b.computed(f"{f.title}: {f.explanation}.", [f]) for f in sorted(flags, key=lambda f: order[f.severity])]
+    assessment = [b.computed(f"{f.title}: {_s(f.explanation)}{_refs(f)}.", [f])
+                  for f in sorted(flags, key=lambda f: order[f.severity])]
     if not assessment:
         assessment = [b.boilerplate("No hay recomendaciones que evaluar.")]
 
