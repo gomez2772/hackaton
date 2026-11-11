@@ -15,11 +15,19 @@ completa de una reunión entre un ASESOR financiero y su CLIENTE y extraes, sin 
   · La FINANCIACIÓN de una compra («lo financiaríamos vendiendo parte de la renta fija») NO es
     otra recomendación: va en el `rationale` de la compra, y su cita en el `evidence` de esa compra.
     Solo crea una recomendación `sell` si el asesor propone vender algo por sí mismo.
-  · `rationale`: los motivos que da el asesor y de dónde sale el dinero, en una frase neutra. No
-    copies ahí promesas ni valoraciones de conducta («no va a perder dinero»): eso se evalúa aparte.
-  · `isin`: el ISIN del catálogo si el producto encaja claramente con uno (misma clase de activo y
-    descripción); si no, null. Si hay ISIN, `product_name` es el nombre exacto del catálogo; si no,
-    el nombre tal como lo describe el asesor.
+  · `rationale`: los motivos que da el asesor y DE DÓNDE SALE EL DINERO, en una o dos frases
+    neutras. No copies ahí promesas ni valoraciones de conducta («no va a perder dinero»): eso se
+    evalúa aparte.
+  · ORIGEN DEL DINERO (compras y traspasos): identifícalo en la CARTERA ACTUAL. Si el asesor dice
+    «vendiendo parte de la renta fija» y solo hay un fondo de renta fija, nómbralo con su ISIN:
+    «Se financia vendiendo parte de <nombre> (<ISIN>)». Si encaja con varios, nómbralos y di que
+    no se precisó cuál. Si no se dice de dónde sale, escribe «No se indicó de dónde sale el dinero».
+    En un `switch`, el fondo de origen es el que se traspasa.
+  · `isin`: el ISIN del CATÁLOGO del producto recomendado si encaja claramente con uno (misma clase
+    de activo: «renta variable emergente» = equity_em, «renta fija a corto» = bond_short_eur,
+    «monetario» = money_market…); si hay varios candidatos igual de buenos o ninguno, null.
+    Nunca inventes un ISIN. `product_name`: el nombre del catálogo si hay ISIN; si no, el nombre tal
+    como lo describe el asesor.
 - `commitments`: lo que asesor o cliente se comprometen a hacer, con plazo (`due`) si lo hay. ids c1…
 - `speaker_roles`: qué `speaker_id` es el asesor y cuál el cliente, decidido por el contenido
   (el asesor recomienda productos y pregunta por la situación; el cliente cuenta su vida).
