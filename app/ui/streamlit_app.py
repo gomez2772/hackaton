@@ -26,6 +26,8 @@ CONDUCT = {"ok": "🟢 Cumple", "breach": "🔴 No cumple", "no_evidence": "⚪ 
 STAGE_LABEL = {"stt": "Transcribiendo", "extract": "Extrayendo con Claude", "validate": "Verificando citas",
                "check": "Comprobando idoneidad", "conduct": "Revisando la conducta", "summary": "Resumiendo para el cliente",
                "report": "Redactando el informe"}
+STAGE_SHORT = {"stt": "Transcripción", "extract": "Extracción", "validate": "Citas", "check": "Idoneidad",
+               "conduct": "Conducta", "summary": "Resumen", "report": "Informe"}
 settings = get_settings()
 st.session_state.setdefault("t", 0)
 
@@ -33,6 +35,30 @@ st.session_state.setdefault("t", 0)
 def mmss(t: float | None) -> str:
     t = int(t or 0)
     return f"{t // 60:02d}:{t % 60:02d}"
+
+
+def secs(x: float) -> str:
+    """1.25 -> '1,3 s' (Spanish decimal comma)."""
+    return f"{x:.1f} s".replace(".", ",")
+
+
+def speaker_label(role: str, speaker_id: str) -> str:
+    """Readable speaker name; unknown roles become 'Hablante N'."""
+    if role == "advisor":
+        return "🧑‍💼 Asesor"
+    if role == "client":
+        return "🙋 Cliente"
+    digits = "".join(ch for ch in speaker_id if ch.isdigit())
+    return f"🗣️ Hablante {int(digits) + 1}" if digits else f"🗣️ {speaker_id}"
+
+
+def exported(res: AnalysisResult, fmt: str) -> bytes:
+    """Export once per analysis: every ▶ click reruns the script and PDF/DOCX take ~0.4 s."""
+    cache = st.session_state.setdefault("exports", {})
+    key = (res.analysis_id, fmt)
+    if key not in cache:
+        cache[key] = export(res, fmt)
+    return cache[key]
 
 
 def jump(second: float | None) -> None:
@@ -84,6 +110,7 @@ if go:
                          on_stage=lambda s: status.write(f"{STAGE_LABEL.get(s, s)}…"))
         status.update(label="Análisis completado", state="complete", expanded=False)
     st.session_state.result, st.session_state.audio, st.session_state.t = result, audio_path, 0
+    st.session_state.exports = {}
 
 res: AnalysisResult | None = st.session_state.get("result")
 if res is None:
@@ -108,9 +135,11 @@ breaches = sum(it.status.value == "breach" for it in res.conduct.items) if res.c
 c1, c2, c3, c4 = st.columns(4)
 c1.metric("Idoneidad", "Sin evaluar" if not res.flags else "No idóneo" if reds else "Con advertencias" if ambers else "Idóneo")
 c2.metric("Alertas rojas", reds)
-c3.metric("Incumplimientos de conducta", breaches)
+c3.metric("Incumplimientos de conducta", breaches if res.conduct else "—",
+          help=None if res.conduct else "El chequeo de conducta no está disponible para este análisis")
 c4.metric("Cobertura de evidencia", "—" if res.report.template_mode else f"{res.report.coverage_pct:.0f} %")
-st.caption(" · ".join(f"{t.stage} {t.seconds:.1f} s" + (" (sim.)" if t.fake else "") for t in res.timings))
+st.caption(" · ".join(f"{STAGE_SHORT.get(t.stage, t.stage)} {secs(t.seconds)}" + (" (sim.)" if t.fake else "")
+                      for t in res.timings))
 
 t_rep, t_flags, t_cond, t_tr, t_sum = st.tabs(
     ["Informe de idoneidad", "Banderas", "Conducta", "Transcripción", "Resumen para el cliente"])
@@ -128,10 +157,12 @@ with t_rep:
     st.divider()
     cols = st.columns(len(FORMATS))
     for col, fmt in zip(cols, FORMATS, strict=True):
-        col.download_button(fmt.upper(), export(res, fmt), file_name=f"informe_{res.analysis_id}.{fmt}",
+        col.download_button(fmt.upper(), exported(res, fmt), file_name=f"informe_{res.analysis_id}.{fmt}",
                             mime=FORMATS[fmt], use_container_width=True)
 
 with t_flags:
+    if not res.flags:
+        st.info("El comprobador no ha generado banderas: no se detectaron recomendaciones que evaluar.")
     order = {"red": 0, "amber": 1, "green": 2}
     for f in sorted(res.flags, key=lambda f: order[f.severity.value]):
         st.markdown(f"{SEV[f.severity.value]} **{f.title}** — {f.explanation}")
@@ -153,7 +184,7 @@ with t_tr:
                                         res.extraction.recommendations, res.extraction.commitments)
              for item in group for e in item.evidence if e.verified}
     for seg in res.transcript.segments:
-        who = "🧑‍💼 Asesor" if seg.role.value == "advisor" else "🙋 Cliente" if seg.role.value == "client" else seg.speaker_id
+        who = speaker_label(seg.role.value, seg.speaker_id)
         a, b = st.columns([1, 9])
         a.button(mmss(seg.start), key=f"seg-{seg.id}", on_click=jump, args=(seg.start,))
         b.markdown(f"{who}: " + (f"**{seg.text}**" if seg.id in cited else seg.text))
