@@ -1,0 +1,5 @@
+{"client_id": "CLI-002", "name": "Carmen Ruiz (sintético)", "risk_profile": 3, "horizon_years": null, "liquidity_need_eur": null,
+ "portfolio": [
+  {"isin": "LU0290358497", "name": "Xtrackers II EUR Overnight Rate Swap UCITS ETF 1C", "amount_eur": 120000.0},
+  {"isin": "LU1650487413", "name": "Amundi Euro Government Bond 1-3Y UCITS ETF Acc", "amount_eur": 60000.0}
+ ], "synthetic": true}

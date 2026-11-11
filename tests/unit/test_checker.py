@@ -23,3 +23,10 @@ def test_no_recommendations_no_flags(demo_client):
     from app.schemas import Extraction
 
     assert check(Extraction(), demo_client, kids=fakes.kids(), limits=fakes.risk_limits()) == []
+
+
+def test_years_formatting():
+    from app.engine.checker import years
+
+    assert years(5) == "5 años" and years(1) == "1 año" and years(1.5) == "1,5 años"
+    assert years(0.08) == "1 mes" and years(0.5) == "6 meses"

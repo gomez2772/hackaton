@@ -28,3 +28,15 @@ def test_single_asset_approx_equals_class_midpoint():
 def test_switch_funded_from_lowest_sri(demo_client, demo_extraction):
     pf = resulting_portfolio(demo_client, demo_extraction.recommendations, fakes.kids())
     assert pf == {"DEMO00000001": 50_000, "DEMO00000002": 20_000, "DEMO00000003": 30_000}
+
+
+def test_two_correlated_assets_known_volatility():
+    rng = np.random.default_rng(1)
+    n, rho = 200_000, 0.6
+    z1, z2 = rng.normal(size=n), rng.normal(size=n)
+    a = 0.01 * z1
+    b = 0.02 * (rho * z1 + np.sqrt(1 - rho**2) * z2)
+    vol = portfolio_volatility({"A": 0.5, "B": 0.5}, pd.DataFrame({"A": a, "B": b}))
+    var = 0.25 * 0.01**2 + 0.25 * 0.02**2 + 2 * 0.25 * rho * 0.01 * 0.02
+    expected = np.sqrt(var) * np.sqrt(252) * 100
+    assert abs(vol - expected) / expected < 0.01
