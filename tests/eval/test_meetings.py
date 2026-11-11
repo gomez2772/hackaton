@@ -7,7 +7,7 @@ from pathlib import Path
 
 import pytest
 
-from app import fakes
+from app.data.loaders import load_kids, load_risk_limits
 from app.engine.checker import check
 from app.engine.citations import normalize
 from app.engine.conduct import CHECKLIST
@@ -15,7 +15,9 @@ from app.schemas import ClientProfile, Evidence, Extraction, Recommendation, Sta
 
 MEETINGS = Path(__file__).resolve().parent / "meetings"
 DIRS = sorted(p for p in MEETINGS.iterdir() if p.is_dir())
-DEMO_ISIN = {k.asset_class: k.isin for k in fakes.kids().values()}
+KIDS = load_kids()
+# asset class -> real fund used in the meetings (mapping given by C in PET-1)
+REAL_ISIN = {"equity_global": "IE00B03HD191", "equity_em": "IE0031786696", "bond_short_eur": "LU0290356871"}
 STATUSES = {"ok", "breach", "no_evidence"}
 
 
@@ -42,7 +44,8 @@ def test_script_shape_and_length(d):
 def test_client_is_valid_and_matches(d):
     c = ClientProfile.model_validate(load(d, "client"))
     assert c.synthetic and c.client_id == load(d, "script")["client_id"]
-    assert all(h.isin in fakes.kids() for h in c.portfolio)
+    assert all(h.isin in KIDS for h in c.portfolio)
+    assert set(REAL_ISIN.values()) <= set(KIDS)
 
 
 @pytest.mark.parametrize("d", DIRS, ids=lambda d: d.name)
@@ -63,10 +66,10 @@ def test_conduct_truth_covers_the_checklist(d):
 
 @pytest.mark.parametrize("d", DIRS, ids=lambda d: d.name)
 def test_expected_flags_match_the_real_checker(d):
-    """Feed the truth (as a perfect extraction) to the real checker with the demo funds."""
+    """Feed the truth (as a perfect extraction) to the real checker with the real catalogue and prices."""
     t, client = load(d, "truth"), ClientProfile.model_validate(load(d, "client"))
     ev = [Evidence(quote="(truth)", verified=True)]
-    recs = [Recommendation(id=r["id"], product_name=r["asset_class"], isin=DEMO_ISIN[r["asset_class"]],
+    recs = [Recommendation(id=r["id"], product_name=r["asset_class"], isin=REAL_ISIN[r["asset_class"]],
                            action=r["action"], amount_eur=r["amount_eur"],
                            rationale=f"financiado con {r['funded_from']}", evidence=ev)
             for r in t["recommendations"]]
@@ -74,7 +77,7 @@ def test_expected_flags_match_the_real_checker(d):
                         horizon_years=n.get("horizon_years"), evidence=ev)
              for i, n in enumerate(t["stated_needs"], start=1)]
     flags = check(Extraction(recommendations=recs, stated_needs=needs), client,
-                  kids=fakes.kids(), limits=fakes.risk_limits())
+                  kids=KIDS, limits=load_risk_limits())
     got = {f.type.value: f.severity.value for f in flags}
     for ftype, expected in t["flags"].items():
         if expected is not None:

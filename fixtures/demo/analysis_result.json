@@ -1,7 +1,7 @@
 {
   "schema_version": "1.1",
   "analysis_id": "AN-DEMO-0001",
-  "created_at": "2026-11-11T15:23:07.510973Z",
+  "created_at": "2026-11-11T16:16:43.750552Z",
   "client": {
     "client_id": "CLI-DEMO-001",
     "name": "Lucía Martín (sintético)",
@@ -10,14 +10,14 @@
     "liquidity_need_eur": null,
     "portfolio": [
       {
-        "isin": "DEMO00000001",
-        "name": "Fondo índice RV global (demo)",
-        "amount_eur": 50000.0
+        "isin": "IE00B03HD191",
+        "name": "Vanguard Global Stock Index Fund EUR Acc",
+        "amount_eur": 60000.0
       },
       {
-        "isin": "DEMO00000002",
-        "name": "Fondo RF corto plazo euro (demo)",
-        "amount_eur": 50000.0
+        "isin": "LU0290356871",
+        "name": "Xtrackers II Eurozone Government Bond 1-3 UCITS ETF 1C",
+        "amount_eur": 40000.0
       }
     ],
     "synthetic": true
@@ -209,8 +209,8 @@
     "recommendations": [
       {
         "id": "r1",
-        "product_name": "Fondo índice RV emergente (demo)",
-        "isin": "DEMO00000003",
+        "product_name": "Vanguard Emerging Markets Stock Index Fund - EUR Accumulation Shares",
+        "isin": "IE0031786696",
         "action": "buy",
         "amount_eur": 30000.0,
         "rationale": "Mercados emergentes baratos, potencial a largo plazo; se financia vendiendo renta fija",
@@ -261,7 +261,7 @@
       "severity": "red",
       "recommendation_id": "r1",
       "title": "Horizonte insuficiente",
-      "explanation": "Horizonte recomendado KID 5 años > 3 años declarados por la clienta",
+      "explanation": "Horizonte recomendado KID 5 años > 3 años declarados",
       "value": 3.0,
       "limit": 5.0,
       "unit": "años",
@@ -281,8 +281,8 @@
       "severity": "red",
       "recommendation_id": "r1",
       "title": "Volatilidad por encima del perfil",
-      "explanation": "Volatilidad anual de la cartera resultante 12,2 % > 12,0 % límite del perfil 3 (Moderado) · estimación por SRI",
-      "value": 12.2,
+      "explanation": "Volatilidad anual de la cartera resultante 12,8 % > 12,0 % límite del perfil 3 (Moderado) · covarianza de 3 años de precios",
+      "value": 12.8,
       "limit": 12.0,
       "unit": "%",
       "evidence": []
@@ -293,7 +293,7 @@
       "severity": "amber",
       "recommendation_id": "r1",
       "title": "Concentración elevada",
-      "explanation": "RV emergente pasaría a 30,0 % de la cartera > 25,0 % máximo por producto",
+      "explanation": "Vanguard Emerging Markets Stock Index Fund - EUR Accumulation Shares pasaría a 30,0 % de la cartera > 25,0 % máximo por producto",
       "value": 30.0,
       "limit": 25.0,
       "unit": "%",
@@ -451,7 +451,7 @@
           },
           {
             "id": "p6",
-            "text": "La volatilidad estimada de la cartera resultante (12,2 %) excede el límite del perfil Moderado (12,0 %).",
+            "text": "La volatilidad estimada de la cartera resultante (12,8 %) excede el límite del perfil Moderado (12,0 %).",
             "kind": "computed",
             "evidence": [],
             "flag_ids": [

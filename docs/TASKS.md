@@ -100,6 +100,7 @@ Ruta crítica de la demo: C-1 → C-2 → B-1 → B-2 → A-2 → D-5.
 
 ### Peticiones (de otros roles)
 - ✅ **PET-1** · de D · C-7 desbloqueada: guiones en `tests/eval/meetings/<id>/script.json` (`turns` = lista `[quién, texto]` para `synthesize_dialogue`, Flash) → `app/data/meetings/<id>/audio.mp3`. Son ~1,5–2 min: ≈ 6 000 créditos en total. Cuando tengas el catálogo real (C-3), dime la ISIN equivalente a `equity_global`, `equity_em` y `bond_short_eur` para el mapeo de `run_eval.py`.
+- ⬜ **PET-2** · de D · `tests/unit/test_risk.py` fija los ISIN `DEMO0000000x` del fixture y se rompe con el fixture de ISIN reales (PR de D «fixture con ISIN reales»). Cambiad los 2 tests para que busquen el ISIN por `asset_class` (`_isin("equity_em")`, etc.) y comprueben `bond = antes − 30 000`, `equity = antes`, `em = 30 000`: código exacto en el PR de D; pasa con el fixture antiguo y con el nuevo, así que podéis fusionarlo antes.
 
 ---
 
