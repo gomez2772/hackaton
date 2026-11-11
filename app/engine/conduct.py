@@ -47,13 +47,13 @@ SYSTEM = """Eres un revisor de cumplimiento normativo (MiFID II, España). Eval�
 asesor-cliente contra una lista cerrada de comprobaciones de conducta. Cada comprobación es una
 obligación (duty: debe ocurrir) o una prohibición (ban: no debe ocurrir). Para cada una:
 - status "ok": la obligación se cumplió (cita que lo demuestra) o la prohibición no se ha producido.
-  En una prohibición cumplida, si el asesor lo deja claro con una frase («no le puedo asegurar
-  ninguna rentabilidad», «no hay ninguna prisa», «no recibimos incentivos»), cítala; si no, evidence
-  vacía.
+  En una prohibición cumplida, si el asesor lo deja claro con una frase explícita (que ninguna
+  rentabilidad está garantizada, que el cliente puede decidir sin prisa, o qué cobra la entidad y
+  de quién), cítala; si no, evidence vacía.
 - status "breach": hay una conducta incorrecta. La evidence DEBE incluir TODAS las frases del
   asesor que la demuestran (hasta 3: cada promesa, cada frase de presión, o su respuesta evasiva
-  tras una duda del cliente, como «no se preocupe…») y, si ayuda, la frase del cliente que da
-  contexto.
+  tras una duda del cliente, cuando quita importancia al riesgo sin explicarlo) y, si ayuda, la
+  frase del cliente que da contexto.
 - status "no_evidence": es una obligación (duty) de la que no se habló.
 No des "ok" a una obligación sin una cita que lo demuestre.
 Juzga con la normativa de <normativa> y el <checklist>; en `explanation` puedes mencionar el id del
