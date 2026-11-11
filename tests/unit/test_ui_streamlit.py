@@ -54,7 +54,7 @@ def test_missing_conduct_is_not_shown_as_zero_breaches(demo_result):
 
 def test_no_flags_shows_message(demo_result):
     r = demo_result.model_copy(deep=True)
-    r.flags = []
+    r.flags, r.extraction.recommendations = [], []  # nothing to evaluate
     at = render(r)
     assert metric(at, "Idoneidad") == "Sin evaluar"
     assert any("no ha generado banderas" in i.value for i in at.tabs[1].info)
