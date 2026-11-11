@@ -184,7 +184,7 @@ def _polish(report: SuitabilityReport, s: Settings) -> SuitabilityReport:
     try:
         out = complete_json(PROMPT.read_text(encoding="utf-8"),
                             "FRASES:\n" + json.dumps(todo, ensure_ascii=False, indent=1),
-                            _Rewrites, max_tokens=4000, settings=s)
+                            _Rewrites, effort="low", settings=s)
     except Exception as e:  # never break the report because of the LLM
         log.warning("redacción con Claude no disponible, se usa la plantilla: %s", e)
         return report
