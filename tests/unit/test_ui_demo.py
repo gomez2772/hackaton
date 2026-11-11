@@ -40,7 +40,10 @@ def test_demo_preloads_demo_client_and_clip(app):
     assert at.sidebar.radio[0].value == "Clip de la demo"
 
 
-def test_demo_run_from_main_button_then_reset(app):
+def test_demo_run_from_main_button_then_reset(app, monkeypatch):
+    from app import fakes
+
+    monkeypatch.setattr(fakes, "demo_audio", lambda: None)  # independent of whether C-2's clip is in the repo
     at = demo(app)
     at.button(key="run-main").click().run()
     assert not app.exception and "result" in at.session_state
@@ -50,6 +53,20 @@ def test_demo_run_from_main_button_then_reset(app):
     at.button(key="reset").click().run()
     assert "result" not in at.session_state
     assert any("en minutos" in m.value for m in at.markdown)
+
+
+def test_demo_plays_the_clip_when_it_exists(app, monkeypatch, tmp_path):
+    from app import fakes
+
+    clip = tmp_path / "demo_clip.mp3"
+    clip.write_bytes(b"ID3" + b"\x00" * 64)
+    monkeypatch.setattr(fakes, "demo_audio", lambda: clip)
+    at = demo(app)
+    at.button(key="run-main").click().run()
+    assert not at.exception
+    assert at.session_state["audio"] == clip
+    assert len(at.main.get("audio")) == 1
+    assert not any("Audio no disponible" in c.value for c in at.caption)
 
 
 def test_toggle_keeps_url_in_sync(app):
