@@ -45,6 +45,28 @@ Ruta crítica de la demo: C-1 → C-2 → B-1 → B-2 → A-2 → D-5.
 
 ---
 
+## Tareas comunes (sin rol asignado) · añadidas el 11-nov
+
+Las coge quien quede libre: márcala 🟡 con tu letra al empezar, p. ej. «🟡 (A) **T-1**».
+Toca solo los archivos listados. Los marcados como congelados van por PR con etiqueta `contrato`.
+Orden recomendado: T-1 → T-2 → T-3 → T-4 (T-4 es la única con riesgo técnico).
+
+- ⬜ **T-1** · (0,5 h) · **Quitar «para GPTadvisor» de lo que se ve** — `app/ui/streamlit_app.py` (l. 140 subtítulo de la barra lateral, l. 175 cabecera «📝 Acta :gray[· para GPTadvisor]»), `app/export/pdf.py` (l. 140 cabecera de cada página; l. 324 y 364 metadatos `creator` del PDF), `tests/unit/test_ui_demo.py` (l. 29 comprueba ese texto), `docs/TASKS.md` (A-7) · — · `git grep -i "para GPTadvisor"` no devuelve nada en `app/` ni en `tests/`, la app y el PDF no muestran el texto y `pytest -q` en verde. **No** se tocan README, DEMO.md, CONTRACT.md ni CLAUDE.md salvo que el equipo lo decida (ver pregunta abierta 1)
+- ⬜ **T-2** · (1–1,5 h) · **Renombrar la app a «Verbatim»** (solo lo visible) — UI: `app/ui/streamlit_app.py` (l. 37 `page_title`, l. 139 título, l. 175 cabecera); PDF: `app/export/pdf.py` (l. 137 cabecera «Acta», l. 140 desplazamiento del texto, metadatos `author`/`creator`); otros exportadores: `app/export/__init__.py` (pie y títulos si nombran la app); CLI: `app/pipeline.py` (l. 140 descripción); docs: `README.md`, `docs/DEMO.md`, `docs/EVAL.md`, `CLAUDE.md` §0 y `pyproject.toml` (`name`, `description`; los dos últimos son congelados); tests: `tests/unit/test_ui_demo.py` · T-1 · `git grep -n -w "Acta"` solo devuelve los usos de la palabra común «acta» (p. ej. «acta presencial», art. 76.9) y lo que se decida conservar; tests en verde; el PDF dice «Verbatim». **Fuera de esta tarea**: variables `ACTA_*` de `.env` (las usan los 4 `.env` y la CI), nombre del repo, docstrings internos y `app/data/normativa/**` (ver avisos)
+- ⬜ **T-3** · (1 h) · **Barra lateral compacta, sin scroll y plegable** — `app/ui/streamlit_app.py` (bloque `with st.sidebar:`, l. 137-170, y el botón «↺ Nuevo análisis» de l. 240); si hace falta CSS, un `st.markdown(<style>)` en el mismo archivo · — · con la ventana a 1366 × 768 y 1920 × 1080 la barra lateral cabe entera sin scroll en las 3 opciones de audio (clip, grabar, subir con archivo cargado); se sigue pudiendo plegar con la flecha nativa de Streamlit; nada se pierde (los ajustes poco usados pueden ir en un desplegable). Ideas: título y subtítulo en una línea; «Audio» como control segmentado horizontal (`st.segmented_control` o `st.radio(horizontal=True)`); «Asesor» y «Redactar con IA» dentro de un `st.expander("Opciones")`; quitar el aviso de etapas simuladas en modo demo (ya se hace); reducir el relleno superior con CSS (`[data-testid="stSidebarContent"]`)
+- ⬜ **T-4** · (1 h lanzador · +2–3 h si es .exe autónomo) · **Ejecutable para abrir la app con doble clic** — nuevos: `launcher/` (o `scripts/launch_*.{bat,command,py}`), `.streamlit/config.toml` (sin la pantalla de correo de bienvenida de Streamlit, `headless`, navegador automático), `README.md` (cómo abrirla) · T-2 · en un ordenador del equipo, un doble clic abre la app en el navegador sin escribir comandos y con el modo elegido. Opción 1 (recomendada): lanzador `Verbatim.bat` (Windows) / `Verbatim.command` (Mac) que crea el entorno la primera vez, instala dependencias y ejecuta `streamlit run app/ui/streamlit_app.py`; necesita Python instalado. Opción 2: `.exe` autónomo con PyInstaller (no necesita Python, pero pesa unos 300–500 MB, Streamlit requiere `--collect-all streamlit` y un script de arranque propio, hay que compilar en el sistema destino y el antivirus puede bloquearlo). Ver pregunta abierta 2
+- ⬜ **T-5** · (0,5 h) · **Revisión final del cambio** — · T-1…T-4 · se repasa la demo entera con el nombre nuevo (UI, PDF, Markdown, resumen para el cliente) y se actualiza `docs/DEMO.md` si el guion dice «Acta»
+
+**Avisos para T-1…T-5**
+- «acta» también es una palabra normal en la normativa («acta presencial», «la orden firmada solo sirve como acta»): **nada de buscar y reemplazar a ciegas**.
+- `app/data/normativa/**` entra en el prompt de la conducta: si se cambia su texto, la caché del LLM deja de valer y la siguiente ejecución vuelve a gastar tokens (y conviene repetir la evaluación). Recomendación: no tocarla ahora.
+- Las cifras de `docs/EVAL.md` y del README no cambian con el nombre.
+
+### Preguntas abiertas (contestar aquí antes de cerrar la tarea)
+1. T-1: ¿solo se quita «para GPTadvisor» de la app y del PDF, o se borra toda mención a GPTadvisor (README, DEMO.md, pitch, API)?
+2. T-4: ¿el ejecutable tiene que funcionar en un ordenador sin Python (por ejemplo, el del jurado) o basta con que lo abráis vosotros? ¿Windows, Mac o ambos? ¿Con qué modo arranca: simulado (sin claves) o real (lee las claves de `.env`)?
+3. T-2: ¿se cambia también el icono 📝, el nombre del paquete en `pyproject.toml` y el nombre del repositorio?
+
 ## A · UI y exportación (10 h)
 
 ### Tareas
