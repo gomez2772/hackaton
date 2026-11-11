@@ -1,0 +1,15 @@
+VERBATIM - cómo abrir la demostración
+Requisito: Python 3.11 o superior (python.org; en Windows, marcar «Add Python to PATH» al instalar).
+
+Windows: clic derecho en el zip → «Extraer todo» (no abrirlo sin extraer) → entrar en la carpeta
+Verbatim → doble clic en Verbatim.bat. Si aparece «Windows protegió su PC»: «Más información» →
+«Ejecutar de todas formas».
+
+Mac: doble clic en el zip → entrar en la carpeta Verbatim → clic derecho en Verbatim.command →
+«Abrir» → «Abrir».
+
+La primera vez tarda unos minutos (instala lo necesario); después arranca en segundos. Se abre en
+el navegador; para cerrarla, cerrar la ventana negra (terminal).
+
+Las claves incluidas son solo para esta demostración, tienen límite de gasto y se desactivarán
+después del hackathon.
