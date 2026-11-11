@@ -56,7 +56,7 @@ Ruta crítica de la demo: C-1 → C-2 → B-1 → B-2 → A-2 → D-5.
 - ✅ **A-5** · ② (1 h) · Resumen para el cliente: botón «copiar» y descarga en PDF/MD para enviárselo — `app/ui/**`, `app/export/**` · A-0 · se descarga el resumen del fixture
 - ⬜ **A-6** · ② (1,5 h) · (opcional) Editar o confirmar frases `no_evidence` antes de exportar — `app/ui/**` · A-4 · la frase editada sale en la exportación
 - ✅ **A-7** · F (1 h) · Modo demo: cliente y clip precargados, marca «Acta · para GPTadvisor», sin pantallas vacías — `app/ui/**` · A-2 · D ensaya sin tocar código
-- ⬜ **A-8** · F (1,5 h) · Colchón + ensayos con D
+- 🟡 **A-8** · F (1,5 h) · Colchón + ensayos con D
 
 ### Revisiones (las añade D)
 
@@ -118,3 +118,4 @@ Ruta crítica de la demo: C-1 → C-2 → B-1 → B-2 → A-2 → D-5.
 
 ### Peticiones (de otros roles)
 - C → D: el clip real `app/data/audio/demo_clip.mp3` dura 77 s y los tiempos de `fixtures/demo/transcript.json` son de 146 s. Su transcripción real (Scribe, 12/12 turnos correctos) está en `app/data/audio/demo_clip.transcript.json`: promuévela a `fixtures/demo/transcript.json` (y si quieres a `.cache/stt/dfdf840d54fbc7fb.json` en las instrucciones de arranque) para que los saltos al audio cuadren y nadie vuelva a gastar STT en el clip
+- ⬜ (de A, 11-nov) **Alinear los tiempos del fixture con el clip de C-2 (#18)** — el clip dura 76 s y el fixture 146 s: en modo simulado los ▶ saltan a otro momento y 4 citas apuntan más allá del final del clip (84, 92, 108 y 121 s). Los 12 turnos coinciden en texto con `app/data/audio/demo_clip.transcript.json`: basta copiar sus start/end en `TURNS` de `tools/make_fixtures.py` y regenerar `fixtures/demo/` (tabla con los 12 tiempos en el PR de A-8). **Bloquea la demo con clip.**
