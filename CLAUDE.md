@@ -1,10 +1,10 @@
-# CLAUDE.md — Reglas comunes para los 4 agentes de Acta
+# CLAUDE.md — Reglas comunes para los 4 agentes de Verbatim
 
 Lee este archivo entero al empezar cada sesión. Es la ley del repositorio.
 
 ## 0. Qué estamos construyendo
 
-**Acta**: audio de una reunión asesor–cliente → transcripción diarizada (ElevenLabs Scribe)
+**Verbatim**: audio de una reunión asesor–cliente → transcripción diarizada (ElevenLabs Scribe)
 → extracción estructurada con citas literales (Claude) → comprobación cuantitativa de
 idoneidad contra el perfil (SRI, horizonte, concentración, liquidez, volatilidad)
 → **chequeo de conducta** (¿fue correcta la llamada? aviso de grabación, promesas de rentabilidad,
@@ -12,7 +12,7 @@ riesgos y costes explicados, presión comercial, conflictos de interés)
 → borrador del informe de idoneidad MiFID II con cada frase enlazada al segundo del audio
 → **resumen en lenguaje llano para el cliente**.
 
-Cliente objetivo: **GPTadvisor**, que lo integrará y revenderá a sus asesores. Por eso el
+Producto genérico para entidades financieras y asesores independientes. El
 motor (`app/engine`, `app/audio`, `app/pipeline.py`) es una librería sin dependencia de la UI,
 y se expone por una API REST (`app/api`). Streamlit es solo una de las caras.
 
