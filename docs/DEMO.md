@@ -163,3 +163,24 @@ validación estadística.»** Cifras medidas con los prompts limpios (B-5); con 
 | 3 | | | | |
 
 Después del tercer ensayo: congelar el guion y no tocar `main` salvo para arreglar algo que rompa la demo.
+
+## 8. Zip para el jurado (T-7)
+
+**Generarlo** (en `main`, desde la carpeta del proyecto, en PowerShell):
+`.venv\Scripts\python.exe launcher\make_zip.py` → pide las claves del jurado sin mostrarlas → `dist\Verbatim.zip`.
+- Anthropic: clave `sk-ant-…` con límite de gasto. ElevenLabs: la clave que **empieza por `sk_`** (no el
+  ID de la clave, que da «400 Bad Request» al transcribir) y con permiso **Speech to Text**.
+- Si se cambia una clave, se vuelve a generar: el zip se sobrescribe. Las copias ya descomprimidas no se
+  actualizan; hay que borrarlas.
+- El zip lleva las transcripciones del clip y de m01–m05 en caché: analizarlas (también subiéndolas) no gasta ElevenLabs.
+
+**Abrirlo** (lo que hace el jurado; probado en Windows el 11-nov):
+1. Clic derecho en el zip → «Extraer todo» → carpeta `Verbatim`.
+2. Windows: doble clic en `Verbatim.bat` (si sale «Windows protegió su PC»: «Más información» → «Ejecutar
+   de todas formas»). Mac: clic derecho en `Verbatim.command` → «Abrir» → «Abrir».
+3. La primera vez instala las dependencias (unos minutos); no pide claves. Se abre `http://localhost:8501`
+   en modo real.
+4. «Clip de la demo» → «Analizar» → informe, banderas, conducta y resumen → descargar el PDF.
+   «Grabar ahora» y «Subir archivo» también funcionan (gastan ElevenLabs con audios nuevos).
+
+Al acabar la evaluación, **revocar las claves del jurado** en la Console de Anthropic y en ElevenLabs.
