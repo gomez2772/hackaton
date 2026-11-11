@@ -11,7 +11,7 @@ import html
 import io
 from typing import Literal
 
-from app.schemas import AnalysisResult, Evidence, ReportSentence
+from app.schemas import AnalysisResult, Evidence, Recommendation, ReportSentence
 
 Format = Literal["pdf", "docx", "md", "html", "json"]
 
@@ -81,7 +81,10 @@ def blocks(result: AnalysisResult) -> list[Block]:
         ("h1", f"Informe de idoneidad · {r.client_name}"),
         ("p", f"Asesor: {r.advisor_name} · Fecha: {r.meeting_date} · Análisis: {result.analysis_id}"),
         ("p", f"Cobertura de evidencia: {r.coverage_pct:.0f} %" + (" · MODO PLANTILLA (falló el LLM)" if r.template_mode else "")),
+        ("p", f"Idoneidad: {verdict(result)}"),
     ]
+    if note := unchecked_note(result):
+        out.append(("p", f"ATENCIÓN: {note}"))
     for sec in r.sections:
         out.append(("h2", sec.title))
         for s in sec.sentences:
@@ -156,12 +159,38 @@ def to_docx(result: AnalysisResult) -> bytes:
     return buf.getvalue()
 
 
+def unchecked_recommendations(result: AnalysisResult) -> list[Recommendation]:
+    """Recommendations the checker could not evaluate against a KID.
+
+    CONTRACT: one flag per (recommendation × type). The SRI flag needs the product's KID, so a
+    recommendation without it was skipped (e.g. no ISIN from the catalogue): its SRI, horizon and
+    concentration were never checked and the analysis must not read as «Idóneo»."""
+    with_sri = {f.recommendation_id for f in result.flags if f.type.value == "sri"}
+    return [r for r in result.extraction.recommendations if r.id not in with_sri]
+
+
+INCOMPLETE = "Comprobación incompleta"
+
+
+def unchecked_note(result: AnalysisResult) -> str:
+    """Sentence for people explaining which recommendations were not checked ('' if none)."""
+    names = [f"«{r.product_name}»" for r in unchecked_recommendations(result)]
+    if not names:
+        return ""
+    return (f"No se ha podido comprobar {', '.join(names)}: el producto no está en el catálogo de KID, así que "
+            "no se han evaluado su SRI, su horizonte ni la concentración. El asesor debe revisarlo.")
+
+
 def verdict(result: AnalysisResult) -> str:
-    """Overall suitability label from the flags: 'No idóneo', 'Con advertencias', 'Idóneo' or 'Sin evaluar'."""
+    """Overall suitability label: 'No idóneo', 'Comprobación incompleta', 'Con advertencias', 'Idóneo' or 'Sin evaluar'."""
     sev = {f.severity.value for f in result.flags}
+    if "red" in sev:
+        return "No idóneo"
+    if unchecked_recommendations(result):
+        return INCOMPLETE
     if not sev:
         return "Sin evaluar"
-    return "No idóneo" if "red" in sev else "Con advertencias" if "amber" in sev else "Idóneo"
+    return "Con advertencias" if "amber" in sev else "Idóneo"
 
 
 def to_pdf(result: AnalysisResult) -> bytes:
