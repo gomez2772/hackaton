@@ -1,7 +1,8 @@
-"""Report exporters: PDF, DOCX, Markdown, HTML, JSON. Owner: A. Task A-06 (A-4 polishes the PDF).
+"""Report exporters: PDF, DOCX, Markdown, HTML, JSON. Owner: A. Tasks A-0 and A-4 (professional PDF).
 
-Contract: docs/CONTRACT.md §A·Exportación. Markdown is the single source: HTML, DOCX and PDF are
-rendered from the same block list, so the five formats always say the same thing.
+Contract: docs/CONTRACT.md §A·Exportación. Markdown, HTML and DOCX are rendered from the same block
+list (`blocks`). The PDF (`app/export/pdf.py`) is laid out from the result itself to use colour and
+tables, but carries the same content; tests check both against the contract list.
 """
 
 from __future__ import annotations
@@ -120,23 +121,19 @@ def to_docx(result: AnalysisResult) -> bytes:
     return buf.getvalue()
 
 
-def to_pdf(result: AnalysisResult) -> bytes:
-    """Simple PDF (A-4 will make it look professional)."""
-    from reportlab.lib.pagesizes import A4
-    from reportlab.lib.styles import getSampleStyleSheet
-    from reportlab.platypus import Paragraph, SimpleDocTemplate, Spacer
+def verdict(result: AnalysisResult) -> str:
+    """Overall suitability label from the flags: 'No idóneo', 'Con advertencias', 'Idóneo' or 'Sin evaluar'."""
+    sev = {f.severity.value for f in result.flags}
+    if not sev:
+        return "Sin evaluar"
+    return "No idóneo" if "red" in sev else "Con advertencias" if "amber" in sev else "Idóneo"
 
-    st = getSampleStyleSheet()
-    style = {"h1": st["Title"], "h2": st["Heading2"], "p": st["BodyText"], "li": st["BodyText"], "small": st["Italic"]}
-    story = []
-    for k, t in blocks(result):
-        text = html.escape(t.replace("≤", "<=").replace("≥", ">=").replace("·", "-"))  # built-in fonts are Latin-1
-        story.append(Paragraph(f"• {text}" if k == "li" else text, style[k]))
-        if k == "h1":
-            story.append(Spacer(1, 6))
-    buf = io.BytesIO()
-    SimpleDocTemplate(buf, pagesize=A4, title="Informe de idoneidad").build(story)
-    return buf.getvalue()
+
+def to_pdf(result: AnalysisResult) -> bytes:
+    """Professional PDF: header band, verdict, coloured flags, cited sentences with [mm:ss], page footer."""
+    from app.export.pdf import render
+
+    return render(result)
 
 
 def export(result: AnalysisResult, fmt: Format) -> bytes:
