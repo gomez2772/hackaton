@@ -1,0 +1,25 @@
+{
+  "meeting_id": "m01_horizonte_sri",
+  "client_id": "CLI-EVAL-001",
+  "synthetic": true,
+  "turns": [
+    ["advisor", "Buenas tardes, Javier. Antes de nada, le informo de que esta conversación se graba, como exige la normativa. ¿Le parece bien?"],
+    ["client", "Sí, claro, ningún problema."],
+    ["advisor", "Gracias. Como cada año, quiero repasar con usted su situación. ¿Ha cambiado algo en su trabajo, en su familia o en sus planes desde la última vez?"],
+    ["client", "Pues sí, bastante. Mi pareja y yo hemos decidido comprar una casa. Queremos hacerlo dentro de dos años, así que necesitaré el dinero para entonces."],
+    ["advisor", "Enhorabuena. Entonces su horizonte es de unos dos años. ¿Y sus ingresos siguen igual?"],
+    ["client", "Sí, el sueldo es el mismo. Lo que no quiero es tocar mucho el colchón que tengo."],
+    ["advisor", "Entiendo. Ahora mismo tiene unos ochenta mil euros: sesenta mil en un fondo de renta fija a corto plazo y veinte mil en un fondo indexado de renta variable global."],
+    ["client", "Eso es. La renta fija me da tranquilidad, aunque renta poco."],
+    ["advisor", "Precisamente por eso le propongo pasar cincuenta mil euros de la renta fija al fondo de renta variable global, para buscar más rentabilidad."],
+    ["client", "¿Cincuenta mil? Es mucho. ¿Qué riesgo tiene eso?"],
+    ["advisor", "Se lo explico. Es renta variable: su valor sube y baja con las bolsas de todo el mundo. En un mal año puede caer un treinta por ciento o más, y puede tardar varios años en recuperarse."],
+    ["client", "Ya. ¿Y lo que cuesta?"],
+    ["advisor", "El fondo tiene unos gastos corrientes de cero coma dos por ciento al año. Además, como sabe, nosotros cobramos una comisión de asesoramiento y no recibimos incentivos de la gestora del fondo."],
+    ["client", "Vale. No sé, me lo tengo que pensar."],
+    ["advisor", "Por supuesto, no hay ninguna prisa. Piénselo con calma y lo hablamos la semana que viene."],
+    ["client", "Perfecto. ¿Me puede mandar la información del fondo?"],
+    ["advisor", "Sí, le enviaré el documento de datos fundamentales y un resumen de esta reunión antes del lunes."],
+    ["client", "Muy bien, muchas gracias."]
+  ]
+}

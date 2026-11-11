@@ -1,0 +1,35 @@
+{
+  "meeting_id": "m04_sin_aviso_riesgos",
+  "scenario": "conduct_failure",
+  "description": "Perfil 3 con horizonte de 8 años (del perfil). Recomendación idónea (15 000 € a RV global), pero no avisa de la grabación, no pregunta por la situación y esquiva explicar riesgos cuando la clienta dice no entender.",
+  "recommendations": [
+    {"id": "r1", "action": "buy", "asset_class": "equity_global", "amount_eur": 15000, "funded_from": "bond_short_eur"}
+  ],
+  "stated_needs": [],
+  "flags": {
+    "sri": "green",
+    "horizon": "green",
+    "concentration": "green",
+    "liquidity": null,
+    "volatility": "green"
+  },
+  "flag_notes": "RV global pasa a 35 000 / 160 000 = 21,9 % (≤ 25 %). Horizonte del perfil 8 años ≥ 5 del KID. SRI 4 ≤ 4. Renta variable al 21,9 %.",
+  "conduct": {
+    "recording_notice": "no_evidence",
+    "circumstances_updated": "no_evidence",
+    "return_promise": "ok",
+    "risks_explained": "breach",
+    "costs_disclosed": "ok",
+    "commercial_pressure": "ok",
+    "conflicts_of_interest": "no_evidence"
+  },
+  "key_quotes": [
+    "mover quince mil euros de la renta fija al fondo indexado de renta variable global",
+    "no entiendo bien qué es eso de la renta variable",
+    "No se preocupe, es un fondo muy conocido",
+    "Nada raro, de verdad",
+    "comisión de cero coma dos por ciento al año",
+    "decídalo cuando quiera, no hay ninguna prisa",
+    "el jueves por la tarde la llamo"
+  ]
+}
