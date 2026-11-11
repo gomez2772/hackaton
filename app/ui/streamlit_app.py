@@ -19,6 +19,7 @@ from app.data.loaders import list_clients  # noqa: E402
 from app.export import FORMATS, export  # noqa: E402
 from app.pipeline import analyze  # noqa: E402
 from app.schemas import AnalysisResult, Evidence  # noqa: E402
+from app.ui.progress import STAGE_ORDER, StageProgress, save_audio, secs  # noqa: E402
 
 st.set_page_config(page_title="Acta", page_icon="📝", layout="wide")
 SEV = {"red": "🔴", "amber": "🟠", "green": "🟢"}
@@ -35,11 +36,6 @@ st.session_state.setdefault("t", 0)
 def mmss(t: float | None) -> str:
     t = int(t or 0)
     return f"{t // 60:02d}:{t % 60:02d}"
-
-
-def secs(x: float) -> str:
-    """1.25 -> '1,3 s' (Spanish decimal comma)."""
-    return f"{x:.1f} s".replace(".", ",")
 
 
 def speaker_label(role: str, speaker_id: str) -> str:
@@ -94,21 +90,45 @@ with st.sidebar:
         up = st.file_uploader("Audio", type=["mp3", "wav", "m4a", "webm", "ogg"])
         if up:
             audio_bytes, audio_name = up.getvalue(), up.name
+    needs_audio = source != "Clip de la demo"
+    if needs_audio and audio_bytes and settings.is_fake("stt"):
+        st.caption(":orange[Transcripción simulada: se analizará la reunión de ejemplo, no tu audio.]")
     advisor = st.text_input("Asesor", settings.advisor_name)
-    go = st.button("Analizar", type="primary", use_container_width=True)
+    go = st.button("Analizar", type="primary", use_container_width=True, disabled=needs_audio and not audio_bytes)
+    if needs_audio and not audio_bytes:
+        st.caption("Graba o sube un audio para poder analizarlo.")
 
 if go:
     if audio_bytes:
-        folder = settings.cache_dir / "uploads"
-        folder.mkdir(parents=True, exist_ok=True)
-        audio_path: Path | None = folder / audio_name
-        audio_path.write_bytes(audio_bytes)
+        audio_path: Path | None = save_audio(audio_bytes, audio_name, settings.cache_dir / "uploads")
     else:
         audio_path = fakes.demo_audio()  # None -> the pipeline uses the fixture transcript
+    prog = StageProgress()
     with st.status("Analizando la reunión…", expanded=True) as status:
-        result = analyze(audio_path, client, settings=settings, advisor_name=advisor,
-                         on_stage=lambda s: status.write(f"{STAGE_LABEL.get(s, s)}…"))
-        status.update(label="Análisis completado", state="complete", expanded=False)
+        bar = st.progress(0.0)
+        board = st.empty()
+
+        def on_stage(stage: str) -> None:
+            prog.start(stage)
+            n = STAGE_ORDER.index(stage) + 1 if stage in STAGE_ORDER else len(prog.done) + 1
+            bar.progress(prog.fraction, text=f"{STAGE_LABEL.get(stage, stage)}… ({n}/{len(STAGE_ORDER)})")
+            board.markdown(prog.markdown(STAGE_LABEL))
+
+        try:
+            result = analyze(audio_path, client, settings=settings, advisor_name=advisor, on_stage=on_stage)
+        except Exception as e:  # STT (or another stage without fallback) failed: say so, don't show a traceback
+            prog.fail()
+            board.markdown(prog.markdown(STAGE_LABEL))
+            status.update(label=f"El análisis falló en «{STAGE_SHORT.get(prog.failed or '', '?')}»",
+                          state="error", expanded=True)
+            st.error(f"No se pudo completar el análisis: {e}")
+            st.session_state.pop("result", None)
+            st.stop()
+        prog.finish()
+        bar.progress(1.0, text=f"{len(STAGE_ORDER)}/{len(STAGE_ORDER)} etapas")
+        board.markdown(prog.markdown(STAGE_LABEL))
+        total = sum(t.seconds for t in result.timings)
+        status.update(label=f"Análisis completado en {secs(total)}", state="complete", expanded=False)
     st.session_state.result, st.session_state.audio, st.session_state.t = result, audio_path, 0
     st.session_state.exports = {}
 
@@ -138,8 +158,9 @@ c2.metric("Alertas rojas", reds)
 c3.metric("Incumplimientos de conducta", breaches if res.conduct else "—",
           help=None if res.conduct else "El chequeo de conducta no está disponible para este análisis")
 c4.metric("Cobertura de evidencia", "—" if res.report.template_mode else f"{res.report.coverage_pct:.0f} %")
-st.caption(" · ".join(f"{STAGE_SHORT.get(t.stage, t.stage)} {secs(t.seconds)}" + (" (sim.)" if t.fake else "")
-                      for t in res.timings))
+st.caption(f"⏱ Total {secs(sum(t.seconds for t in res.timings))} — "
+           + " · ".join(f"{STAGE_SHORT.get(t.stage, t.stage)} {secs(t.seconds)}" + (" (sim.)" if t.fake else "")
+                        for t in res.timings))
 
 t_rep, t_flags, t_cond, t_tr, t_sum = st.tabs(
     ["Informe de idoneidad", "Banderas", "Conducta", "Transcripción", "Resumen para el cliente"])
