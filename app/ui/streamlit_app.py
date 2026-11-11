@@ -1,4 +1,4 @@
-"""Acta demo UI (Streamlit). Owner: A. Tasks A-1..A-7.
+"""Verbatim demo UI (Streamlit). Owner: A. Tasks A-1..A-7.
 
 Run:  streamlit run app/ui/streamlit_app.py
 Consumes only app.pipeline.analyze, app.data.loaders and app.export (CONTRACT §A·UI).
@@ -14,7 +14,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 import streamlit as st  # noqa: E402
 
 from app import fakes  # noqa: E402
-from app.config import get_settings  # noqa: E402
+from app.config import STAGES, get_settings  # noqa: E402
 from app.data.loaders import list_clients  # noqa: E402
 from app.export import (  # noqa: E402
     CONFIRMED_LABEL,
@@ -34,7 +34,7 @@ from app.schemas import AnalysisResult, Evidence  # noqa: E402
 from app.ui.highlight import by_segment, legend, render_segment  # noqa: E402
 from app.ui.progress import STAGE_ORDER, StageProgress, save_audio, secs  # noqa: E402
 
-st.set_page_config(page_title="Acta", page_icon="📝", layout="wide")
+st.set_page_config(page_title="Verbatim", layout="wide")
 SEV = {"red": "🔴", "amber": "🟠", "green": "🟢"}
 CONDUCT = {"ok": "🟢 Cumple", "breach": "🔴 No cumple", "no_evidence": "⚪ Sin evidencia"}
 STAGE_LABEL = {"stt": "Transcribiendo", "extract": "Extrayendo con Claude", "validate": "Verificando citas",
@@ -135,44 +135,57 @@ def evidence_buttons(evs: list[Evidence], key: str) -> None:
 
 
 # ------------------------------------------------------------------ sidebar
+# T-5: compact sidebar that fits 1366×768 without scrolling (Streamlit's native arrow still folds it)
+SIDEBAR_CSS = """<style>
+[data-testid="stSidebarContent"] [data-testid="stSidebarUserContent"] {padding-top: 1rem; padding-bottom: 1rem;}
+[data-testid="stSidebarContent"] [data-testid="stVerticalBlock"] {gap: 0.55rem;}
+[data-testid="stSidebarContent"] h3 {padding: 0; margin: 0;}
+[data-testid="stSidebarContent"] [data-testid="stFileUploaderDropzone"] {padding: 0.4rem 0.6rem;}
+</style>"""
+
 with st.sidebar:
-    st.title("📝 Acta")
-    st.caption("Del audio de la reunión al informe de idoneidad MiFID II · para GPTadvisor")
+    st.markdown(SIDEBAR_CSS, unsafe_allow_html=True)
+    st.markdown("### Verbatim")
+    st.caption("Del audio al informe MiFID II")
     demo = st.toggle("Modo demo", value=st.query_params.get("demo") == "1", key="demo_toggle",
                      on_change=sync_demo_param,
                      help="Cliente y clip de la demo precargados y sin datos técnicos en pantalla. "
                           "También se activa abriendo la página con ?demo=1.")
     if settings.fake_stages and not demo:
-        st.info(f"Etapas simuladas: {', '.join(sorted(settings.fake_stages))}")
+        fake = "todas" if set(STAGES) <= set(settings.fake_stages) else ", ".join(sorted(settings.fake_stages))
+        st.info(f"Etapas simuladas: {fake}")
     clients = list_clients()
     demo_index = next((i for i, c in enumerate(clients) if c.client_id == DEMO_CLIENT_ID), 0)
     client = st.selectbox("Cliente", clients, index=demo_index,
                           format_func=lambda c: f"{c.name} · perfil {c.risk_profile}")
-    source = st.radio("Audio", ["Clip de la demo", "Grabar ahora", "Subir archivo"], horizontal=False)
+    source = st.radio("Audio", ["Clip de la demo", "Grabar ahora", "Subir archivo"], horizontal=True)
     audio_bytes, audio_name = None, None
     if source == "Grabar ahora":
-        rec = st.audio_input("Graba la reunión (con el consentimiento del cliente)")
+        rec = st.audio_input("Graba la reunión (con el consentimiento del cliente)", label_visibility="collapsed",
+                             help="Graba la reunión con el consentimiento del cliente.")
         if rec:
             audio_bytes, audio_name = rec.getvalue(), "grabacion.wav"
     elif source == "Subir archivo":
-        up = st.file_uploader("Audio", type=["mp3", "wav", "m4a", "webm", "ogg"])
+        up = st.file_uploader("Archivo de audio", type=["mp3", "wav", "m4a", "webm", "ogg"],
+                              label_visibility="collapsed")
         if up:
             audio_bytes, audio_name = up.getvalue(), up.name
     needs_audio = source != "Clip de la demo"
     if needs_audio and audio_bytes and settings.is_fake("stt"):
         st.caption(":orange[Transcripción simulada: se analizará la reunión de ejemplo, no tu audio.]")
-    advisor = st.text_input("Asesor", settings.advisor_name)
-    # B-6 (petición de B): Claude reescribe la plantilla; si falla, se queda la plantilla
-    polish = st.toggle("Redactar el informe con IA", value=False, disabled=settings.is_fake("report"),
-                       help="Claude reescribe el informe de plantilla con mejor redacción, sin añadir hechos. "
-                            "Gasta tokens; si falla, se mantiene la plantilla."
-                       + (" No disponible: la etapa del informe está simulada." if settings.is_fake("report") else ""))
+    with st.expander("Opciones"):
+        advisor = st.text_input("Asesor", settings.advisor_name)
+        # B-6 (petición de B): Claude reescribe la plantilla; si falla, se queda la plantilla
+        polish = st.toggle("Redactar el informe con IA", value=False, disabled=settings.is_fake("report"),
+                           help="Claude reescribe el informe de plantilla con mejor redacción, sin añadir hechos. "
+                                "Gasta tokens; si falla, se mantiene la plantilla."
+                           + (" No disponible: la etapa del informe está simulada." if settings.is_fake("report") else ""))
     go = st.button("Analizar", type="primary", use_container_width=True, disabled=needs_audio and not audio_bytes)
     if needs_audio and not audio_bytes:
         st.caption("Graba o sube un audio para poder analizarlo.")
 
 go = go or st.session_state.pop("run_requested", False)
-st.markdown("#### 📝 Acta :gray[· para GPTadvisor]")
+st.markdown("#### Verbatim")
 
 if go:
     if audio_bytes:

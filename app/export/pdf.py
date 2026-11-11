@@ -134,10 +134,9 @@ def _canvas_class(right: str, footer: str = FOOTER) -> type[rl_canvas.Canvas]:
             top = PAGE_H - 11 * mm
             self.setFont(BOLD, 9)
             self.setFillColor(NAVY)
-            self.drawString(MARGIN, top, "Acta")
+            self.drawString(MARGIN, top, "Verbatim")
             self.setFont(FONT, 8)
             self.setFillColor(GREY)
-            self.drawString(MARGIN + pdfmetrics.stringWidth("Acta ", BOLD, 9), top, "· para GPTadvisor")
             self.drawRightString(PAGE_W - MARGIN, top, right)
             self.setStrokeColor(NAVY)
             self.setLineWidth(0.8)
@@ -321,7 +320,7 @@ def render(result: AnalysisResult) -> bytes:
     buf = io.BytesIO()
     doc = SimpleDocTemplate(buf, pagesize=A4, leftMargin=MARGIN, rightMargin=MARGIN, topMargin=22 * mm,
                             bottomMargin=22 * mm, title=f"Informe de idoneidad · {result.report.client_name}",
-                            author="Acta", subject=f"Análisis {result.analysis_id}", creator="Acta · para GPTadvisor")
+                            author="Verbatim", subject=f"Análisis {result.analysis_id}", creator="Verbatim")
     right = f"Informe de idoneidad · {result.report.client_name} · {result.analysis_id}"
     doc.build(story, canvasmaker=_canvas_class(right))
     return buf.getvalue()
@@ -361,7 +360,7 @@ def render_summary(result: AnalysisResult) -> bytes:
     buf = io.BytesIO()
     doc = SimpleDocTemplate(buf, pagesize=A4, leftMargin=MARGIN, rightMargin=MARGIN, topMargin=22 * mm,
                             bottomMargin=22 * mm, title=cs.title, author=r.advisor_name,
-                            subject=f"Resumen para {r.client_name}", creator="Acta · para GPTadvisor")
+                            subject=f"Resumen para {r.client_name}", creator="Verbatim")
     footer = f"Resumen preparado por tu asesor con ayuda de IA a partir de la grabación. {SUMMARY_SYNTHETIC}"
     doc.build(story, canvasmaker=_canvas_class(f"Resumen de tu reunión · {human_date(r.meeting_date)}", footer))
     return buf.getvalue()

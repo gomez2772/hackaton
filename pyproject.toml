@@ -1,7 +1,7 @@
 [project]
-name = "acta"
+name = "verbatim"
 version = "0.1.0"
-description = "Acta: de la reunión al informe de idoneidad MiFID II trazable al segundo"
+description = "Verbatim: de la reunión al informe de idoneidad MiFID II trazable al segundo"
 requires-python = ">=3.11"
 
 [tool.pytest.ini_options]

@@ -1,0 +1,20 @@
+{
+  "client_id": "CLI-EVAL-001",
+  "name": "Javier Ruiz (sintético)",
+  "risk_profile": 2,
+  "horizon_years": null,
+  "liquidity_need_eur": null,
+  "portfolio": [
+    {
+      "isin": "LU0290356871",
+      "name": "Xtrackers II Eurozone Government Bond 1-3 UCITS ETF 1C",
+      "amount_eur": 60000
+    },
+    {
+      "isin": "IE00B03HD191",
+      "name": "Vanguard Global Stock Index Fund - EUR Accumulation Shares",
+      "amount_eur": 20000
+    }
+  ],
+  "synthetic": true
+}
