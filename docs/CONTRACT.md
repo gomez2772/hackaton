@@ -33,7 +33,7 @@ list[Flag]
 SuitabilityReport
    │  B · app.pipeline.analyze()  → AnalysisResult (todo junto + tiempos)
    ▼
-A · app.ui (Streamlit)   ·   A · app.api (REST para GPTadvisor)   ·   A · app.export (PDF/DOCX/MD/HTML/JSON)
+A · app.ui (Streamlit)   ·   A · app.api (REST para integraciones)   ·   A · app.export (PDF/DOCX/MD/HTML/JSON)
 ```
 
 ## 2. Firmas públicas
@@ -174,7 +174,7 @@ Autenticación: cabecera `X-API-Key` (= `ACTA_API_KEY`). Documentación automát
 | POST | `/v1/analyses` | multipart: `audio` (archivo), `client_id` **o** `client` (JSON ClientProfile), `advisor_name?`, `meeting_date?` | `AnalysisResult` (201) |
 | GET | `/v1/analyses/{analysis_id}` | — | `AnalysisResult` |
 | GET | `/v1/analyses/{analysis_id}/report?format=pdf\|docx\|md\|html\|json` | — | archivo |
-| GET | `/v1/analyses/{analysis_id}/audio` | — | audio original (para el reproductor de GPTadvisor) |
+| GET | `/v1/analyses/{analysis_id}/audio` | — | audio original (para el reproductor de la plataforma integradora) |
 
 Persistencia: `ACTA_CACHE_DIR/analyses/<id>/result.json` + `audio.<ext>`. Errores:
 `{"error": {"code": "...", "message": "..."}}` con 400/401/404/422/502.
