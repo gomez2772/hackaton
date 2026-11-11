@@ -71,7 +71,9 @@ y vuelve a gastar tokens), las variables `ACTA_*` de `.env` ni las líneas antig
 - ⬜ **T-4** · (30 min) · Claude de **D en modo contrato** (`ACTA_CONTRACT_EDIT=1`, PR con etiqueta `contrato`) · **Archivos congelados** — `pyproject.toml` (`name = "verbatim"`, `description` con Verbatim), `CLAUDE.md` (título y §0: «Verbatim», quitar el párrafo «Cliente objetivo: GPTadvisor» → «producto genérico para entidades y asesores; el motor es una librería sin dependencia de la UI»), `docs/CONTRACT.md` (l. 36 y 177), `app/__init__.py` (docstring; es compartido) · — · `git grep -n -i "gptadvisor"` solo queda en líneas antiguas de `DECISIONS.md`; `pytest -q` en verde
 - ⬜ **T-5** · (1 h) · Claude de **A** · **Barra lateral compacta, sin scroll y plegable** — `app/ui/streamlit_app.py` (bloque `with st.sidebar:`, l. 137-170, y «↺ Nuevo análisis», l. 240) · T-1 · con la ventana a 1366 × 768 y 1920 × 1080 la barra lateral cabe sin scroll con las 3 opciones de audio (también «Subir» con un archivo cargado); se sigue plegando con la flecha nativa de Streamlit; no se pierde ninguna opción. Ideas: título en una línea y subtítulo corto; «Audio» como `st.segmented_control`; «Asesor» y «Redactar con IA» dentro de `st.expander("Opciones")`; menos relleno con CSS en `[data-testid="stSidebarContent"]`
 - ⬜ **T-6** · (1,5–2 h) · Claude de **cualquiera** · **Lanzador con doble clic para Windows y Mac, en modo real** — nuevos: `Verbatim.bat` (Windows), `Verbatim.command` (Mac), `launcher/launch.py` (lógica común), `launcher/README.md`, `.streamlit/config.toml`; `README.md` solo una sección «Abrir con doble clic» (si no eres D, pídeselo en sus Peticiones) · T-1 (para que se abra ya como Verbatim) · ver especificación debajo
-- ⬜ **T-7** · (45 min) · Claude de **D** · **Prueba final** — · T-1…T-6 · en un Windows y un Mac **con solo Python instalado** (sin `.venv` ni `.env`): doble clic → pide las 2 claves → instala → abre Verbatim en el navegador en modo real → analiza el clip de la demo sin gastar créditos de ElevenLabs → descarga el PDF. Se actualiza `docs/DEMO.md` con cómo abrirla
+- ⬜ **T-7** · (45 min) · Claude de **D** · **Prueba final con el zip del jurado** — · T-1…T-6, T-8 · se genera el zip con T-8 y se prueba en un Windows y un Mac **con solo Python instalado**: descomprimir → doble clic → **no pide claves** (ya vienen dentro) → instala → abre Verbatim en el navegador en modo real → analiza el clip de la demo sin gastar ElevenLabs → descarga el PDF. Se actualiza `docs/DEMO.md` con cómo abrirla
+
+- ⬜ **T-8** · (1 h) · Claude de **cualquiera** · **Zip para el jurado, con las claves dentro** — nuevos: `launcher/make_zip.py`, `launcher/LEEME_JURADO.txt`; ampliar `launcher/README.md` · T-6 · `python launcher/make_zip.py` genera `dist/Verbatim.zip` (fuera de git), que descomprimido en otro ordenador arranca con doble clic sin pedir nada. Ver especificación debajo
 
 **Especificación de T-6 (lanzador)**
 - `Verbatim.bat`: `cd /d "%~dp0"`; busca `py -3` y si no, `python`; si no hay Python ≥ 3.11 muestra «Instala Python 3.11 o superior desde python.org (marca "Add Python to PATH")» y hace `pause`; ejecuta `launcher\launch.py`; si algo falla, `pause` para que la ventana no se cierre sin que se lea el error.
@@ -82,9 +84,27 @@ y vuelve a gastar tokens), las variables `ACTA_*` de `.env` ni las líneas antig
   3. **Modo real**: arranca Streamlit con `ACTA_FAKE_STAGES=` vacío en el entorno, aunque `.env` diga otra cosa.
   4. Copia `app/data/audio/demo_clip.transcript.json` a `.cache/stt/dfdf840d54fbc7fb.json` si no existe, para que el clip de la demo no gaste ElevenLabs.
   5. Lanza `.venv` → `python -m streamlit run app/ui/streamlit_app.py` y abre `http://localhost:8501` en el navegador (con `webbrowser`) cuando el puerto responda.
+- Si `.env` ya trae las dos claves (el zip del jurado, T-8), **no** las pide.
 - `.streamlit/config.toml`: `[browser] gatherUsageStats = false` y `[server] headless = true` (evita la pregunta del correo de Streamlit en la primera ejecución; el navegador lo abre el lanzador).
 - **Claves (seguridad)**: nunca en el repositorio, ni en un zip, ni en el código. `.env` ya está en `.gitignore`. Para el jurado: claves **propias para la demo con límite de gasto** (Console de Anthropic y ElevenLabs), que se teclean al abrir por primera vez o se entregan aparte, y que se revocan después del hackathon.
 - Test: `tests/unit/test_launcher.py` no puede crearse sin dueño; basta con probar a mano en T-7.
+
+**Especificación de T-8 (zip para el jurado)**
+- El zip se envía al jurado, así que **lleva un `.env` con las claves**. Ese `.env` solo existe dentro del zip: **nunca** se sube a git ni se copia a otra carpeta del repo.
+- `launcher/make_zip.py` (solo librería estándar):
+  1. Lista los archivos con `git ls-files` (así nunca entran `.env`, `.venv`, `.cache`, `dist/` ni nada sin versionar) y quita lo que el jurado no necesita: `tests/eval/results/**`, `.github/**`, `.claude/**`, `tools/**`.
+  2. Pide las claves por la terminal con `getpass` (o las lee de las variables `VERBATIM_ZIP_ANTHROPIC_KEY` y `VERBATIM_ZIP_ELEVENLABS_KEY`), **no** del `.env` personal, para que nadie empaquete su clave de trabajo por error.
+  3. Escribe dentro del zip un `.env` creado a partir de `.env.example` con: las dos claves, `ACTA_FAKE_STAGES=` vacío (modo real), `ACTA_LLM_CACHE=1` y `ACTA_ADVISOR_NAME=Asesor de demostración`.
+  4. Mete también `.cache/stt/dfdf840d54fbc7fb.json` (copia de `app/data/audio/demo_clip.transcript.json`), para que el clip de la demo no gaste ElevenLabs aunque el lanzador falle en ese paso.
+  5. Todo va dentro de una carpeta `Verbatim/` en el zip. A `Verbatim.command` le pone permiso de ejecución en el zip (`ZipInfo.external_attr = 0o100755 << 16`), para que en Mac funcione el doble clic tras descomprimir.
+  6. Lo guarda en `dist/Verbatim.zip`. `dist/` ya está en `.gitignore`. Al terminar imprime el tamaño y la frase: «Este zip contiene claves: envíalo solo al jurado».
+- `launcher/LEEME_JURADO.txt` (va en la raíz del zip, 15 líneas como mucho):
+  - Requisito: Python 3.11 o superior (python.org; en Windows, marcar «Add Python to PATH»).
+  - **Windows**: clic derecho en el zip → «Extraer todo» (no abrirlo sin extraer) → doble clic en `Verbatim.bat`. Si aparece «Windows protegió su PC»: «Más información» → «Ejecutar de todas formas».
+  - **Mac**: doble clic en el zip → clic derecho en `Verbatim.command` → «Abrir» → «Abrir».
+  - La primera vez tarda unos minutos (instala lo necesario); después arranca en segundos. Se abre en el navegador; para cerrarla, cerrar la ventana negra (terminal).
+  - Las claves incluidas son solo para esta demostración, tienen límite de gasto y se desactivarán después del hackathon.
+- **Antes de generarlo (equipo)**: crear en la Console de Anthropic y en ElevenLabs **claves nuevas solo para el jurado**, con **límite de gasto** (p. ej. 10 USD en Anthropic; en ElevenLabs, una clave con límite de créditos si lo permite el plan), y **revocarlas** cuando termine la evaluación. Enviar el zip por un canal privado (correo o la plataforma del hackathon), nunca en un enlace público ni subido a GitHub.
 
 ## A · UI y exportación (10 h)
 
