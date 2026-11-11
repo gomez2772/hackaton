@@ -61,7 +61,7 @@ Ruta crítica de la demo: C-1 → C-2 → B-1 → B-2 → A-2 → D-5.
 ### Revisiones (las añade D)
 
 ### Peticiones (de otros roles)
-- 🔵 (de B, B-6) Interruptor «Redactar el informe con IA» en la UI que llame a `analyze(..., polish_report=True)`; si falla se queda la plantilla sin aviso. Mostrar `report.model` («plantilla» o «plantilla+claude-…») junto al informe
+- ✅ (de B, B-6) Interruptor «Redactar el informe con IA» en la UI que llame a `analyze(..., polish_report=True)`; si falla se queda la plantilla sin aviso. Mostrar `report.model` («plantilla» o «plantilla+claude-…») junto al informe
 
 ---
 
