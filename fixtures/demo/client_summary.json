@@ -7,8 +7,8 @@
         {
           "quote": "me jubilo en tres años",
           "segment_id": "s0003",
-          "start": 24.0,
-          "end": 38.5,
+          "start": 18.6,
+          "end": 26.66,
           "verified": true
         }
       ]
@@ -19,8 +19,8 @@
         {
           "quote": "Necesitaré unos veinte mil euros el año que viene",
           "segment_id": "s0005",
-          "start": 46.0,
-          "end": 61.0,
+          "start": 32.78,
+          "end": 38.36,
           "verified": true
         }
       ]
@@ -31,8 +31,8 @@
         {
           "quote": "invertir treinta mil euros en un fondo indexado de renta variable emergente",
           "segment_id": "s0006",
-          "start": 61.0,
-          "end": 84.0,
+          "start": 39.38,
+          "end": 49.22,
           "verified": true
         }
       ]
@@ -45,8 +45,8 @@
         {
           "quote": "Le enviaré por correo la documentación del fondo y el informe antes del viernes",
           "segment_id": "s0010",
-          "start": 121.0,
-          "end": 140.0,
+          "start": 69.02,
+          "end": 74.04,
           "verified": true
         }
       ]

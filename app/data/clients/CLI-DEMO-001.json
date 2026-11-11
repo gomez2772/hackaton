@@ -1,0 +1,5 @@
+{"client_id": "CLI-DEMO-001", "name": "Lucía Martín (sintético)", "risk_profile": 3, "horizon_years": null, "liquidity_need_eur": null,
+ "portfolio": [
+  {"isin": "IE00B03HD191", "name": "Vanguard Global Stock Index Fund EUR Acc", "amount_eur": 60000.0},
+  {"isin": "LU0290356871", "name": "Xtrackers II Eurozone Government Bond 1-3 UCITS ETF 1C", "amount_eur": 40000.0}
+ ], "synthetic": true}

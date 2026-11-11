@@ -65,3 +65,14 @@ def test_conduct_and_summary_fixtures_quote_the_transcript(demo_transcript):
         assert e.quote in texts[e.segment_id], f"cita no literal: {e.quote!r}"
     codes = {it.code: it.status.value for it in fakes.conduct().items}
     assert codes["return_promise"] == "breach"
+
+
+def test_demo_flags_equal_the_real_checker(demo_extraction, demo_client, demo_flags):
+    """The golden flags are what the checker computes, so demo mode never shows invented numbers (§9)."""
+    from app import fakes
+    from app.engine.checker import check
+
+    real = {f.type: (f.severity, f.value, f.limit) for f in
+            check(demo_extraction, demo_client, kids=fakes.kids(), limits=fakes.risk_limits())}
+    fixture = {f.type: (f.severity, f.value, f.limit) for f in demo_flags}
+    assert fixture == real

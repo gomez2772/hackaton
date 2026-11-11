@@ -1,8 +1,8 @@
 """Speech-to-text with ElevenLabs Scribe + diarization. Owner: C. Tasks C-01 (C-08 out of scope).
 
 Contract: docs/CONTRACT.md §C·Audio.
-Pending (C-1): check the endpoint, fields and response format against the current ElevenLabs
-docs with a real 20 s recording (written against the public REST API, not yet run live).
+C-1: endpoint, form fields and response format checked against the ElevenLabs API reference
+(POST /v1/speech-to-text, words[] with type word|spacing|audio_event and nullable start/end).
 """
 
 from __future__ import annotations
@@ -64,7 +64,8 @@ def transcribe(audio_path: Path, *, language: str = "es", num_speakers: int = 2,
 
 def words_to_transcript(resp: dict, aid: str, language: str = "es") -> Transcript:
     """Group consecutive words of the same speaker into Segment s0000, s0001..."""
-    words = [w for w in resp.get("words", []) if w.get("type", "word") == "word"]
+    words = [w for w in resp.get("words", [])
+             if w.get("type", "word") == "word" and w.get("start") is not None and w.get("end") is not None]
     segments: list[Segment] = []
     current: list[dict] = []
 
@@ -83,6 +84,7 @@ def words_to_transcript(resp: dict, aid: str, language: str = "es") -> Transcrip
             flush()
         current.append(w)
     flush()
-    return Transcript(audio_id=aid, language=language, duration_s=segments[-1].end if segments else 0.0,
+    duration = resp.get("audio_duration_secs") or (segments[-1].end if segments else 0.0)
+    return Transcript(audio_id=aid, language=language, duration_s=float(duration),
                       segments=segments, stt_provider="elevenlabs")
 

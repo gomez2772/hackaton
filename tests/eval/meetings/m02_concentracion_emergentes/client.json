@@ -1,0 +1,12 @@
+{
+  "client_id": "CLI-EVAL-002",
+  "name": "Marta Gil (sintético)",
+  "risk_profile": 3,
+  "horizon_years": 10,
+  "liquidity_need_eur": null,
+  "portfolio": [
+    {"isin": "DEMO00000001", "name": "Fondo índice RV global (demo)", "amount_eur": 80000},
+    {"isin": "DEMO00000002", "name": "Fondo RF corto plazo euro (demo)", "amount_eur": 120000}
+  ],
+  "synthetic": true
+}
