@@ -26,7 +26,7 @@ def demo(app: AppTest) -> AppTest:
 def test_demo_landing_is_never_empty(app):
     at = demo(app)
     md = [m.value for m in at.markdown]
-    assert "#### 📝 Acta :gray[· para GPTadvisor]" in md
+    assert "#### Verbatim" in md
     assert any("en minutos" in m for m in md)
     assert any("Lucía Martín" in m and "perfil de riesgo 3 de 5" in m for m in md)
     assert at.button(key="run-main").label == "▶ Analizar la reunión de demostración"

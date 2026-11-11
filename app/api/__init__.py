@@ -1,1 +1,1 @@
-"""REST API for GPTadvisor integration. Owner: A. Task A-07."""
+"""Verbatim REST API, to integrate it into advisory platforms. Owner: A. Task A-07."""
