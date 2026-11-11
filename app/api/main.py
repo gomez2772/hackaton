@@ -1,4 +1,4 @@
-"""FastAPI app for GPTadvisor. Owner: A. Task A-07.
+"""Verbatim FastAPI app, to integrate it into advisory platforms. Owner: A. Task A-07.
 
 Run: uvicorn app.api.main:app --reload   ·   Docs: http://localhost:8000/docs
 Contract: docs/CONTRACT.md §A·API REST.
@@ -11,7 +11,7 @@ from fastapi import FastAPI
 from app.schemas import SCHEMA_VERSION
 
 app = FastAPI(
-    title="Acta API",
+    title="Verbatim API",
     version=SCHEMA_VERSION,
     description="Audio de la reunión → informe de idoneidad MiFID II trazable al segundo.",
 )
