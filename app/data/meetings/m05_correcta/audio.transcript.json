@@ -1,0 +1,1694 @@
+{
+ "audio_id": "e226500da8440da7",
+ "language": "es",
+ "duration_s": 99.9455625,
+ "segments": [
+  {
+   "id": "s0000",
+   "speaker_id": "speaker_0",
+   "role": "unknown",
+   "start": 0.08,
+   "end": 6.16,
+   "text": "Buenas tardes, Pablo. Le informo de que esta reunión se graba para cumplir la normativa. ¿Le parece bien?",
+   "words": [
+    {
+     "text": "Buenas",
+     "start": 0.08,
+     "end": 0.34,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "tardes,",
+     "start": 0.38,
+     "end": 0.66,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "Pablo.",
+     "start": 0.74,
+     "end": 1.02,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "Le",
+     "start": 1.62,
+     "end": 1.68,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "informo",
+     "start": 1.7,
+     "end": 2.1,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "de",
+     "start": 2.16,
+     "end": 2.22,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "que",
+     "start": 2.32,
+     "end": 2.44,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "esta",
+     "start": 2.5,
+     "end": 2.7,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "reunión",
+     "start": 2.74,
+     "end": 3.12,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "se",
+     "start": 3.24,
+     "end": 3.32,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "graba",
+     "start": 3.36,
+     "end": 3.64,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "para",
+     "start": 3.66,
+     "end": 3.78,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "cumplir",
+     "start": 3.86,
+     "end": 4.24,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "la",
+     "start": 4.32,
+     "end": 4.38,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "normativa.",
+     "start": 4.44,
+     "end": 5.04,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "¿Le",
+     "start": 5.5,
+     "end": 5.6,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "parece",
+     "start": 5.66,
+     "end": 5.94,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "bien?",
+     "start": 5.98,
+     "end": 6.16,
+     "speaker_id": "speaker_0"
+    }
+   ]
+  },
+  {
+   "id": "s0001",
+   "speaker_id": "speaker_1",
+   "role": "unknown",
+   "start": 7.08,
+   "end": 7.62,
+   "text": "Sí, perfecto.",
+   "words": [
+    {
+     "text": "Sí,",
+     "start": 7.08,
+     "end": 7.14,
+     "speaker_id": "speaker_1"
+    },
+    {
+     "text": "perfecto.",
+     "start": 7.2,
+     "end": 7.62,
+     "speaker_id": "speaker_1"
+    }
+   ]
+  },
+  {
+   "id": "s0002",
+   "speaker_id": "speaker_0",
+   "role": "unknown",
+   "start": 8.5,
+   "end": 14.34,
+   "text": "Antes de hablar de productos, quiero saber si ha cambiado algo: trabajo, familia, gastos previstos.",
+   "words": [
+    {
+     "text": "Antes",
+     "start": 8.5,
+     "end": 8.76,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "de",
+     "start": 8.78,
+     "end": 8.84,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "hablar",
+     "start": 8.88,
+     "end": 9.12,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "de",
+     "start": 9.18,
+     "end": 9.24,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "productos,",
+     "start": 9.3,
+     "end": 9.8,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "quiero",
+     "start": 10.18,
+     "end": 10.34,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "saber",
+     "start": 10.42,
+     "end": 10.66,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "si",
+     "start": 10.76,
+     "end": 10.86,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "ha",
+     "start": 10.92,
+     "end": 10.96,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "cambiado",
+     "start": 11.02,
+     "end": 11.46,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "algo:",
+     "start": 11.54,
+     "end": 11.74,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "trabajo,",
+     "start": 12.24,
+     "end": 12.74,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "familia,",
+     "start": 12.88,
+     "end": 13.32,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "gastos",
+     "start": 13.4,
+     "end": 13.78,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "previstos.",
+     "start": 13.8,
+     "end": 14.34,
+     "speaker_id": "speaker_0"
+    }
+   ]
+  },
+  {
+   "id": "s0003",
+   "speaker_id": "speaker_1",
+   "role": "unknown",
+   "start": 15.2,
+   "end": 21.86,
+   "text": "El trabajo sigue igual. Lo único es que dentro de dos años quiero cambiar de coche y necesitaré unos diez mil euros.",
+   "words": [
+    {
+     "text": "El",
+     "start": 15.2,
+     "end": 15.28,
+     "speaker_id": "speaker_1"
+    },
+    {
+     "text": "trabajo",
+     "start": 15.3,
+     "end": 15.64,
+     "speaker_id": "speaker_1"
+    },
+    {
+     "text": "sigue",
+     "start": 15.74,
+     "end": 15.92,
+     "speaker_id": "speaker_1"
+    },
+    {
+     "text": "igual.",
+     "start": 15.94,
+     "end": 16.34,
+     "speaker_id": "speaker_1"
+    },
+    {
+     "text": "Lo",
+     "start": 16.8,
+     "end": 16.9,
+     "speaker_id": "speaker_1"
+    },
+    {
+     "text": "único",
+     "start": 16.98,
+     "end": 17.26,
+     "speaker_id": "speaker_1"
+    },
+    {
+     "text": "es",
+     "start": 17.28,
+     "end": 17.4,
+     "speaker_id": "speaker_1"
+    },
+    {
+     "text": "que",
+     "start": 17.42,
+     "end": 17.5,
+     "speaker_id": "speaker_1"
+    },
+    {
+     "text": "dentro",
+     "start": 17.52,
+     "end": 17.78,
+     "speaker_id": "speaker_1"
+    },
+    {
+     "text": "de",
+     "start": 17.82,
+     "end": 17.88,
+     "speaker_id": "speaker_1"
+    },
+    {
+     "text": "dos",
+     "start": 17.94,
+     "end": 18.1,
+     "speaker_id": "speaker_1"
+    },
+    {
+     "text": "años",
+     "start": 18.2,
+     "end": 18.44,
+     "speaker_id": "speaker_1"
+    },
+    {
+     "text": "quiero",
+     "start": 18.52,
+     "end": 18.7,
+     "speaker_id": "speaker_1"
+    },
+    {
+     "text": "cambiar",
+     "start": 18.74,
+     "end": 19.04,
+     "speaker_id": "speaker_1"
+    },
+    {
+     "text": "de",
+     "start": 19.08,
+     "end": 19.14,
+     "speaker_id": "speaker_1"
+    },
+    {
+     "text": "coche",
+     "start": 19.24,
+     "end": 19.62,
+     "speaker_id": "speaker_1"
+    },
+    {
+     "text": "y",
+     "start": 20.12,
+     "end": 20.14,
+     "speaker_id": "speaker_1"
+    },
+    {
+     "text": "necesitaré",
+     "start": 20.2,
+     "end": 20.8,
+     "speaker_id": "speaker_1"
+    },
+    {
+     "text": "unos",
+     "start": 20.84,
+     "end": 21.04,
+     "speaker_id": "speaker_1"
+    },
+    {
+     "text": "diez",
+     "start": 21.08,
+     "end": 21.22,
+     "speaker_id": "speaker_1"
+    },
+    {
+     "text": "mil",
+     "start": 21.26,
+     "end": 21.42,
+     "speaker_id": "speaker_1"
+    },
+    {
+     "text": "euros.",
+     "start": 21.48,
+     "end": 21.86,
+     "speaker_id": "speaker_1"
+    }
+   ]
+  },
+  {
+   "id": "s0004",
+   "speaker_id": "speaker_0",
+   "role": "unknown",
+   "start": 22.72,
+   "end": 28.5,
+   "text": "Tomo nota. Diez mil euros en dos años. ¿El resto del dinero lo necesitará antes de siete años?",
+   "words": [
+    {
+     "text": "Tomo",
+     "start": 22.72,
+     "end": 22.94,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "nota.",
+     "start": 23.0,
+     "end": 23.28,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "Diez",
+     "start": 23.62,
+     "end": 23.86,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "mil",
+     "start": 23.96,
+     "end": 24.12,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "euros",
+     "start": 24.2,
+     "end": 24.5,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "en",
+     "start": 24.54,
+     "end": 24.62,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "dos",
+     "start": 24.68,
+     "end": 24.82,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "años.",
+     "start": 24.9,
+     "end": 25.22,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "¿El",
+     "start": 25.56,
+     "end": 25.74,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "resto",
+     "start": 25.84,
+     "end": 26.08,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "del",
+     "start": 26.16,
+     "end": 26.26,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "dinero",
+     "start": 26.32,
+     "end": 26.62,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "lo",
+     "start": 26.7,
+     "end": 26.76,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "necesitará",
+     "start": 26.82,
+     "end": 27.4,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "antes",
+     "start": 27.44,
+     "end": 27.72,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "de",
+     "start": 27.74,
+     "end": 27.8,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "siete",
+     "start": 27.88,
+     "end": 28.14,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "años?",
+     "start": 28.22,
+     "end": 28.5,
+     "speaker_id": "speaker_0"
+    }
+   ]
+  },
+  {
+   "id": "s0005",
+   "speaker_id": "speaker_1",
+   "role": "unknown",
+   "start": 29.34,
+   "end": 30.56,
+   "text": "No, el resto es a largo plazo.",
+   "words": [
+    {
+     "text": "No,",
+     "start": 29.34,
+     "end": 29.42,
+     "speaker_id": "speaker_1"
+    },
+    {
+     "text": "el",
+     "start": 29.48,
+     "end": 29.54,
+     "speaker_id": "speaker_1"
+    },
+    {
+     "text": "resto",
+     "start": 29.58,
+     "end": 29.78,
+     "speaker_id": "speaker_1"
+    },
+    {
+     "text": "es",
+     "start": 29.8,
+     "end": 29.88,
+     "speaker_id": "speaker_1"
+    },
+    {
+     "text": "a",
+     "start": 29.92,
+     "end": 29.94,
+     "speaker_id": "speaker_1"
+    },
+    {
+     "text": "largo",
+     "start": 29.98,
+     "end": 30.2,
+     "speaker_id": "speaker_1"
+    },
+    {
+     "text": "plazo.",
+     "start": 30.28,
+     "end": 30.56,
+     "speaker_id": "speaker_1"
+    }
+   ]
+  },
+  {
+   "id": "s0006",
+   "speaker_id": "speaker_0",
+   "role": "unknown",
+   "start": 31.44,
+   "end": 42.16,
+   "text": "Bien. Tiene cien mil euros, veinte mil en renta variable global y ochenta mil en renta fija a corto plazo. La renta fija cubre de sobra lo del coche.",
+   "words": [
+    {
+     "text": "Bien.",
+     "start": 31.44,
+     "end": 31.64,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "Tiene",
+     "start": 32.28,
+     "end": 32.56,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "cien",
+     "start": 32.7,
+     "end": 32.9,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "mil",
+     "start": 32.94,
+     "end": 33.08,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "euros,",
+     "start": 33.16,
+     "end": 33.52,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "veinte",
+     "start": 34.12,
+     "end": 34.38,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "mil",
+     "start": 34.46,
+     "end": 34.6,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "en",
+     "start": 34.64,
+     "end": 34.76,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "renta",
+     "start": 34.82,
+     "end": 35.1,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "variable",
+     "start": 35.12,
+     "end": 35.52,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "global",
+     "start": 35.56,
+     "end": 35.9,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "y",
+     "start": 36.38,
+     "end": 36.42,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "ochenta",
+     "start": 36.5,
+     "end": 36.86,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "mil",
+     "start": 36.94,
+     "end": 37.08,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "en",
+     "start": 37.14,
+     "end": 37.26,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "renta",
+     "start": 37.32,
+     "end": 37.56,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "fija",
+     "start": 37.66,
+     "end": 37.98,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "a",
+     "start": 38.26,
+     "end": 38.3,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "corto",
+     "start": 38.38,
+     "end": 38.66,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "plazo.",
+     "start": 38.74,
+     "end": 39.08,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "La",
+     "start": 39.88,
+     "end": 39.96,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "renta",
+     "start": 40.04,
+     "end": 40.36,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "fija",
+     "start": 40.4,
+     "end": 40.62,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "cubre",
+     "start": 40.72,
+     "end": 40.98,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "de",
+     "start": 41.02,
+     "end": 41.08,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "sobra",
+     "start": 41.16,
+     "end": 41.44,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "lo",
+     "start": 41.48,
+     "end": 41.54,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "del",
+     "start": 41.6,
+     "end": 41.72,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "coche.",
+     "start": 41.82,
+     "end": 42.16,
+     "speaker_id": "speaker_0"
+    }
+   ]
+  },
+  {
+   "id": "s0007",
+   "speaker_id": "speaker_1",
+   "role": "unknown",
+   "start": 43.16,
+   "end": 44.46,
+   "text": "Me parece bien mantener eso.",
+   "words": [
+    {
+     "text": "Me",
+     "start": 43.16,
+     "end": 43.28,
+     "speaker_id": "speaker_1"
+    },
+    {
+     "text": "parece",
+     "start": 43.3,
+     "end": 43.6,
+     "speaker_id": "speaker_1"
+    },
+    {
+     "text": "bien",
+     "start": 43.62,
+     "end": 43.78,
+     "speaker_id": "speaker_1"
+    },
+    {
+     "text": "mantener",
+     "start": 43.82,
+     "end": 44.16,
+     "speaker_id": "speaker_1"
+    },
+    {
+     "text": "eso.",
+     "start": 44.2,
+     "end": 44.46,
+     "speaker_id": "speaker_1"
+    }
+   ]
+  },
+  {
+   "id": "s0008",
+   "speaker_id": "speaker_0",
+   "role": "unknown",
+   "start": 45.32,
+   "end": 52.52,
+   "text": "Le propongo aumentar un poco la renta variable, invertir cinco mil euros más en el fondo indexado global desde la renta fija.",
+   "words": [
+    {
+     "text": "Le",
+     "start": 45.32,
+     "end": 45.36,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "propongo",
+     "start": 45.44,
+     "end": 45.82,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "aumentar",
+     "start": 45.86,
+     "end": 46.34,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "un",
+     "start": 46.4,
+     "end": 46.54,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "poco",
+     "start": 46.58,
+     "end": 46.76,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "la",
+     "start": 46.84,
+     "end": 46.92,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "renta",
+     "start": 46.96,
+     "end": 47.26,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "variable,",
+     "start": 47.28,
+     "end": 47.72,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "invertir",
+     "start": 48.22,
+     "end": 48.66,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "cinco",
+     "start": 48.76,
+     "end": 49.0,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "mil",
+     "start": 49.06,
+     "end": 49.2,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "euros",
+     "start": 49.26,
+     "end": 49.58,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "más",
+     "start": 49.62,
+     "end": 49.78,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "en",
+     "start": 49.82,
+     "end": 49.9,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "el",
+     "start": 49.94,
+     "end": 50.06,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "fondo",
+     "start": 50.1,
+     "end": 50.32,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "indexado",
+     "start": 50.34,
+     "end": 50.84,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "global",
+     "start": 50.86,
+     "end": 51.2,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "desde",
+     "start": 51.52,
+     "end": 51.74,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "la",
+     "start": 51.78,
+     "end": 51.84,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "renta",
+     "start": 51.92,
+     "end": 52.16,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "fija.",
+     "start": 52.24,
+     "end": 52.52,
+     "speaker_id": "speaker_0"
+    }
+   ]
+  },
+  {
+   "id": "s0009",
+   "speaker_id": "speaker_1",
+   "role": "unknown",
+   "start": 52.52,
+   "end": 54.38,
+   "text": "¿Qué riesgo asumo?",
+   "words": [
+    {
+     "text": "¿Qué",
+     "start": 52.52,
+     "end": 53.52,
+     "speaker_id": "speaker_1"
+    },
+    {
+     "text": "riesgo",
+     "start": 53.58,
+     "end": 53.88,
+     "speaker_id": "speaker_1"
+    },
+    {
+     "text": "asumo?",
+     "start": 53.94,
+     "end": 54.38,
+     "speaker_id": "speaker_1"
+    }
+   ]
+  },
+  {
+   "id": "s0010",
+   "speaker_id": "speaker_0",
+   "role": "unknown",
+   "start": 55.24,
+   "end": 64.04,
+   "text": "La renta variable puede caer un 30 % en un mal año y tardar años en recuperarse. Por eso solo lo propongo para el dinero a largo plazo.",
+   "words": [
+    {
+     "text": "La",
+     "start": 55.24,
+     "end": 55.3,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "renta",
+     "start": 55.38,
+     "end": 55.64,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "variable",
+     "start": 55.66,
+     "end": 56.08,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "puede",
+     "start": 56.18,
+     "end": 56.4,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "caer",
+     "start": 56.48,
+     "end": 56.76,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "un",
+     "start": 56.8,
+     "end": 56.92,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "30",
+     "start": 57.08,
+     "end": 57.3,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "%",
+     "start": 57.32,
+     "end": 57.76,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "en",
+     "start": 57.8,
+     "end": 57.88,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "un",
+     "start": 57.92,
+     "end": 58.02,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "mal",
+     "start": 58.06,
+     "end": 58.18,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "año",
+     "start": 58.24,
+     "end": 58.42,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "y",
+     "start": 58.74,
+     "end": 58.78,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "tardar",
+     "start": 58.86,
+     "end": 59.14,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "años",
+     "start": 59.2,
+     "end": 59.46,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "en",
+     "start": 59.5,
+     "end": 59.6,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "recuperarse.",
+     "start": 59.64,
+     "end": 60.36,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "Por",
+     "start": 61.22,
+     "end": 61.32,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "eso",
+     "start": 61.38,
+     "end": 61.64,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "solo",
+     "start": 61.68,
+     "end": 61.92,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "lo",
+     "start": 61.96,
+     "end": 62.06,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "propongo",
+     "start": 62.08,
+     "end": 62.56,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "para",
+     "start": 62.58,
+     "end": 62.72,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "el",
+     "start": 62.76,
+     "end": 62.82,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "dinero",
+     "start": 62.88,
+     "end": 63.22,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "a",
+     "start": 63.28,
+     "end": 63.3,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "largo",
+     "start": 63.38,
+     "end": 63.62,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "plazo.",
+     "start": 63.7,
+     "end": 64.04,
+     "speaker_id": "speaker_0"
+    }
+   ]
+  },
+  {
+   "id": "s0011",
+   "speaker_id": "speaker_1",
+   "role": "unknown",
+   "start": 64.959,
+   "end": 66.34,
+   "text": "Entiendo. ¿Gastos?",
+   "words": [
+    {
+     "text": "Entiendo.",
+     "start": 64.959,
+     "end": 65.459,
+     "speaker_id": "speaker_1"
+    },
+    {
+     "text": "¿Gastos?",
+     "start": 65.78,
+     "end": 66.34,
+     "speaker_id": "speaker_1"
+    }
+   ]
+  },
+  {
+   "id": "s0012",
+   "speaker_id": "speaker_0",
+   "role": "unknown",
+   "start": 67.2,
+   "end": 76.36,
+   "text": "El fondo tiene unos gastos corrientes de 0,2 % al año. Nosotros cobramos una comisión de asesoramiento fija y no recibimos nada de la gestora.",
+   "words": [
+    {
+     "text": "El",
+     "start": 67.2,
+     "end": 67.26,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "fondo",
+     "start": 67.34,
+     "end": 67.54,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "tiene",
+     "start": 67.62,
+     "end": 67.82,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "unos",
+     "start": 67.86,
+     "end": 68.04,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "gastos",
+     "start": 68.1,
+     "end": 68.4,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "corrientes",
+     "start": 68.46,
+     "end": 68.94,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "de",
+     "start": 68.98,
+     "end": 69.04,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "0,2",
+     "start": 69.3,
+     "end": 69.9,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "%",
+     "start": 69.92,
+     "end": 70.4,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "al",
+     "start": 70.44,
+     "end": 70.52,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "año.",
+     "start": 70.58,
+     "end": 70.8,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "Nosotros",
+     "start": 71.46,
+     "end": 71.92,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "cobramos",
+     "start": 71.94,
+     "end": 72.34,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "una",
+     "start": 72.4,
+     "end": 72.5,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "comisión",
+     "start": 72.58,
+     "end": 73.02,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "de",
+     "start": 73.06,
+     "end": 73.12,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "asesoramiento",
+     "start": 73.16,
+     "end": 73.86,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "fija",
+     "start": 73.96,
+     "end": 74.22,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "y",
+     "start": 74.6,
+     "end": 74.62,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "no",
+     "start": 74.68,
+     "end": 74.78,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "recibimos",
+     "start": 74.82,
+     "end": 75.36,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "nada",
+     "start": 75.42,
+     "end": 75.66,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "de",
+     "start": 75.72,
+     "end": 75.78,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "la",
+     "start": 75.82,
+     "end": 75.86,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "gestora.",
+     "start": 75.92,
+     "end": 76.36,
+     "speaker_id": "speaker_0"
+    }
+   ]
+  },
+  {
+   "id": "s0013",
+   "speaker_id": "speaker_1",
+   "role": "unknown",
+   "start": 76.4,
+   "end": 78.76,
+   "text": "¿Y qué rentabilidad puedo esperar?",
+   "words": [
+    {
+     "text": "¿Y",
+     "start": 76.4,
+     "end": 77.32,
+     "speaker_id": "speaker_1"
+    },
+    {
+     "text": "qué",
+     "start": 77.34,
+     "end": 77.44,
+     "speaker_id": "speaker_1"
+    },
+    {
+     "text": "rentabilidad",
+     "start": 77.48,
+     "end": 78.02,
+     "speaker_id": "speaker_1"
+    },
+    {
+     "text": "puedo",
+     "start": 78.04,
+     "end": 78.2,
+     "speaker_id": "speaker_1"
+    },
+    {
+     "text": "esperar?",
+     "start": 78.22,
+     "end": 78.76,
+     "speaker_id": "speaker_1"
+    }
+   ]
+  },
+  {
+   "id": "s0014",
+   "speaker_id": "speaker_0",
+   "role": "unknown",
+   "start": 79.66,
+   "end": 87.16,
+   "text": "No le puedo garantizar ninguna rentabilidad. Históricamente, ha sido positiva a largo plazo, pero el pasado no asegura el futuro.",
+   "words": [
+    {
+     "text": "No",
+     "start": 79.66,
+     "end": 79.74,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "le",
+     "start": 79.78,
+     "end": 79.88,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "puedo",
+     "start": 79.9,
+     "end": 80.12,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "garantizar",
+     "start": 80.16,
+     "end": 80.68,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "ninguna",
+     "start": 80.74,
+     "end": 81.08,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "rentabilidad.",
+     "start": 81.16,
+     "end": 81.84,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "Históricamente,",
+     "start": 82.26,
+     "end": 83.0,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "ha",
+     "start": 83.08,
+     "end": 83.12,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "sido",
+     "start": 83.22,
+     "end": 83.44,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "positiva",
+     "start": 83.48,
+     "end": 83.94,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "a",
+     "start": 83.96,
+     "end": 84.04,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "largo",
+     "start": 84.1,
+     "end": 84.36,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "plazo,",
+     "start": 84.44,
+     "end": 84.7,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "pero",
+     "start": 84.8,
+     "end": 84.96,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "el",
+     "start": 85.34,
+     "end": 85.4,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "pasado",
+     "start": 85.48,
+     "end": 85.86,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "no",
+     "start": 85.92,
+     "end": 86.04,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "asegura",
+     "start": 86.1,
+     "end": 86.54,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "el",
+     "start": 86.58,
+     "end": 86.64,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "futuro.",
+     "start": 86.72,
+     "end": 87.16,
+     "speaker_id": "speaker_0"
+    }
+   ]
+  },
+  {
+   "id": "s0015",
+   "speaker_id": "speaker_1",
+   "role": "unknown",
+   "start": 88.02,
+   "end": 90.04,
+   "text": "Me parece razonable. Lo pienso y le digo.",
+   "words": [
+    {
+     "text": "Me",
+     "start": 88.02,
+     "end": 88.12,
+     "speaker_id": "speaker_1"
+    },
+    {
+     "text": "parece",
+     "start": 88.14,
+     "end": 88.46,
+     "speaker_id": "speaker_1"
+    },
+    {
+     "text": "razonable.",
+     "start": 88.5,
+     "end": 89.0,
+     "speaker_id": "speaker_1"
+    },
+    {
+     "text": "Lo",
+     "start": 89.24,
+     "end": 89.28,
+     "speaker_id": "speaker_1"
+    },
+    {
+     "text": "pienso",
+     "start": 89.36,
+     "end": 89.6,
+     "speaker_id": "speaker_1"
+    },
+    {
+     "text": "y",
+     "start": 89.64,
+     "end": 89.66,
+     "speaker_id": "speaker_1"
+    },
+    {
+     "text": "le",
+     "start": 89.7,
+     "end": 89.76,
+     "speaker_id": "speaker_1"
+    },
+    {
+     "text": "digo.",
+     "start": 89.8,
+     "end": 90.04,
+     "speaker_id": "speaker_1"
+    }
+   ]
+  },
+  {
+   "id": "s0016",
+   "speaker_id": "speaker_0",
+   "role": "unknown",
+   "start": 90.9,
+   "end": 97.74,
+   "text": "Tómese el tiempo que necesite. Le envío hoy el documento de datos fundamentales y el resumen de la reunión.",
+   "words": [
+    {
+     "text": "Tómese",
+     "start": 90.9,
+     "end": 91.24,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "el",
+     "start": 91.32,
+     "end": 91.38,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "tiempo",
+     "start": 91.48,
+     "end": 91.72,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "que",
+     "start": 91.78,
+     "end": 91.9,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "necesite.",
+     "start": 91.92,
+     "end": 92.5,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "Le",
+     "start": 93.12,
+     "end": 93.18,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "envío",
+     "start": 93.22,
+     "end": 93.6,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "hoy",
+     "start": 93.98,
+     "end": 94.2,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "el",
+     "start": 94.26,
+     "end": 94.32,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "documento",
+     "start": 94.38,
+     "end": 94.9,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "de",
+     "start": 94.94,
+     "end": 95.0,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "datos",
+     "start": 95.06,
+     "end": 95.38,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "fundamentales",
+     "start": 95.42,
+     "end": 96.12,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "y",
+     "start": 96.46,
+     "end": 96.5,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "el",
+     "start": 96.54,
+     "end": 96.62,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "resumen",
+     "start": 96.68,
+     "end": 97.08,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "de",
+     "start": 97.12,
+     "end": 97.2,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "la",
+     "start": 97.24,
+     "end": 97.28,
+     "speaker_id": "speaker_0"
+    },
+    {
+     "text": "reunión.",
+     "start": 97.36,
+     "end": 97.74,
+     "speaker_id": "speaker_0"
+    }
+   ]
+  },
+  {
+   "id": "s0017",
+   "speaker_id": "speaker_1",
+   "role": "unknown",
+   "start": 98.6,
+   "end": 99.68,
+   "text": "Muchas gracias, Elena",
+   "words": [
+    {
+     "text": "Muchas",
+     "start": 98.6,
+     "end": 98.88,
+     "speaker_id": "speaker_1"
+    },
+    {
+     "text": "gracias,",
+     "start": 98.92,
+     "end": 99.32,
+     "speaker_id": "speaker_1"
+    },
+    {
+     "text": "Elena",
+     "start": 99.38,
+     "end": 99.68,
+     "speaker_id": "speaker_1"
+    }
+   ]
+  }
+ ],
+ "stt_provider": "elevenlabs"
+}
