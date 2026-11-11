@@ -12,6 +12,7 @@ from __future__ import annotations
 import argparse
 import getpass
 import hashlib
+import json
 import os
 import shutil
 import subprocess
@@ -28,7 +29,7 @@ REQUIREMENTS = ROOT / "requirements.txt"
 REQ_HASH = VENV / ".req-hash"
 ENV_FILE = ROOT / ".env"
 ENV_EXAMPLE = ROOT / ".env.example"
-DEMO_TRANSCRIPT = ROOT / "app" / "data" / "audio" / "demo_clip.transcript.json"
+DATA_DIR = ROOT / "app" / "data"
 DEMO_AUDIO_ID = "dfdf840d54fbc7fb"
 APP = ROOT / "app" / "ui" / "streamlit_app.py"
 PORT = 8501
@@ -139,13 +140,21 @@ def cache_dir() -> Path:
 
 
 def seed_demo_cache() -> None:
-    """Copy the versioned demo transcript into the STT cache so the demo clip costs nothing."""
-    target = cache_dir() / "stt" / f"{DEMO_AUDIO_ID}.json"
-    if target.exists() or not DEMO_TRANSCRIPT.exists():
-        return
-    target.parent.mkdir(parents=True, exist_ok=True)
-    shutil.copyfile(DEMO_TRANSCRIPT, target)
-    say("Transcripción del clip de la demo copiada a la caché (0 créditos de ElevenLabs).")
+    """Copy every versioned transcript (demo clip + meetings) into the STT cache: 0 ElevenLabs credits."""
+    copied = 0
+    for src in sorted(DATA_DIR.rglob("*.transcript.json")):
+        try:
+            aid = json.loads(src.read_text(encoding="utf-8"))["audio_id"]
+        except (OSError, ValueError, KeyError):
+            continue
+        target = cache_dir() / "stt" / f"{aid}.json"
+        if target.exists():
+            continue
+        target.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(src, target)
+        copied += 1
+    if copied:
+        say(f"{copied} transcripciones de la demo copiadas a la caché (0 créditos de ElevenLabs).")
 
 
 def server_up(timeout: float = 1.0) -> bool:

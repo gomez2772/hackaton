@@ -19,8 +19,8 @@ con el permiso puesto: `git update-index --chmod=+x Verbatim.command`.
 2. Si no hay `.env`, lo copia de `.env.example`. Si `ANTHROPIC_API_KEY` o `ELEVENLABS_API_KEY`
    están vacías, las pide por la terminal (sin mostrarlas) y las guarda en `.env` de ese ordenador.
    Si ya están (zip del jurado), no pide nada.
-3. Copia `app/data/audio/demo_clip.transcript.json` a `.cache/stt/dfdf840d54fbc7fb.json` para que
-   el clip de la demo no gaste ElevenLabs.
+3. Copia cada `*.transcript.json` de `app/data/` (clip de la demo y reuniones m01–m05) a
+   `.cache/stt/<audio_id>.json`, para que analizar esos audios (también subiéndolos) no gaste ElevenLabs.
 4. Arranca `python -m streamlit run app/ui/streamlit_app.py` con `ACTA_FAKE_STAGES` vacío
    (**modo real**, aunque `.env` diga otra cosa) y abre `http://localhost:8501` cuando responde.
    Si Verbatim ya estaba abierto en ese puerto, solo abre el navegador.
@@ -60,7 +60,7 @@ Genera `dist/Verbatim.zip` (fuera de git; `dist/` está en `.gitignore`):
   lleva permiso de ejecución dentro del zip, para el doble clic en Mac.
 - Dentro lleva un `.env` hecho desde `.env.example` con las dos claves, `ACTA_FAKE_STAGES=` vacío
   (modo real), `ACTA_LLM_CACHE=1` y `ACTA_ADVISOR_NAME=Asesor de demostración`, y la caché
-  `.cache/stt/dfdf840d54fbc7fb.json` del clip de la demo.
+  `.cache/stt/<audio_id>.json` de todas las transcripciones versionadas (clip de la demo y m01–m05).
 - Las claves se piden o se leen de `VERBATIM_ZIP_*`, **nunca del `.env` personal**, para no
   empaquetar por error la clave de trabajo. Ese `.env` solo existe dentro del zip.
 
